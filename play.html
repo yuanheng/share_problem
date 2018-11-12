@@ -1,0 +1,1772 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>错题播放</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+  	<meta name="App-Config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+  	<meta content="yes" name="apple-mobile-web-app-capable">
+  	<meta content="yes" name="apple-touch-fullscreen">
+  	<meta content="telephone=no,email=no" name="format-detection">
+  	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+  	<link rel="stylesheet" type="text/css" href="css/play.css">
+  	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	  <script type="text/javascript">
+        (function(){
+             var currClientWidth,
+                 fontValue,
+                 originWidth;
+                 originWidth = 667;//ui设计稿的宽度，一般750或640
+                 __resize();
+
+                 window.addEventListener('resize', __resize, false);
+
+                function __resize() {
+                    currClientWidth = document.documentElement.clientWidth;
+                    if (currClientWidth > 667){
+                        currClientWidth = 667;
+                    } 
+                    if (currClientWidth < 320){
+                        currClientWidth = 320;
+                    } 
+                    fontValue = currClientWidth;
+                    document.documentElement.style.fontSize = fontValue/6.67 + 'px';
+
+                };
+                var mql = window.matchMedia("(orientation: portrait)");
+                function onMatchMeidaChange(mql){
+                    if(mql.matches) {
+                        // 竖屏
+                        console.info("竖屏");
+                        alert("请切换到竖屏观看");
+                    }
+                }
+                onMatchMeidaChange(mql);
+                mql.addListener(onMatchMeidaChange);
+        })();
+    </script>
+</head>
+<body id="page_body">
+    <div id='play_page' class="play_page">
+        <div class="title">
+          <div class="download_message">查看更多班级内容请</div>
+          <div class="download_btn" v-on:click='showDownloadAppWin'>下载APP</div>
+        </div>
+
+        <div class="play_box">
+          <div class="play_btn_box">
+            <div class="play_btn_bg"></div>
+            <div class="play_back_box">
+                <img class="play_back" v-on:click='goBack' style="transform: rotate(90deg);" src="img/play_back.png"/>
+                <div class="play_back_txt">返回</div>
+            </div>
+            <div class="play_start_box">
+                <img class="play_start" style="transform: rotate(90deg);" v-on:click="play" :src="playBtnImg"/>
+                <div class="play_back_txt">{{playTimeShow}}</div>
+            </div>
+            
+          </div>   
+          <div class="play_canvas_box">
+              <div class="play_canvas">
+                  <canvas id='canvas'  width="396" height="289.5" class="" style="background-image:url('http://img.openonline.com.cn/teacher/static/wrongtitle/d7bdb36f4a744bd99ca85effbe7711a4.jpg')" />
+              </div>
+          </div>
+          <div class="play_operator_box">
+              
+              <div class="play_item_box favorite_margin_top">
+                  <img  v-on:click='downloadApp' src="img/favorite.png"/>
+                  <div class="play_operator_num">18</div>
+              </div>
+
+              <div class="play_item_box">
+                  <img  v-on:click='downloadApp' src="img/flower.png"/>
+                  <div class="play_operator_num">123</div>
+              </div>
+              <div class="play_item_box">
+                  <img  v-on:click='downloadApp' src="img/comment.png"/>
+                  <div class="play_operator_num">54</div>
+              </div>
+          </div>
+
+          <audio id="myvideo"  preload='load'  controls="controls" hidden="hidden"></audio>
+        
+        </div>
+   
+        <div id="win_bg" class="win_bg_box" v-show='isShow' style="display:none">
+            <div class="win_bg"></div>
+            <div class="download_app_tip" v-show='isShowDownladAppWin' style="display:none" ref='downloadAppTip'>
+                <div class="closed_box" v-on:click="showDownloadAppWin"></div>
+                <div class="win_title">提示</div>
+                <div class="tip_message">
+                    <div class="class_num">245524</div>
+                    <div class="tip_message">请牢记此班级号（加入班级时使用）</div>
+                </div>
+                <div class="app_type_box">
+                    <div class="teacher_box">
+                        <img class="teacher_icon" src="img/teacher_icon.png">
+                        <div class="app_name">【教师秘书】</div>
+                    </div>
+                    <div class="teacher_box">
+                        <img class="teacher_icon" src="img/parent_icon.png">
+                        <div class="app_name">【家长帮手】</div>
+                    </div>
+                </div>
+                <div class="download_btn_box">
+                    <div class="download_app_btn" v-on:click="openTeacherApp">老师请下载</div>
+                    <div class="download_app_btn" v-on:click="openParentApp">家长请下载</div>
+                </div>
+                <div class="download_app_bg"></div>
+            </div>
+            <div class="download_tip" v-show='isShowWin3' style="display:none" ref="downloadTip">
+                <div class="closed_box" v-on:click="showWin3"></div>
+                <div class="win_title">提示</div>
+                <div class="tip_download_message_play">
+                    <p class="tip_message_p">下载APP，观看体验更好，还可查看更多本班错题信息哦！</p>
+                </div>
+                <div class="tip_download_btn_box">
+                  <div class="btn_box_3">
+                      <div class="download_paly_3" v-on:click='downloadApp'>下载APP</div>
+
+                  </div>
+                  <div class="btn_box_4">
+                      <div class="download_paly_4" v-on:click='goOnPlay'>继续播放</div>
+                  </div>
+                  
+                  <div class="tip_bg"></div>
+                </div>
+            </div> 
+            <div class="download_tip" v-show='isShowWin4' style="display:none"  ref="downloadTip">
+                <div class="closed_box" v-on:click="showWin4"></div>
+                <div class="win_title">提示</div>
+                <div class="tip_download_message">下载APP后，还有更多班级内容等您查看哦！</div>
+                <div class="tip_download_bt" v-on:click="downloadApp">下载APP</div>
+                <div class="tip_bg"></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    var page = new Vue({
+        el: '#play_page',
+        data:{
+          isShow:false,
+          isShowDownladAppWin:false,
+          isShowWin3:false,
+          isShowWin4:false,
+          playBtnImg:'img/play_stop.png',
+          playing:false,
+          playTimeShow:'00:00',
+          showTimeSetIntervel:null,
+          playTime:0,
+          drawCanvas:null
+        },
+        created:function(){ 
+          this.setPlayUrl();
+          this.getData();
+        },
+        mounted:function(){
+          
+        },
+        methods:{
+            getData:function(){
+                var drawData = [
+                            {
+                              "r" : 0,
+                              "o" : "0.846",
+                              "pointbeans" : [
+                                {
+                                  "o" : "0.846",
+                                  "p" : {
+                                    "x" : 340,
+                                    "y" : 54
+                                  }
+                                },
+                                {
+                                  "o" : "0.874",
+                                  "p" : {
+                                    "x" : 337,
+                                    "y" : 57
+                                  }
+                                },
+                                {
+                                  "o" : "0.891",
+                                  "p" : {
+                                    "x" : 332,
+                                    "y" : 60
+                                  }
+                                },
+                                {
+                                  "o" : "0.908",
+                                  "p" : {
+                                    "x" : 324,
+                                    "y" : 66
+                                  }
+                                },
+                                {
+                                  "o" : "0.925",
+                                  "p" : {
+                                    "x" : 312,
+                                    "y" : 76
+                                  }
+                                },
+                                {
+                                  "o" : "0.942",
+                                  "p" : {
+                                    "x" : 298,
+                                    "y" : 88
+                                  }
+                                },
+                                {
+                                  "o" : "0.958",
+                                  "p" : {
+                                    "x" : 279,
+                                    "y" : 102
+                                  }
+                                },
+                                {
+                                  "o" : "0.976",
+                                  "p" : {
+                                    "x" : 259,
+                                    "y" : 117
+                                  }
+                                },
+                                {
+                                  "o" : "0.993",
+                                  "p" : {
+                                    "x" : 238,
+                                    "y" : 131
+                                  }
+                                },
+                                {
+                                  "o" : "1.008",
+                                  "p" : {
+                                    "x" : 217,
+                                    "y" : 147
+                                  }
+                                },
+                                {
+                                  "o" : "1.026",
+                                  "p" : {
+                                    "x" : 197,
+                                    "y" : 162
+                                  }
+                                },
+                                {
+                                  "o" : "1.042",
+                                  "p" : {
+                                    "x" : 178,
+                                    "y" : 177
+                                  }
+                                },
+                                {
+                                  "o" : "1.059",
+                                  "p" : {
+                                    "x" : 164,
+                                    "y" : 188
+                                  }
+                                },
+                                {
+                                  "o" : "1.075",
+                                  "p" : {
+                                    "x" : 150,
+                                    "y" : 198
+                                  }
+                                },
+                                {
+                                  "o" : "1.095",
+                                  "p" : {
+                                    "x" : 142,
+                                    "y" : 204
+                                  }
+                                },
+                                {
+                                  "o" : "1.108",
+                                  "p" : {
+                                    "x" : 138,
+                                    "y" : 208
+                                  }
+                                },
+                                {
+                                  "o" : "1.125",
+                                  "p" : {
+                                    "x" : 136,
+                                    "y" : 211
+                                  }
+                                },
+                                {
+                                  "o" : "1.142",
+                                  "p" : {
+                                    "x" : 135,
+                                    "y" : 211
+                                  }
+                                },
+                                {
+                                  "o" : "1.208",
+                                  "p" : {
+                                    "x" : 136,
+                                    "y" : 211
+                                  }
+                                },
+                                {
+                                  "o" : "1.229",
+                                  "p" : {
+                                    "x" : 137,
+                                    "y" : 211
+                                  }
+                                },
+                                {
+                                  "o" : "1.242",
+                                  "p" : {
+                                    "x" : 138,
+                                    "y" : 211
+                                  }
+                                },
+                                {
+                                  "o" : "1.258",
+                                  "p" : {
+                                    "x" : 139,
+                                    "y" : 211
+                                  }
+                                },
+                                {
+                                  "o" : "1.275",
+                                  "p" : {
+                                    "x" : 141,
+                                    "y" : 211
+                                  }
+                                },
+                                {
+                                  "o" : "1.296",
+                                  "p" : {
+                                    "x" : 144,
+                                    "y" : 211
+                                  }
+                                },
+                                {
+                                  "o" : "1.308",
+                                  "p" : {
+                                    "x" : 151,
+                                    "y" : 211
+                                  }
+                                },
+                                {
+                                  "o" : "1.325",
+                                  "p" : {
+                                    "x" : 162,
+                                    "y" : 208
+                                  }
+                                },
+                                {
+                                  "o" : "1.341",
+                                  "p" : {
+                                    "x" : 180,
+                                    "y" : 204
+                                  }
+                                },
+                                {
+                                  "o" : "1.357",
+                                  "p" : {
+                                    "x" : 201,
+                                    "y" : 198
+                                  }
+                                },
+                                {
+                                  "o" : "1.375",
+                                  "p" : {
+                                    "x" : 224,
+                                    "y" : 193
+                                  }
+                                },
+                                {
+                                  "o" : "1.392",
+                                  "p" : {
+                                    "x" : 249,
+                                    "y" : 187
+                                  }
+                                },
+                                {
+                                  "o" : "1.409",
+                                  "p" : {
+                                    "x" : 276,
+                                    "y" : 182
+                                  }
+                                },
+                                {
+                                  "o" : "1.426",
+                                  "p" : {
+                                    "x" : 300,
+                                    "y" : 179
+                                  }
+                                },
+                                {
+                                  "o" : "1.442",
+                                  "p" : {
+                                    "x" : 322,
+                                    "y" : 176
+                                  }
+                                },
+                                {
+                                  "o" : "1.461",
+                                  "p" : {
+                                    "x" : 341,
+                                    "y" : 175
+                                  }
+                                },
+                                {
+                                  "o" : "1.475",
+                                  "p" : {
+                                    "x" : 356,
+                                    "y" : 173
+                                  }
+                                },
+                                {
+                                  "o" : "1.495",
+                                  "p" : {
+                                    "x" : 368,
+                                    "y" : 173
+                                  }
+                                },
+                                {
+                                  "o" : "1.509",
+                                  "p" : {
+                                    "x" : 375,
+                                    "y" : 172
+                                  }
+                                },
+                                {
+                                  "o" : "1.525",
+                                  "p" : {
+                                    "x" : 378,
+                                    "y" : 172
+                                  }
+                                },
+                                {
+                                  "o" : "1.542",
+                                  "p" : {
+                                    "x" : 380,
+                                    "y" : 171
+                                  }
+                                },
+                                {
+                                  "o" : "1.559",
+                                  "p" : {
+                                    "x" : 380,
+                                    "y" : 171
+                                  }
+                                },
+                                {
+                                  "o" : "1.575",
+                                  "p" : {
+                                    "x" : 380,
+                                    "y" : 171
+                                  }
+                                },
+                                {
+                                  "o" : "1.592",
+                                  "p" : {
+                                    "x" : 380,
+                                    "y" : 171
+                                  }
+                                },
+                                {
+                                  "o" : "1.609",
+                                  "p" : {
+                                    "x" : 380,
+                                    "y" : 171
+                                  }
+                                },
+                                {
+                                  "o" : "1.627",
+                                  "p" : {
+                                    "x" : 379,
+                                    "y" : 171
+                                  }
+                                },
+                                {
+                                  "o" : "1.642",
+                                  "p" : {
+                                    "x" : 378,
+                                    "y" : 171
+                                  }
+                                },
+                                {
+                                  "o" : "1.663",
+                                  "p" : {
+                                    "x" : 378,
+                                    "y" : 171
+                                  }
+                                },
+                                {
+                                  "o" : "1.675",
+                                  "p" : {
+                                    "x" : 377,
+                                    "y" : 170
+                                  }
+                                },
+                                {
+                                  "o" : "1.691",
+                                  "p" : {
+                                    "x" : 375,
+                                    "y" : 169
+                                  }
+                                },
+                                {
+                                  "o" : "1.707",
+                                  "p" : {
+                                    "x" : 373,
+                                    "y" : 168
+                                  }
+                                },
+                                {
+                                  "o" : "1.724",
+                                  "p" : {
+                                    "x" : 368,
+                                    "y" : 166
+                                  }
+                                },
+                                {
+                                  "o" : "1.741",
+                                  "p" : {
+                                    "x" : 363,
+                                    "y" : 164
+                                  }
+                                },
+                                {
+                                  "o" : "1.758",
+                                  "p" : {
+                                    "x" : 355,
+                                    "y" : 160
+                                  }
+                                },
+                                {
+                                  "o" : "1.775",
+                                  "p" : {
+                                    "x" : 344,
+                                    "y" : 155
+                                  }
+                                },
+                                {
+                                  "o" : "1.791",
+                                  "p" : {
+                                    "x" : 330,
+                                    "y" : 149
+                                  }
+                                },
+                                {
+                                  "o" : "1.807",
+                                  "p" : {
+                                    "x" : 314,
+                                    "y" : 140
+                                  }
+                                },
+                                {
+                                  "o" : "1.824",
+                                  "p" : {
+                                    "x" : 297,
+                                    "y" : 132
+                                  }
+                                },
+                                {
+                                  "o" : "1.842",
+                                  "p" : {
+                                    "x" : 280,
+                                    "y" : 122
+                                  }
+                                },
+                                {
+                                  "o" : "1.858",
+                                  "p" : {
+                                    "x" : 262,
+                                    "y" : 112
+                                  }
+                                },
+                                {
+                                  "o" : "1.874",
+                                  "p" : {
+                                    "x" : 245,
+                                    "y" : 102
+                                  }
+                                },
+                                {
+                                  "o" : "1.892",
+                                  "p" : {
+                                    "x" : 229,
+                                    "y" : 93
+                                  }
+                                },
+                                {
+                                  "o" : "1.909",
+                                  "p" : {
+                                    "x" : 215,
+                                    "y" : 84
+                                  }
+                                },
+                                {
+                                  "o" : "1.925",
+                                  "p" : {
+                                    "x" : 205,
+                                    "y" : 78
+                                  }
+                                },
+                                {
+                                  "o" : "1.942",
+                                  "p" : {
+                                    "x" : 198,
+                                    "y" : 72
+                                  }
+                                },
+                                {
+                                  "o" : "1.959",
+                                  "p" : {
+                                    "x" : 192,
+                                    "y" : 69
+                                  }
+                                },
+                                {
+                                  "o" : "1.975",
+                                  "p" : {
+                                    "x" : 189,
+                                    "y" : 66
+                                  }
+                                },
+                                {
+                                  "o" : "1.992",
+                                  "p" : {
+                                    "x" : 187,
+                                    "y" : 65
+                                  }
+                                },
+                                {
+                                  "o" : "2.008",
+                                  "p" : {
+                                    "x" : 187,
+                                    "y" : 65
+                                  }
+                                },
+                                {
+                                  "o" : "2.074",
+                                  "p" : {
+                                    "x" : 187,
+                                    "y" : 65
+                                  }
+                                },
+                                {
+                                  "o" : "2.092",
+                                  "p" : {
+                                    "x" : 187,
+                                    "y" : 66
+                                  }
+                                },
+                                {
+                                  "o" : "2.109",
+                                  "p" : {
+                                    "x" : 187,
+                                    "y" : 67
+                                  }
+                                },
+                                {
+                                  "o" : "2.125",
+                                  "p" : {
+                                    "x" : 188,
+                                    "y" : 68
+                                  }
+                                },
+                                {
+                                  "o" : "2.142",
+                                  "p" : {
+                                    "x" : 188,
+                                    "y" : 70
+                                  }
+                                },
+                                {
+                                  "o" : "2.159",
+                                  "p" : {
+                                    "x" : 189,
+                                    "y" : 72
+                                  }
+                                },
+                                {
+                                  "o" : "2.175",
+                                  "p" : {
+                                    "x" : 190,
+                                    "y" : 75
+                                  }
+                                },
+                                {
+                                  "o" : "2.192",
+                                  "p" : {
+                                    "x" : 192,
+                                    "y" : 80
+                                  }
+                                },
+                                {
+                                  "o" : "2.209",
+                                  "p" : {
+                                    "x" : 195,
+                                    "y" : 87
+                                  }
+                                },
+                                {
+                                  "o" : "2.225",
+                                  "p" : {
+                                    "x" : 199,
+                                    "y" : 97
+                                  }
+                                },
+                                {
+                                  "o" : "2.242",
+                                  "p" : {
+                                    "x" : 203,
+                                    "y" : 108
+                                  }
+                                },
+                                {
+                                  "o" : "2.258",
+                                  "p" : {
+                                    "x" : 208,
+                                    "y" : 123
+                                  }
+                                },
+                                {
+                                  "o" : "2.275",
+                                  "p" : {
+                                    "x" : 213,
+                                    "y" : 139
+                                  }
+                                },
+                                {
+                                  "o" : "2.292",
+                                  "p" : {
+                                    "x" : 217,
+                                    "y" : 156
+                                  }
+                                },
+                                {
+                                  "o" : "2.308",
+                                  "p" : {
+                                    "x" : 220,
+                                    "y" : 174
+                                  }
+                                },
+                                {
+                                  "o" : "2.325",
+                                  "p" : {
+                                    "x" : 223,
+                                    "y" : 193
+                                  }
+                                },
+                                {
+                                  "o" : "2.344",
+                                  "p" : {
+                                    "x" : 225,
+                                    "y" : 210
+                                  }
+                                },
+                                {
+                                  "o" : "2.358",
+                                  "p" : {
+                                    "x" : 227,
+                                    "y" : 224
+                                  }
+                                },
+                                {
+                                  "o" : "2.375",
+                                  "p" : {
+                                    "x" : 229,
+                                    "y" : 233
+                                  }
+                                },
+                                {
+                                  "o" : "2.391",
+                                  "p" : {
+                                    "x" : 231,
+                                    "y" : 239
+                                  }
+                                },
+                                {
+                                  "o" : "2.409",
+                                  "p" : {
+                                    "x" : 232,
+                                    "y" : 243
+                                  }
+                                },
+                                {
+                                  "o" : "2.425",
+                                  "p" : {
+                                    "x" : 232,
+                                    "y" : 245
+                                  }
+                                },
+                                {
+                                  "o" : "2.442",
+                                  "p" : {
+                                    "x" : 233,
+                                    "y" : 245
+                                  }
+                                },
+                                {
+                                  "o" : "2.459",
+                                  "p" : {
+                                    "x" : 233,
+                                    "y" : 245
+                                  }
+                                },
+                                {
+                                  "o" : "2.508",
+                                  "p" : {
+                                    "x" : 233,
+                                    "y" : 244
+                                  }
+                                },
+                                {
+                                  "o" : "2.526",
+                                  "p" : {
+                                    "x" : 234,
+                                    "y" : 243
+                                  }
+                                },
+                                {
+                                  "o" : "2.541",
+                                  "p" : {
+                                    "x" : 234,
+                                    "y" : 242
+                                  }
+                                },
+                                {
+                                  "o" : "2.558",
+                                  "p" : {
+                                    "x" : 234,
+                                    "y" : 240
+                                  }
+                                },
+                                {
+                                  "o" : "2.577",
+                                  "p" : {
+                                    "x" : 236,
+                                    "y" : 237
+                                  }
+                                },
+                                {
+                                  "o" : "2.591",
+                                  "p" : {
+                                    "x" : 238,
+                                    "y" : 234
+                                  }
+                                },
+                                {
+                                  "o" : "2.607",
+                                  "p" : {
+                                    "x" : 242,
+                                    "y" : 227
+                                  }
+                                },
+                                {
+                                  "o" : "2.625",
+                                  "p" : {
+                                    "x" : 250,
+                                    "y" : 215
+                                  }
+                                },
+                                {
+                                  "o" : "2.641",
+                                  "p" : {
+                                    "x" : 259,
+                                    "y" : 199
+                                  }
+                                },
+                                {
+                                  "o" : "2.657",
+                                  "p" : {
+                                    "x" : 271,
+                                    "y" : 177
+                                  }
+                                },
+                                {
+                                  "o" : "2.675",
+                                  "p" : {
+                                    "x" : 282,
+                                    "y" : 156
+                                  }
+                                },
+                                {
+                                  "o" : "2.692",
+                                  "p" : {
+                                    "x" : 290,
+                                    "y" : 140
+                                  }
+                                },
+                                {
+                                  "o" : "2.707",
+                                  "p" : {
+                                    "x" : 297,
+                                    "y" : 124
+                                  }
+                                },
+                                {
+                                  "o" : "2.725",
+                                  "p" : {
+                                    "x" : 303,
+                                    "y" : 109
+                                  }
+                                },
+                                {
+                                  "o" : "2.741",
+                                  "p" : {
+                                    "x" : 309,
+                                    "y" : 96
+                                  }
+                                },
+                                {
+                                  "o" : "2.758",
+                                  "p" : {
+                                    "x" : 315,
+                                    "y" : 83
+                                  }
+                                },
+                                {
+                                  "o" : "2.775",
+                                  "p" : {
+                                    "x" : 320,
+                                    "y" : 72
+                                  }
+                                },
+                                {
+                                  "o" : "2.792",
+                                  "p" : {
+                                    "x" : 323,
+                                    "y" : 64
+                                  }
+                                },
+                                {
+                                  "o" : "2.808",
+                                  "p" : {
+                                    "x" : 325,
+                                    "y" : 59
+                                  }
+                                },
+                                {
+                                  "o" : "2.825",
+                                  "p" : {
+                                    "x" : 327,
+                                    "y" : 55
+                                  }
+                                },
+                                {
+                                  "o" : "2.841",
+                                  "p" : {
+                                    "x" : 327,
+                                    "y" : 54
+                                  }
+                                },
+                                {
+                                  "o" : "2.858",
+                                  "p" : {
+                                    "x" : 327,
+                                    "y" : 54
+                                  }
+                                },
+                                {
+                                  "o" : "2.991",
+                                  "p" : {
+                                    "x" : 327,
+                                    "y" : 54
+                                  }
+                                },
+                                {
+                                  "o" : "3.091",
+                                  "p" : {
+                                    "x" : 327,
+                                    "y" : 54
+                                  }
+                                },
+                                {
+                                  "o" : "3.108",
+                                  "p" : {
+                                    "x" : 326,
+                                    "y" : 54
+                                  }
+                                },
+                                {
+                                  "o" : "3.126",
+                                  "p" : {
+                                    "x" : 325,
+                                    "y" : 54
+                                  }
+                                },
+                                {
+                                  "o" : "3.141",
+                                  "p" : {
+                                    "x" : 323,
+                                    "y" : 54
+                                  }
+                                },
+                                {
+                                  "o" : "3.158",
+                                  "p" : {
+                                    "x" : 320,
+                                    "y" : 54
+                                  }
+                                },
+                                {
+                                  "o" : "3.175",
+                                  "p" : {
+                                    "x" : 318,
+                                    "y" : 54
+                                  }
+                                },
+                                {
+                                  "o" : "3.192",
+                                  "p" : {
+                                    "x" : 314,
+                                    "y" : 54
+                                  }
+                                },
+                                {
+                                  "o" : "3.208",
+                                  "p" : {
+                                    "x" : 309,
+                                    "y" : 54
+                                  }
+                                },
+                                {
+                                  "o" : "3.226",
+                                  "p" : {
+                                    "x" : 304,
+                                    "y" : 53
+                                  }
+                                },
+                                {
+                                  "o" : "3.242",
+                                  "p" : {
+                                    "x" : 297,
+                                    "y" : 52
+                                  }
+                                },
+                                {
+                                  "o" : "3.258",
+                                  "p" : {
+                                    "x" : 289,
+                                    "y" : 52
+                                  }
+                                },
+                                {
+                                  "o" : "3.275",
+                                  "p" : {
+                                    "x" : 281,
+                                    "y" : 51
+                                  }
+                                },
+                                {
+                                  "o" : "3.292",
+                                  "p" : {
+                                    "x" : 272,
+                                    "y" : 51
+                                  }
+                                },
+                                {
+                                  "o" : "3.308",
+                                  "p" : {
+                                    "x" : 261,
+                                    "y" : 50
+                                  }
+                                },
+                                {
+                                  "o" : "3.325",
+                                  "p" : {
+                                    "x" : 249,
+                                    "y" : 50
+                                  }
+                                },
+                                {
+                                  "o" : "3.341",
+                                  "p" : {
+                                    "x" : 237,
+                                    "y" : 50
+                                  }
+                                },
+                                {
+                                  "o" : "3.357",
+                                  "p" : {
+                                    "x" : 225,
+                                    "y" : 50
+                                  }
+                                },
+                                {
+                                  "o" : "3.375",
+                                  "p" : {
+                                    "x" : 213,
+                                    "y" : 51
+                                  }
+                                },
+                                {
+                                  "o" : "3.392",
+                                  "p" : {
+                                    "x" : 201,
+                                    "y" : 54
+                                  }
+                                },
+                                {
+                                  "o" : "3.407",
+                                  "p" : {
+                                    "x" : 190,
+                                    "y" : 58
+                                  }
+                                },
+                                {
+                                  "o" : "3.425",
+                                  "p" : {
+                                    "x" : 178,
+                                    "y" : 63
+                                  }
+                                },
+                                {
+                                  "o" : "3.441",
+                                  "p" : {
+                                    "x" : 167,
+                                    "y" : 70
+                                  }
+                                },
+                                {
+                                  "o" : "3.458",
+                                  "p" : {
+                                    "x" : 156,
+                                    "y" : 78
+                                  }
+                                },
+                                {
+                                  "o" : "3.475",
+                                  "p" : {
+                                    "x" : 147,
+                                    "y" : 86
+                                  }
+                                },
+                                {
+                                  "o" : "3.491",
+                                  "p" : {
+                                    "x" : 140,
+                                    "y" : 94
+                                  }
+                                },
+                                {
+                                  "o" : "3.507",
+                                  "p" : {
+                                    "x" : 132,
+                                    "y" : 103
+                                  }
+                                },
+                                {
+                                  "o" : "3.525",
+                                  "p" : {
+                                    "x" : 126,
+                                    "y" : 112
+                                  }
+                                },
+                                {
+                                  "o" : "3.541",
+                                  "p" : {
+                                    "x" : 121,
+                                    "y" : 122
+                                  }
+                                },
+                                {
+                                  "o" : "3.558",
+                                  "p" : {
+                                    "x" : 117,
+                                    "y" : 133
+                                  }
+                                },
+                                {
+                                  "o" : "3.575",
+                                  "p" : {
+                                    "x" : 113,
+                                    "y" : 144
+                                  }
+                                },
+                                {
+                                  "o" : "3.591",
+                                  "p" : {
+                                    "x" : 112,
+                                    "y" : 157
+                                  }
+                                },
+                                {
+                                  "o" : "3.607",
+                                  "p" : {
+                                    "x" : 112,
+                                    "y" : 169
+                                  }
+                                },
+                                {
+                                  "o" : "3.624",
+                                  "p" : {
+                                    "x" : 112,
+                                    "y" : 181
+                                  }
+                                },
+                                {
+                                  "o" : "3.641",
+                                  "p" : {
+                                    "x" : 112,
+                                    "y" : 192
+                                  }
+                                },
+                                {
+                                  "o" : "3.657",
+                                  "p" : {
+                                    "x" : 115,
+                                    "y" : 201
+                                  }
+                                },
+                                {
+                                  "o" : "3.675",
+                                  "p" : {
+                                    "x" : 121,
+                                    "y" : 211
+                                  }
+                                },
+                                {
+                                  "o" : "3.691",
+                                  "p" : {
+                                    "x" : 127,
+                                    "y" : 219
+                                  }
+                                },
+                                {
+                                  "o" : "3.707",
+                                  "p" : {
+                                    "x" : 133,
+                                    "y" : 226
+                                  }
+                                },
+                                {
+                                  "o" : "3.725",
+                                  "p" : {
+                                    "x" : 141,
+                                    "y" : 234
+                                  }
+                                },
+                                {
+                                  "o" : "3.741",
+                                  "p" : {
+                                    "x" : 150,
+                                    "y" : 240
+                                  }
+                                },
+                                {
+                                  "o" : "3.758",
+                                  "p" : {
+                                    "x" : 160,
+                                    "y" : 246
+                                  }
+                                },
+                                {
+                                  "o" : "3.775",
+                                  "p" : {
+                                    "x" : 169,
+                                    "y" : 251
+                                  }
+                                },
+                                {
+                                  "o" : "3.792",
+                                  "p" : {
+                                    "x" : 182,
+                                    "y" : 256
+                                  }
+                                },
+                                {
+                                  "o" : "3.807",
+                                  "p" : {
+                                    "x" : 194,
+                                    "y" : 259
+                                  }
+                                },
+                                {
+                                  "o" : "3.825",
+                                  "p" : {
+                                    "x" : 206,
+                                    "y" : 261
+                                  }
+                                },
+                                {
+                                  "o" : "3.841",
+                                  "p" : {
+                                    "x" : 219,
+                                    "y" : 262
+                                  }
+                                },
+                                {
+                                  "o" : "3.857",
+                                  "p" : {
+                                    "x" : 232,
+                                    "y" : 263
+                                  }
+                                },
+                                {
+                                  "o" : "3.874",
+                                  "p" : {
+                                    "x" : 246,
+                                    "y" : 263
+                                  }
+                                },
+                                {
+                                  "o" : "3.892",
+                                  "p" : {
+                                    "x" : 263,
+                                    "y" : 263
+                                  }
+                                },
+                                {
+                                  "o" : "3.908",
+                                  "p" : {
+                                    "x" : 279,
+                                    "y" : 261
+                                  }
+                                },
+                                {
+                                  "o" : "3.925",
+                                  "p" : {
+                                    "x" : 295,
+                                    "y" : 257
+                                  }
+                                },
+                                {
+                                  "o" : "3.941",
+                                  "p" : {
+                                    "x" : 309,
+                                    "y" : 252
+                                  }
+                                },
+                                {
+                                  "o" : "3.957",
+                                  "p" : {
+                                    "x" : 321,
+                                    "y" : 248
+                                  }
+                                },
+                                {
+                                  "o" : "3.974",
+                                  "p" : {
+                                    "x" : 334,
+                                    "y" : 242
+                                  }
+                                },
+                                {
+                                  "o" : "3.992",
+                                  "p" : {
+                                    "x" : 347,
+                                    "y" : 235
+                                  }
+                                },
+                                {
+                                  "o" : "4.007",
+                                  "p" : {
+                                    "x" : 359,
+                                    "y" : 226
+                                  }
+                                },
+                                {
+                                  "o" : "4.024",
+                                  "p" : {
+                                    "x" : 369,
+                                    "y" : 215
+                                  }
+                                },
+                                {
+                                  "o" : "4.041",
+                                  "p" : {
+                                    "x" : 376,
+                                    "y" : 205
+                                  }
+                                },
+                                {
+                                  "o" : "4.058",
+                                  "p" : {
+                                    "x" : 383,
+                                    "y" : 193
+                                  }
+                                },
+                                {
+                                  "o" : "4.074",
+                                  "p" : {
+                                    "x" : 387,
+                                    "y" : 185
+                                  }
+                                },
+                                {
+                                  "o" : "4.092",
+                                  "p" : {
+                                    "x" : 389,
+                                    "y" : 179
+                                  }
+                                },
+                                {
+                                  "o" : "4.107",
+                                  "p" : {
+                                    "x" : 389,
+                                    "y" : 171
+                                  }
+                                },
+                                {
+                                  "o" : "4.124",
+                                  "p" : {
+                                    "x" : 389,
+                                    "y" : 164
+                                  }
+                                },
+                                {
+                                  "o" : "4.141",
+                                  "p" : {
+                                    "x" : 389,
+                                    "y" : 156
+                                  }
+                                },
+                                {
+                                  "o" : "4.158",
+                                  "p" : {
+                                    "x" : 386,
+                                    "y" : 145
+                                  }
+                                },
+                                {
+                                  "o" : "4.174",
+                                  "p" : {
+                                    "x" : 381,
+                                    "y" : 133
+                                  }
+                                },
+                                {
+                                  "o" : "4.192",
+                                  "p" : {
+                                    "x" : 375,
+                                    "y" : 121
+                                  }
+                                },
+                                {
+                                  "o" : "4.207",
+                                  "p" : {
+                                    "x" : 368,
+                                    "y" : 107
+                                  }
+                                },
+                                {
+                                  "o" : "4.225",
+                                  "p" : {
+                                    "x" : 360,
+                                    "y" : 94
+                                  }
+                                },
+                                {
+                                  "o" : "4.242",
+                                  "p" : {
+                                    "x" : 354,
+                                    "y" : 85
+                                  }
+                                },
+                                {
+                                  "o" : "4.258",
+                                  "p" : {
+                                    "x" : 347,
+                                    "y" : 77
+                                  }
+                                },
+                                {
+                                  "o" : "4.274",
+                                  "p" : {
+                                    "x" : 340,
+                                    "y" : 70
+                                  }
+                                },
+                                {
+                                  "o" : "4.292",
+                                  "p" : {
+                                    "x" : 333,
+                                    "y" : 65
+                                  }
+                                },
+                                {
+                                  "o" : "4.307",
+                                  "p" : {
+                                    "x" : 328,
+                                    "y" : 61
+                                  }
+                                },
+                                {
+                                  "o" : "4.325",
+                                  "p" : {
+                                    "x" : 320,
+                                    "y" : 57
+                                  }
+                                },
+                                {
+                                  "o" : "4.342",
+                                  "p" : {
+                                    "x" : 315,
+                                    "y" : 54
+                                  }
+                                },
+                                {
+                                  "o" : "4.358",
+                                  "p" : {
+                                    "x" : 311,
+                                    "y" : 52
+                                  }
+                                },
+                                {
+                                  "o" : "4.374",
+                                  "p" : {
+                                    "x" : 308,
+                                    "y" : 51
+                                  }
+                                },
+                                {
+                                  "o" : "4.390",
+                                  "p" : {
+                                    "x" : 306,
+                                    "y" : 49
+                                  }
+                                },
+                                {
+                                  "o" : "4.390",
+                                  "p" : {
+                                    "x" : 306,
+                                    "y" : 49
+                                  }
+                                }
+                              ]
+                            }
+                          ];
+                this.historyStroker = drawData;
+
+            },
+            showDownloadAppWin:function(){
+                this.isShow = !this.isShow;
+                this.isShowDownladAppWin = !this.isShowDownladAppWin;
+            },
+            showWin3:function(){
+                this.isShow = !this.isShow;
+                this.isShowWin3 = !this.isShowWin3;
+            },
+            showWin4:function(){
+                this.isShow = !this.isShow;
+                this.isShowWin4 = !this.isShowWin4;
+            },
+            play:function(){
+                this.playing = !this.playing;
+
+                if(!this.playing){
+                  this.playBtnImg='img/play_stop.png';
+                  this.showWin3();
+                  this.stopMusic();
+                  this.stopShowTime();
+                  this.stopDraw();
+                }else{
+                  this.playBtnImg='img/play_start.png';
+                  this.playMusic();
+                  this.showTime();
+                  this.startDraw();
+                  this.drawCanvas.testDraw();
+                }
+               
+            },
+            stopDraw:function(){
+                this.drawCanvas.supendDraw();
+            },
+            startDraw:function(){
+                var options = {};
+                options.historyStroker = this.historyStroker;
+                var draw = new Drawing('canvas',options);
+                this.drawCanvas = draw;
+                draw.testDraw();
+            },
+            goOnPlay:function(){
+                this.isShow = false;
+                this.isShowWin3 = false;
+                this.play();
+            },
+            goBack:function(){
+                window.location.href='share_problem.html';
+            },
+            downloadApp:function(){
+                this.isShow = true;
+                this.isShowWin3 = false;
+                this.isShowWin4 = false;
+                this.isShowDownladAppWin = true;
+            },
+            openTeacherApp:function(){
+                try {
+                    window.location.href = "openteacher://open?code=&openType=joinClazz&clazzId=";//
+                }catch(err){
+                    window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.open.teachermanager";//android 下载地址
+                }
+  
+            },
+            openParentApp:function(){
+                try{
+                    window.location.href = "openparents://open?code=&openType=joinClazz&clazzId=";//
+                }catch(err){
+                    window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.open.parentmanager";//android 下载地址
+                }
+            },
+            setPlayUrl:function(){
+                var self = this;
+                var audio = document.getElementById('myvideo');
+                audio.src = 'wrongResource/song.mp3';
+                audio.addEventListener('canplaythrough',function(){
+                    console.info("123123");
+                });
+
+              
+            },
+            stopShowTime:function(){
+                clearInterval(this.showTimeSetIntervel);
+            },
+            showTime:function(){
+                var self = this;
+
+                self.showTimeSetIntervel  = setInterval(function(){
+                    var audio = document.getElementById('myvideo');
+                    var playTime = audio.currentTime;
+                    
+                    var minute=Math.floor(playTime/60%60);
+                    var second=Math.floor(playTime%60);
+                    if(minute<10){
+                        minute = "0" + minute;
+                    }
+                    if(second<10){
+                      second = "0" + second;
+                    }
+                    self.playTimeShow = minute+":"+second;
+                    
+
+                },20);
+                
+            },
+            playMusic:function(){
+                var self = this;
+                var audio = document.getElementById('myvideo');
+                audio.play();
+                //音频播放完毕
+                audio.onended = function(){  
+                   console.info("音频播放完毕。。。");
+                   //self.playTimeShow = '00:00';
+                   self.playTime = 0;
+                   clearInterval(self.showTimeSetIntervel);
+                   //调用stopplay方法，
+                   self.resetData();
+
+                };
+                
+            },
+            resetData:function(){
+                var self = this;
+                this.playTime = 0;
+                setTimeout(function(){
+                    self.playTimeShow = '00:00';
+                },1000)
+                
+                this.playing = false;
+                this.playBtnImg = 'img/play_stop.png';
+                this.isShow = true;
+                this.isShowWin4 = true;
+            },
+            stopMusic:function(){
+                var audio = document.getElementById('myvideo');
+                if(audio != null){
+                    audio.pause();
+                }
+            }
+        }
+      });
+
+      function Drawing(canvas, options) {
+            typeof canvas == 'string' && (canvas = document.getElementById(canvas));
+            if (!canvas || !canvas.getContext) {
+                throw new Error(100, '你的浏览器不支持!');
+            }
+            this.starttime = 0;
+            this.init(canvas,options);
+      }
+
+      Drawing.prototype = {
+            init: function (canvas,options) {
+                this.isButtonDown = false;
+                this.historyStroker = options.historyStroker;
+                this.curStroker = { color: '#000000', path: [] };
+                this.lastX = 0;
+                this.lastY = 0;
+                this.curColor = '#000000';
+                this.toolbarspos = {};
+                this.lineIndex=0;
+                this.pointIndex = 0;
+                this.intervalHandle = null;
+                this.testcanvas = null;
+                this.testcontext = null;
+
+            },
+            testDraw: function () {
+              
+                var self = this;
+               
+                if (!this.startplay) {
+                    this.startplay = (new Date()).getTime();
+                }
+                if (!this.lineIndex) {
+                    this.lineIndex = 0;
+                }
+                var p = this.historyStroker;
+                var curLine = p[this.lineIndex], curColor = 'red', p2;
+                var pointIndex = this.pointIndex;
+                self.lineIndex = this.lineIndex;
+                if (!self.testcanvas) {
+                    self.testcanvas = document.getElementById("canvas");
+                    self.testcontext = this.testcanvas.getContext('2d');
+                    self.testcontext.beginPath();
+                }
+
+                //self.intervalHandle = null;
+        　　    
+                self.testcontext.strokeStyle = "#ff0000";
+                if (this.intervalHandle) return;
+                self.intervalHandle = window.setInterval(function () {
+                    var deltatime = (new Date()).getTime() - self.startplay;
+                    p2 = p[self.lineIndex].pointbeans[pointIndex];
+                    //绘制完成一条线
+                    if (!p2) {
+                        window.clearInterval(self.intervalHandle);
+                        self.pointIndex = 0;
+                        self.intervalHandle = null;
+                        if (self.lineIndex < p.length - 1) {
+                            self.lineIndex = self.lineIndex + 1;
+                            self.testDraw();
+                
+                        }
+                       
+                        
+                    }
+                    if(p2){
+                        if (deltatime >= p2.o * 1000) {
+                            self.testcontext.strokeStyle = "#ff0000";
+                            
+                            if (pointIndex == 0) {
+                                self.testcontext.moveTo(p2.p.x, p2.p.y);
+
+                              // self.testcontext.moveTo(3, 54);
+                            }
+                            pointIndex = pointIndex + 1;
+                            self.pointIndex = pointIndex;
+                            self.testcontext.lineTo(p2.p.x, p2.p.y);
+                           
+                            self.testcontext.stroke();
+                       
+                        }
+                    }
+                    
+                }, 10);
+
+            },
+            supendDraw: function () {
+                clearInterval(this.intervalHandle);
+            }
+        };
+
+
+    </script>
+</body>

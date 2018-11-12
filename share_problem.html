@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>错题分享</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+  	<meta name="App-Config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+  	<meta content="yes" name="apple-mobile-web-app-capable">
+  	<meta content="yes" name="apple-touch-fullscreen">
+  	<meta content="telephone=no,email=no" name="format-detection">
+  	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+  	<link rel="stylesheet" type="text/css" href="css/share_problem.css">
+  	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue"></script>
+  	<script type="text/javascript" src='https://cdn.jsdelivr.net/npm/vue-resource@1.5.1'></script>
+	<script type="text/javascript">
+
+        (function(){
+            var currClientWidth,
+                fontValue,
+                originWidth;
+                originWidth = 750;//ui设计稿的宽度，一般750或640
+                __resize();
+
+                window.addEventListener('resize', __resize, false);
+
+                function __resize() {
+                    currClientWidth = document.documentElement.clientWidth;
+                    if (currClientWidth > 750){
+                        currClientWidth = 750;
+                    } 
+                    if (currClientWidth < 320){
+                        currClientWidth = 320;
+                    } 
+                    fontValue = currClientWidth;
+                    document.documentElement.style.fontSize = fontValue/3.75 + 'px';
+                }
+        })();
+    </script>
+</head>
+<body id="page_body">
+	<div class="page" id="body">
+		<div class="container">
+			<div class="title_box">
+				<img src="img/back.png">
+				<p>错题分享</p>
+			</div>
+			<div class="problem_box">
+				<div class="problem_title_box">
+					<img src="img/head.png">
+					<div class="problem_info_box">
+						<div class="class_title">{{clazzGroup.clazzTempName}}（{{clazzGroup.code}}）</div>
+						<div class="class_info">
+							<p class="">作业（{{clazzGroup.homeworkCount}}）</p>
+							<p class="">通知（{{clazzGroup.clazzNoticeCount}}）</p>
+							<p class="">错题（{{clazzGroup.wrongTitleCount}}）</p>
+						</div>
+					</div>
+				</div>
+				<div class="problem_video_box">
+					<div class="opacity_box">
+						<img class="start_btn" src="img/start.png"  v-on:click="openPlayPage(wrongTitle.videoTime)">
+					</div>
+					<img class="problem_pic" :src="wrongTitle.picUrl">
+					<div class="timer_box_opacity"></div>
+					<div class="timer_box">{{wrongTitle.videoTime}}</div>				
+				</div>
+				<div class="problem_subject">
+					<p>学科：{{wrongTitle.courseName}}</p>
+					<p class="problem_author">发布者：{{wrongTitle.nickname}}</p>
+				</div>
+				<div class="problem_desc">
+					<div class="problem_desc_title">{{wrongTitle.modelType}}：</div>
+					<h1></h1>
+					<div class="problem_desc_content">
+						{{wrongTitle.content}}
+					</div>
+				</div>
+				<div class="download_btn" v-on:click='showDownloadAppTip'>
+					下载APP，观看更多班级内容！
+				</div>
+			</div>
+			<div class="other_problems_box" v-show="otherWrongTitleList.length > 1">
+				<div class="other_problem_title">
+					本班错题其他错题：
+				</div>
+				<h1></h1>
+				<div class="other_problem_list">
+					<div class="other_problem_item"  v-for="otherWrong in otherWrongTitleList">
+						<div class="other_problem_image_box">
+							<div class="other_problem_image" :style="{'background-image': 'url('+otherWrong.picUrl+')'}">
+								<img v-on:click="showDownloadTip" src="img/start.png" class="other_start_btn">
+							</div>
+							<div class="other_timer_bar">{{otherWrong.videoTime}}</div>
+						</div>
+						<div class="other_problem_desc">
+							{{otherWrong.content}}
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			<div class="tip_box">
+				<div class="tip_wrapper">
+					<div class="teacher_title">
+						<img class="tip_icon" src="img/teacher_icon.png">
+						<div class="info_box">
+							<div class="info_name">【教师秘书】</div>
+							<div class="info_sologon">老师专属的随行小秘书</div>
+						</div>
+					</div>
+					<div class="tip">
+					<span class="tip_blob">致老师：</span>告别易错、难懂知识点一讲再讲，不需要一对一当面讲解，一次录制，点对点发布；由家长监督完成错题查看，易错难题一讲即懂。
+					</div>
+				</div>
+				<h1></h1>
+				<div class="tip_wrapper">
+					<div class="teacher_title">
+						<img class="tip_icon" src="img/parent_icon.png">
+						<div class="info_box">
+							<div class="info_name">【家长帮手】</div>
+							<div class="info_sologon">智慧做父母，轻松当家长</div>
+						</div>
+					</div>
+					<div class="tip">
+					<span class="tip_blob">致家长：</span>家校互通，轻松掌握孩子所学疑难点，辅导孩子，不再是难题。
+					</div>
+				</div>
+				<div class="sharp_bg"></div>
+
+			</div>
+		</div>
+		<div class="win_bg_box"   v-show="isShow"  @touchmove.prevent v-bind:style="{height: screentHeight + 'px' }">
+			<div class="win_bg"  v-bind:style="{height: screentHeight + 'px' }"></div>
+			<div class="download_app_tip" style="display:none" ref='downloadAppTip'>
+				<div class="closed_box" v-on:click="showDownloadAppTip">
+				</div>
+				<div class="win_title">提示</div>
+				<div class="tip_message">
+					<div class="class_num">245524</div>
+					<div class="tip_message">请牢记此班级号（加入班级时使用）</div>
+				</div>
+				<div class="app_type_box">
+					<div class="teacher_box">
+						<img class="teacher_icon" src="img/teacher_icon.png">
+						<div class="app_name">【教师秘书】</div>
+					</div>
+					<div class="teacher_box">
+						<img class="teacher_icon" src="img/parent_icon.png">
+						<div class="app_name">【家长帮手】</div>
+					</div>
+				</div>
+				<div class="download_btn_box">
+					<div class="download_app_btn" v-on:click="openTeacherApp">老师请下载</div>
+					<div class="download_app_btn" v-on:click="openParentApp">家长请下载</div>
+				</div>
+				<div class="download_app_bg"></div>
+			</div>
+		    <div class="download_tip" style="display:none" ref="downloadTip">
+		    	<div class="closed_box" v-on:click="showDownloadTip"></div>
+				<div class="win_title">提示</div>
+				<div class="tip_download_message">下载APP后，在班级中才能观看哦！</div>
+				<div class="tip_download_bt" v-on:click="downloadApp">下载app</div>
+				<div class="tip_bg"></div>
+		    </div>
+		</div>
+	</div>
+	
+	<script type="text/javascript">
+	
+		var page = new Vue({
+  			el: '#body',
+  			data:{
+  				isShow:false,
+  				screentHeight:0,
+  				clazzGroup:{},
+  				wrongTitle:{},
+  				otherWrongTitleList:[]
+  			},
+  			created:function(){
+  				this.getlist();
+  			},
+  			methods:{
+  				getlist:function () {
+                //请求服务器的api获取到品牌的数据列表
+                	this.$http({
+                		url:'wrong.json',
+                		method: 'POST',
+                		data:'{"params":{"identification":13371,"clazzGroupId":277}}',
+                		headers:{'Content-Type': 'application/json'}
+
+                	}).then(function (response) {
+                			var result = response.body;
+	                    	
+	                    	//处理服务器异常信息提示
+	                    	if(response.status!=200 || result.code != 200){
+	                        	alert("请求错误，请重试！");
+	                        	return ;
+	                    	}
+	                    	this.clazzGroup = result.data.clazzGroup;
+	                    	var wrongTitle = result.data.wrongTitle;
+	                    	wrongTitle.picUrl = wrongTitle.pictures[0].url;
+	                    	this.wrongTitle = result.data.wrongTitle;
+	                    	var otherWrongTitleList = result.data.otherWrongTitleList;
+	                    	for(var i = 0; i < otherWrongTitleList.length; i++){
+	                    		var temp = otherWrongTitleList[i];
+	                    		if(temp.hasPicture != 1){
+	                    			temp.picUrl='img/u2.jpg';
+	                    		}else{
+	                    			temp.picUrl = temp.pictures[0].thu_url;
+	                    		}
+	                    		otherWrongTitleList[i] = temp;
+	                    	}
+	                    	this.otherWrongTitleList = result.data.otherWrongTitleList;
+	                    	
+                	});
+                
+            	},
+            	openPlayPage:function(id,event){
+            		window.location.href='play.html';
+            	},
+  				showDownloadAppTip:function(){
+  					this.isShow = !this.isShow;
+  					var body = document.getElementById('page_body');
+  					if(this.isShow){
+  						body.style.overflow='hidden';
+  						this.$refs.downloadAppTip.style.display = 'block';
+  					}else{
+  						body.style.overflow = '';
+  						this.$refs.downloadAppTip.style.display = 'none';
+  					}
+  					this.screentHeight = window.screen.height;
+  					
+  				},
+  				showDownloadTip:function(){
+  					this.isShow = !this.isShow;
+  					var body = document.getElementById('page_body');
+  					if(this.isShow){
+  						body.style.overflow='hidden';
+  						this.$refs.downloadTip.style.display = 'block';
+  					}else{
+  						body.style.overflow = '';
+  						this.$refs.downloadTip.style.display = 'none';
+  					}
+  					this.screentHeight = window.screen.height;
+  				},
+  				downloadApp:function(){
+  					this.showDownloadTip();
+  					this.showDownloadAppTip();
+  				},
+  				openTeacherApp:function(){
+  					try {
+   						window.location.href = "openteacher://open?code=&openType=joinClazz&clazzId=";//
+					}catch(err){
+     					window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.open.teachermanager";//android 下载地址
+					}
+	
+  				},
+  				openParentApp:function(){
+  					try{
+  						window.location.href = "openparents://open?code=&openType=joinClazz&clazzId=";//
+  					}catch(err){
+						window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.open.parentmanager";//android 下载地址
+  					}
+  				}
+  			}
+  		});
+
+	</script>
+</body>
+</html>
