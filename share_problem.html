@@ -9,10 +9,11 @@
   	<meta content="telephone=no,email=no" name="format-detection">
   	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
   	<link rel="stylesheet" type="text/css" href="css/share_problem.css">
+  	<script  type="text/javascript" src="js/jszip.js"></script>
+	<script  type="text/javascript" src="js/jszip-utils.js"></script>
   	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue"></script>
   	<script type="text/javascript" src='https://cdn.jsdelivr.net/npm/vue-resource@1.5.1'></script>
-	<script type="text/javascript">
-
+  	<script type="text/javascript">
         (function(){
             var currClientWidth,
                 fontValue,
@@ -36,6 +37,7 @@
         })();
     </script>
 </head>
+
 <body id="page_body">
 	<div class="page" id="body">
 		<div class="container">
@@ -173,7 +175,8 @@
   				screentHeight:0,
   				clazzGroup:{},
   				wrongTitle:{},
-  				otherWrongTitleList:[]
+  				otherWrongTitleList:[],
+
   			},
   			created:function(){
   				this.getlist();
@@ -210,9 +213,61 @@
 	                    		otherWrongTitleList[i] = temp;
 	                    	}
 	                    	this.otherWrongTitleList = result.data.otherWrongTitleList;
+
+	                    	this.unZipData(wrongTitle.zipUrl);
 	                    	
                 	});
                 
+            	},
+            	unZipData:function(filePath){
+            		var promise = new JSZip.external.Promise(function (resolve, reject) {
+				    JSZipUtils.getBinaryContent(filePath, function (err, data){
+				            if (err) {
+				              
+				                reject(err);
+				            } else {
+				              
+				                resolve(data);
+				            }
+				        });
+				    });
+				 
+				 
+				    promise.then(JSZip.loadAsync)                  
+				        .then(function (zip) {
+				            
+				            for (var key in zip.files) {
+				                //内置函数,判断是否是文件夹
+				                if (!zip.files[key].dir) {
+									
+									var  fileName = zip.files[key].name;
+									if(fileName.indexOf(".json") != -1){
+										var drawJson = zip.file(zip.files[key].name).async("string");
+				                    	drawJson.then(function (res) {
+				                        	sessionStorage.setItem("drawJson",res);
+				                       
+				                    	});
+									}
+									if(fileName.indexOf(".amr") != -1){
+										var amrData = zip.file(zip.files[key].name).async("base64");
+				                    	amrData.then(function (res) {
+				                        	
+				                            sessionStorage.setItem("amrData",res);
+				                    	});
+									}
+								
+				                }
+				            }
+				        })
+				        .then(
+				            function success(data) {                 
+				            }, function error(e) {
+				            });
+				    var i = 0;
+				    setInterval(function () {
+				        //console.log("等待了："+i+"s");
+				        i++;
+				    }, 1000);
             	},
             	openPlayPage:function(id,event){
             		window.location.href='play.html';
@@ -265,5 +320,6 @@
   		});
 
 	</script>
+	
 </body>
 </html>

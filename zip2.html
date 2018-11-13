@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="js/jszip.js"></script>
+    
+    <script src="js/jszip-utils.js"></script>
+	
+</head>
+<body>
+ 
+<div id="jszip_utils">
+
+</div>
+ 
+<script>
+    var promise = new JSZip.external.Promise(function (resolve, reject) {
+        JSZipUtils.getBinaryContent('http://localhost:8080/share/405a266e6dbc4d099ab33aff48912afc.zip', function (err, data) {
+            if (err) {
+                console.log(err);
+                reject(err);
+            } else {
+                console.log(data);
+                resolve(data);
+            }
+        });
+    });
+ 
+ 
+    promise.then(JSZip.loadAsync)                  
+        .then(function (zip) {
+            console.log(zip);
+            for (var key in zip.files) {
+                //内置函数,判断是否是文件夹
+                if (!zip.files[key].dir) {
+
+					
+					var  fileName = zip.files[key].name;
+					if(fileName == 'draw.json'){
+						
+						var drawJson = zip.file(zip.files[key].name).async("string");
+                    	drawJson.then(function (res) {
+                        	console.log("drawJson"+res);
+                       
+                    	});
+					}
+					if(fileName == '154657811.amr'){
+						var armData = zip.file(zip.files[key].name).async("base64");
+                    	armData.then(function (res) {
+                        	console.log("154657811.amr:"+res);
+                       
+                    	});
+					}
+					var file = zip.file(zip.files[key].name);
+
+					/*
+                    var base = zip.file(zip.files[key].name).async("base64");
+                    base.then(function (res) {
+                        console.log(res);
+                       
+                    })*/
+                }
+            }
+        })
+        .then(
+            function success(data) {                 
+            }, function error(e) {
+            });
+    var i = 0;
+    setInterval(function () {
+        //console.log("等待了："+i+"s");
+        i++;
+    }, 1000);
+</script>
+</body>
+</html>

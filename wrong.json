@@ -60,7 +60,7 @@
         "wrongTitle": {
             "content": "这道题很重点,希望大家都记住，考的发水粉经常能考到，数学应用题语文英语作地方",
             "hasPicture": 1,
-            "zipUrl": "http://img.openonline.com.cn/teacher/static/wrongtitle/zip/405a266e6dbc4d099ab33aff48912afc.zip",
+            "zipUrl": "http://localhost:8080/share/ddb7acf5ffc541409617c5597bcb8c49.zip",
             "likeCount": 0,
             "commentCount": 0,
             "videoTime": "00:07",

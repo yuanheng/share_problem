@@ -484,6 +484,6 @@ h1{
 .tip_bg{
 	background-image: url(../img/win_bg.png);
 	height: 0.33rem;
-	margin-top: -0.1rem;
+	
 	background-size: cover;
 }

@@ -135,15 +135,15 @@ html,body {
 	margin-top:0.395rem;
 }
 .play_canvas{
-	width: 3.96rem;
-	height: 2.895rem;
+	
 	
 }
 
 .play_canvas  canvas{
-	width: 3.96rem;
-	height: 2.895rem;
-	background-size:cover;
+	
+	background-size:contain;
+	background-repeat: no-repeat;
+	background-position: center;
 	display: block;
 }
 
@@ -309,7 +309,7 @@ html,body {
 .tip_bg{
 	background-image: url(../img/win_bg.png);
 	height: 0.33rem;
-	margin-top: -0.1rem;
+	
 	background-size: cover;
 }
 .tip_message_p{
@@ -364,6 +364,67 @@ html,body {
 	background: #FFF;
 }
 
+
+
+
+
+
+.download_tip_shu{
+	width: 6.29rem;
+	height: 3.56rem;
+	background: #FFFFFF;
+	position: relative;
+	
+	box-shadow: 0.128rem 0.128rem 0 0 rgba(6,202,150,0.14);
+	border-radius: 0.128rem;
+	overflow-x: hidden;
+}
+
+.win_title_shu{
+	width: 6.30rem;
+	font-size: 0.311rem;
+	font-family: PingFangSC-Medium;
+	
+	color: #FFFFFF;
+	text-align: center;
+	line-height: 0.915rem;
+	background-image: linear-gradient(-270deg, #27CAAD 1%, #5BCA6F 100%);
+	
+	height: 0.915rem;
+	
+	
+	border-radius: 0.128rem 0.128rem 0 0;
+
+}
+
+
+.download_app_bg_shu{
+	background-image: url(../img/win_bg.png);
+	height: 0.6rem;
+	margin-top:-0.22rem; 
+	background-size: cover;
+	border-radius: 0 0 0.08rem 0.08rem;
+}
+.tip_download_message_shu,.tip_download_message_play_shu{
+	font-family: PingFangSC-Medium;
+	font-size: 0.2745rem;
+	color: #666666;
+	letter-spacing: 0;
+	text-align: center;
+	margin-top: 0.8rem;
+	
+
+}
+
+.tip_bg_shu{
+	background-image: url(../img/win_bg.png);
+	height: 0.6rem;
+	
+	background-size: cover;
+	position: absolute;
+    bottom: 0;
+    width: 100%;
+}
 
 
 
