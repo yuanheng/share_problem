@@ -170,6 +170,7 @@
     var pauseTimeArray=[];
     var startPauseTime = 0;
     var stopPauseTime = 0;
+    var showPlayTimer;
 
       //初始化
     RongIMLib.RongIMVoice.init();
@@ -249,12 +250,14 @@
                 }
 
                 this.playing = true;
-                console.info("pauseTime:"+pauseTimeArray.length);
+               
+                showPlayTimer = setInterval(this.showTime,50);
             },
             stopPlay:function(){
                 this.playing = false;
                 startPauseTime = (new Date()).getTime();
 
+                this.stopShowTime();
             },
             play:function(){
 
@@ -324,27 +327,23 @@
 
             },
             stopShowTime:function(){
-                clearInterval(this.showTimeSetIntervel);
+                clearInterval(showPlayTimer);
+
             },
             showTime:function(){
                 var self = this;
-
-                self.showTimeSetIntervel  = setInterval(function(){
-                    var audio = document.getElementById('myvideo');
-                    var playTime = audio.currentTime;
-
-                    var minute=Math.floor(playTime/60%60);
-                    var second=Math.floor(playTime%60);
-                    if(minute<10){
+                playingTime = playingTime+50;
+                var playTime = playingTime / 1000;
+                var minute=Math.floor(playTime/60%60);
+                var second=Math.floor(playTime%60);
+                if(minute<10){
                         minute = "0" + minute;
-                    }
-                    if(second<10){
+                }
+                if(second<10){
                       second = "0" + second;
-                    }
-                    self.playTimeShow = minute+":"+second;
+                }
 
-
-                },20);
+                self.playTimeShow = minute+":"+second;
 
             },
             playMusic:function(){
