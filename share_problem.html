@@ -176,18 +176,25 @@
   				clazzGroup:{},
   				wrongTitle:{},
   				otherWrongTitleList:[],
+  				clazzId:0,
+  				wrongTitleId:0
 
   			},
   			created:function(){
   				this.getlist();
+  				var classId = this.getParam('clazzId');
+  				console.info("classId:"+classId);
+  				var wrongtitleId = this.getParam('wrongtitleId');
+  				console.log('wrongTitleId:'+wrongtitleId);
   			},
   			methods:{
   				getlist:function () {
                 //请求服务器的api获取到品牌的数据列表
+                	
                 	this.$http({
                 		url:'wrong.json',
                 		method: 'POST',
-                		data:'{"params":{"identification":13371,"clazzGroupId":277}}',
+                		data:'{"params":{"wrongTitleId":'+this.wrongTitleId+',"clazzId":'+this.clazzId+'}}',
                 		headers:{'Content-Type': 'application/json'}
 
                 	}).then(function (response) {
@@ -315,11 +322,19 @@
   					}catch(err){
 						window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.open.parentmanager";//android 下载地址
   					}
+  				},
+  				getParam:function(paramName) { 
+    				paramValue = "", isFound = !1; 
+    				if (window.location.search.indexOf("?") == 0 && window.location.search.indexOf("=") > 1) { 
+        				arrSource = unescape(window.location.search).substring(1, window.location.search.length).split("&"), i = 0; 
+        				while (i < arrSource.length && !isFound) arrSource[i].indexOf("=") > 0 && arrSource[i].split("=")[0].toLowerCase() == paramName.toLowerCase() && (paramValue = arrSource[i].split("=")[1], isFound = !0), i++ 
+    					} 
+    					return paramValue == "" && (paramValue = null), paramValue 
+					} 
   				}
-  			}
   		});
 
 	</script>
-	
+
 </body>
 </html>

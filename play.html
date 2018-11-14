@@ -56,19 +56,24 @@
                 <img class="play_back" v-on:click='goBack' style="transform: rotate(90deg);" src="img/play_back.png"/>
                 <div class="play_back_txt">返回</div>
             </div>
+
             <div class="play_start_box">
-                <img class="play_start" style="transform: rotate(90deg);" v-on:click="play" :src="playBtnImg"/>
+
+                <img v-show='playing' class="play" style="transform: rotate(90deg);" v-on:click="stopPlay" src="img/play_start.png"/>
+
+                <img v-show='!playing'  class="play" style="transform: rotate(90deg);" v-on:click="startPlay" src="img/play_stop.png"/>
+
                 <div class="play_back_txt">{{playTimeShow}}</div>
             </div>
             
           </div>   
           <div class="play_canvas_box">
               <div class="play_canvas">
-                  <canvas id='canvas'  width="510" height="320" class="" style="background-image:url('http://img.openonline.com.cn/teacher/static/wrongtitle/d7bdb36f4a744bd99ca85effbe7711a4.jpg')" />
+                  <canvas id='canvas'  width="510" height="320" class="" style="background-image:url('source.jpg')"/>
               </div>
           </div>
           <div class="play_operator_box">
-              
+
               <div class="play_item_box favorite_margin_top">
                   <img  v-on:click='downloadApp' src="img/favorite.png"/>
                   <div class="play_operator_num">18</div>
@@ -85,9 +90,9 @@
           </div>
 
           <audio id="myvideo"  preload='load'  controls="controls" hidden="hidden"></audio>
-        
+
         </div>
-   
+
         <div id="win_bg" class="win_bg_box" v-show='isShow' style="display:none">
             <div class="win_bg"></div>
             <div class="download_app_tip" v-show='isShowDownladAppWin' style="display:none" ref='downloadAppTip'>
@@ -127,10 +132,10 @@
                   <div class="btn_box_4">
                       <div class="download_paly_4" v-on:click='goOnPlay'>继续播放</div>
                   </div>
-                  
+
                   <div class="tip_bg"></div>
                 </div>
-            </div> 
+            </div>
             <div class="download_tip" v-show='isShowWin4' style="display:none"  ref="downloadTip">
                 <div class="closed_box" v-on:click="showWin4"></div>
                 <div class="win_title">提示</div>
@@ -139,15 +144,33 @@
                 <div class="tip_bg"></div>
             </div>
             <div class="download_tip_shu" v-show='isShowErrorWin' style="display:none"  ref="downloadTip">
-                
+
                 <div class="win_title_shu">提示</div>
                 <div class="tip_download_message_shu">仅支持横屏播放哦！</div>
-                
+
                 <div class="tip_bg_shu"></div>
             </div>
         </div>
     </div>
     <script type="text/javascript">
+
+
+    var drawData =JSON.parse(sessionStorage.getItem("drawJson"));
+    var testcanvas ;
+    var testcontext;
+    var playingTime = 0;
+    var startPlayTime=0;
+    var lineIndex = 0;
+    var pointIndex = 0;
+    var currentLineIndex = 0;
+    var currentPointIndex = 0;
+
+    var timeOutArray=[]
+
+    var pauseTimeArray=[];
+    var startPauseTime = 0;
+    var stopPauseTime = 0;
+
       //初始化
     RongIMLib.RongIMVoice.init();
     var page = new Vue({
@@ -169,1652 +192,22 @@
           showNumWin:0,
           prePointDealTime:0,
           playClickNum:0,
-         
+
         },
-        created:function(){ 
+        created:function(){
           this.setPlayUrl();
           this.getData();
           this.checkScreen();
           window.addEventListener('resize', this.checkScreen, false);
-          
+
+
         },
         mounted:function(){
-          
+
         },
         methods:{
             getData:function(){
-              
-      var drawData=[ {
-    "r" : 0,
-    "o" : "6.746",
-    "pointbeans" : [
-      {
-        "o" : "6.746",
-        "p" : {
-          "x" : 130,
-          "y" : 11
-        }
-      },
-      {
-        "o" : "6.861",
-        "p" : {
-          "x" : 126,
-          "y" : 15
-        }
-      },
-      {
-        "o" : "6.878",
-        "p" : {
-          "x" : 125,
-          "y" : 17
-        }
-      },
-      {
-        "o" : "6.894",
-        "p" : {
-          "x" : 123,
-          "y" : 19
-        }
-      },
-      {
-        "o" : "6.911",
-        "p" : {
-          "x" : 121,
-          "y" : 22
-        }
-      },
-      {
-        "o" : "6.928",
-        "p" : {
-          "x" : 118,
-          "y" : 25
-        }
-      },
-      {
-        "o" : "6.945",
-        "p" : {
-          "x" : 115,
-          "y" : 28
-        }
-      },
-      {
-        "o" : "6.963",
-        "p" : {
-          "x" : 112,
-          "y" : 31
-        }
-      },
-      {
-        "o" : "6.978",
-        "p" : {
-          "x" : 109,
-          "y" : 34
-        }
-      },
-      {
-        "o" : "6.994",
-        "p" : {
-          "x" : 107,
-          "y" : 38
-        }
-      },
-      {
-        "o" : "7.012",
-        "p" : {
-          "x" : 104,
-          "y" : 42
-        }
-      },
-      {
-        "o" : "7.028",
-        "p" : {
-          "x" : 101,
-          "y" : 46
-        }
-      },
-      {
-        "o" : "7.044",
-        "p" : {
-          "x" : 98,
-          "y" : 50
-        }
-      },
-      {
-        "o" : "7.061",
-        "p" : {
-          "x" : 96,
-          "y" : 55
-        }
-      },
-      {
-        "o" : "7.078",
-        "p" : {
-          "x" : 94,
-          "y" : 59
-        }
-      },
-      {
-        "o" : "7.095",
-        "p" : {
-          "x" : 92,
-          "y" : 63
-        }
-      },
-      {
-        "o" : "7.112",
-        "p" : {
-          "x" : 90,
-          "y" : 68
-        }
-      },
-      {
-        "o" : "7.128",
-        "p" : {
-          "x" : 88,
-          "y" : 72
-        }
-      },
-      {
-        "o" : "7.144",
-        "p" : {
-          "x" : 86,
-          "y" : 76
-        }
-      },
-      {
-        "o" : "7.161",
-        "p" : {
-          "x" : 85,
-          "y" : 80
-        }
-      },
-      {
-        "o" : "7.178",
-        "p" : {
-          "x" : 84,
-          "y" : 84
-        }
-      },
-      {
-        "o" : "7.195",
-        "p" : {
-          "x" : 82,
-          "y" : 89
-        }
-      },
-      {
-        "o" : "7.212",
-        "p" : {
-          "x" : 81,
-          "y" : 93
-        }
-      },
-      {
-        "o" : "7.228",
-        "p" : {
-          "x" : 80,
-          "y" : 97
-        }
-      },
-      {
-        "o" : "7.244",
-        "p" : {
-          "x" : 79,
-          "y" : 102
-        }
-      },
-      {
-        "o" : "7.262",
-        "p" : {
-          "x" : 78,
-          "y" : 107
-        }
-      },
-      {
-        "o" : "7.278",
-        "p" : {
-          "x" : 77,
-          "y" : 111
-        }
-      },
-      {
-        "o" : "7.295",
-        "p" : {
-          "x" : 75,
-          "y" : 116
-        }
-      },
-      {
-        "o" : "7.311",
-        "p" : {
-          "x" : 74,
-          "y" : 121
-        }
-      },
-      {
-        "o" : "7.328",
-        "p" : {
-          "x" : 73,
-          "y" : 127
-        }
-      },
-      {
-        "o" : "7.344",
-        "p" : {
-          "x" : 72,
-          "y" : 132
-        }
-      },
-      {
-        "o" : "7.362",
-        "p" : {
-          "x" : 71,
-          "y" : 137
-        }
-      },
-      {
-        "o" : "7.378",
-        "p" : {
-          "x" : 70,
-          "y" : 141
-        }
-      },
-      {
-        "o" : "7.394",
-        "p" : {
-          "x" : 69,
-          "y" : 145
-        }
-      },
-      {
-        "o" : "7.412",
-        "p" : {
-          "x" : 69,
-          "y" : 147
-        }
-      },
-      {
-        "o" : "7.428",
-        "p" : {
-          "x" : 68,
-          "y" : 149
-        }
-      },
-      {
-        "o" : "7.494",
-        "p" : {
-          "x" : 68,
-          "y" : 148
-        }
-      },
-      {
-        "o" : "7.494",
-        "p" : {
-          "x" : 68,
-          "y" : 148
-        }
-      }
-    ]
-  },
-  {
-    "r" : 0,
-    "o" : "7.763",
-    "pointbeans" : [
-      {
-        "o" : "7.763",
-        "p" : {
-          "x" : 107,
-          "y" : 44
-        }
-      },
-      {
-        "o" : "7.846",
-        "p" : {
-          "x" : 114,
-          "y" : 54
-        }
-      },
-      {
-        "o" : "7.862",
-        "p" : {
-          "x" : 117,
-          "y" : 56
-        }
-      },
-      {
-        "o" : "7.878",
-        "p" : {
-          "x" : 122,
-          "y" : 59
-        }
-      },
-      {
-        "o" : "7.894",
-        "p" : {
-          "x" : 129,
-          "y" : 61
-        }
-      },
-      {
-        "o" : "7.912",
-        "p" : {
-          "x" : 137,
-          "y" : 63
-        }
-      },
-      {
-        "o" : "7.928",
-        "p" : {
-          "x" : 146,
-          "y" : 66
-        }
-      },
-      {
-        "o" : "7.944",
-        "p" : {
-          "x" : 159,
-          "y" : 67
-        }
-      },
-      {
-        "o" : "7.962",
-        "p" : {
-          "x" : 171,
-          "y" : 68
-        }
-      },
-      {
-        "o" : "7.979",
-        "p" : {
-          "x" : 185,
-          "y" : 69
-        }
-      },
-      {
-        "o" : "7.994",
-        "p" : {
-          "x" : 201,
-          "y" : 70
-        }
-      },
-      {
-        "o" : "8.011",
-        "p" : {
-          "x" : 213,
-          "y" : 71
-        }
-      },
-      {
-        "o" : "8.028",
-        "p" : {
-          "x" : 225,
-          "y" : 73
-        }
-      },
-      {
-        "o" : "8.045",
-        "p" : {
-          "x" : 235,
-          "y" : 73
-        }
-      },
-      {
-        "o" : "8.061",
-        "p" : {
-          "x" : 244,
-          "y" : 74
-        }
-      },
-      {
-        "o" : "8.078",
-        "p" : {
-          "x" : 252,
-          "y" : 74
-        }
-      },
-      {
-        "o" : "8.095",
-        "p" : {
-          "x" : 259,
-          "y" : 74
-        }
-      },
-      {
-        "o" : "8.111",
-        "p" : {
-          "x" : 266,
-          "y" : 74
-        }
-      },
-      {
-        "o" : "8.128",
-        "p" : {
-          "x" : 273,
-          "y" : 74
-        }
-      },
-      {
-        "o" : "8.145",
-        "p" : {
-          "x" : 279,
-          "y" : 73
-        }
-      },
-      {
-        "o" : "8.162",
-        "p" : {
-          "x" : 285,
-          "y" : 73
-        }
-      },
-      {
-        "o" : "8.178",
-        "p" : {
-          "x" : 290,
-          "y" : 71
-        }
-      },
-      {
-        "o" : "8.194",
-        "p" : {
-          "x" : 295,
-          "y" : 70
-        }
-      },
-      {
-        "o" : "8.211",
-        "p" : {
-          "x" : 298,
-          "y" : 70
-        }
-      },
-      {
-        "o" : "8.228",
-        "p" : {
-          "x" : 301,
-          "y" : 69
-        }
-      },
-      {
-        "o" : "8.244",
-        "p" : {
-          "x" : 302,
-          "y" : 69
-        }
-      },
-      {
-        "o" : "8.262",
-        "p" : {
-          "x" : 305,
-          "y" : 67
-        }
-      },
-      {
-        "o" : "8.262",
-        "p" : {
-          "x" : 305,
-          "y" : 67
-        }
-      },
-      {
-        "o" : "8.262",
-        "p" : {
-          "x" : 305,
-          "y" : 67
-        }
-      }
-    ]
-  },
-  {
-    "r" : 0,
-    "o" : "8.714",
-    "pointbeans" : [
-      {
-        "o" : "8.714",
-        "p" : {
-          "x" : 121,
-          "y" : 92
-        }
-      },
-      {
-        "o" : "8.762",
-        "p" : {
-          "x" : 123,
-          "y" : 96
-        }
-      },
-      {
-        "o" : "8.778",
-        "p" : {
-          "x" : 123,
-          "y" : 101
-        }
-      },
-      {
-        "o" : "8.795",
-        "p" : {
-          "x" : 124,
-          "y" : 108
-        }
-      },
-      {
-        "o" : "8.811",
-        "p" : {
-          "x" : 124,
-          "y" : 115
-        }
-      },
-      {
-        "o" : "8.828",
-        "p" : {
-          "x" : 126,
-          "y" : 124
-        }
-      },
-      {
-        "o" : "8.845",
-        "p" : {
-          "x" : 127,
-          "y" : 131
-        }
-      },
-      {
-        "o" : "8.861",
-        "p" : {
-          "x" : 128,
-          "y" : 138
-        }
-      },
-      {
-        "o" : "8.878",
-        "p" : {
-          "x" : 129,
-          "y" : 146
-        }
-      },
-      {
-        "o" : "8.894",
-        "p" : {
-          "x" : 129,
-          "y" : 153
-        }
-      },
-      {
-        "o" : "8.910",
-        "p" : {
-          "x" : 130,
-          "y" : 159
-        }
-      },
-      {
-        "o" : "8.928",
-        "p" : {
-          "x" : 130,
-          "y" : 165
-        }
-      },
-      {
-        "o" : "8.944",
-        "p" : {
-          "x" : 131,
-          "y" : 170
-        }
-      },
-      {
-        "o" : "8.960",
-        "p" : {
-          "x" : 132,
-          "y" : 176
-        }
-      },
-      {
-        "o" : "8.978",
-        "p" : {
-          "x" : 133,
-          "y" : 180
-        }
-      },
-      {
-        "o" : "8.994",
-        "p" : {
-          "x" : 134,
-          "y" : 184
-        }
-      },
-      {
-        "o" : "9.010",
-        "p" : {
-          "x" : 135,
-          "y" : 187
-        }
-      },
-      {
-        "o" : "9.028",
-        "p" : {
-          "x" : 136,
-          "y" : 189
-        }
-      },
-      {
-        "o" : "9.044",
-        "p" : {
-          "x" : 137,
-          "y" : 189
-        }
-      },
-      {
-        "o" : "9.060",
-        "p" : {
-          "x" : 138,
-          "y" : 189
-        }
-      },
-      {
-        "o" : "9.078",
-        "p" : {
-          "x" : 140,
-          "y" : 189
-        }
-      },
-      {
-        "o" : "9.094",
-        "p" : {
-          "x" : 142,
-          "y" : 188
-        }
-      },
-      {
-        "o" : "9.110",
-        "p" : {
-          "x" : 146,
-          "y" : 183
-        }
-      },
-      {
-        "o" : "9.128",
-        "p" : {
-          "x" : 154,
-          "y" : 175
-        }
-      },
-      {
-        "o" : "9.144",
-        "p" : {
-          "x" : 162,
-          "y" : 166
-        }
-      },
-      {
-        "o" : "9.160",
-        "p" : {
-          "x" : 171,
-          "y" : 156
-        }
-      },
-      {
-        "o" : "9.178",
-        "p" : {
-          "x" : 182,
-          "y" : 147
-        }
-      },
-      {
-        "o" : "9.194",
-        "p" : {
-          "x" : 193,
-          "y" : 139
-        }
-      },
-      {
-        "o" : "9.210",
-        "p" : {
-          "x" : 202,
-          "y" : 132
-        }
-      },
-      {
-        "o" : "9.228",
-        "p" : {
-          "x" : 212,
-          "y" : 125
-        }
-      },
-      {
-        "o" : "9.244",
-        "p" : {
-          "x" : 219,
-          "y" : 120
-        }
-      },
-      {
-        "o" : "9.260",
-        "p" : {
-          "x" : 226,
-          "y" : 115
-        }
-      },
-      {
-        "o" : "9.278",
-        "p" : {
-          "x" : 231,
-          "y" : 112
-        }
-      },
-      {
-        "o" : "9.294",
-        "p" : {
-          "x" : 236,
-          "y" : 110
-        }
-      },
-      {
-        "o" : "9.310",
-        "p" : {
-          "x" : 239,
-          "y" : 109
-        }
-      },
-      {
-        "o" : "9.328",
-        "p" : {
-          "x" : 240,
-          "y" : 108
-        }
-      },
-      {
-        "o" : "9.344",
-        "p" : {
-          "x" : 240,
-          "y" : 107
-        }
-      },
-      {
-        "o" : "9.411",
-        "p" : {
-          "x" : 240,
-          "y" : 108
-        }
-      },
-      {
-        "o" : "9.428",
-        "p" : {
-          "x" : 240,
-          "y" : 109
-        }
-      },
-      {
-        "o" : "9.443",
-        "p" : {
-          "x" : 242,
-          "y" : 111
-        }
-      },
-      {
-        "o" : "9.443",
-        "p" : {
-          "x" : 242,
-          "y" : 111
-        }
-      }
-    ]
-  },
-  {
-    "r" : 0,
-    "o" : "9.982",
-    "pointbeans" : [
-      {
-        "o" : "9.982",
-        "p" : {
-          "x" : 271,
-          "y" : 128
-        }
-      },
-      {
-        "o" : "10.011",
-        "p" : {
-          "x" : 271,
-          "y" : 128
-        }
-      },
-      {
-        "o" : "10.029",
-        "p" : {
-          "x" : 272,
-          "y" : 133
-        }
-      },
-      {
-        "o" : "10.045",
-        "p" : {
-          "x" : 273,
-          "y" : 140
-        }
-      },
-      {
-        "o" : "10.061",
-        "p" : {
-          "x" : 275,
-          "y" : 147
-        }
-      },
-      {
-        "o" : "10.079",
-        "p" : {
-          "x" : 278,
-          "y" : 156
-        }
-      },
-      {
-        "o" : "10.095",
-        "p" : {
-          "x" : 282,
-          "y" : 166
-        }
-      },
-      {
-        "o" : "10.112",
-        "p" : {
-          "x" : 284,
-          "y" : 174
-        }
-      },
-      {
-        "o" : "10.129",
-        "p" : {
-          "x" : 286,
-          "y" : 180
-        }
-      },
-      {
-        "o" : "10.146",
-        "p" : {
-          "x" : 288,
-          "y" : 187
-        }
-      },
-      {
-        "o" : "10.162",
-        "p" : {
-          "x" : 290,
-          "y" : 192
-        }
-      },
-      {
-        "o" : "10.178",
-        "p" : {
-          "x" : 291,
-          "y" : 196
-        }
-      },
-      {
-        "o" : "10.195",
-        "p" : {
-          "x" : 291,
-          "y" : 198
-        }
-      },
-      {
-        "o" : "10.212",
-        "p" : {
-          "x" : 292,
-          "y" : 200
-        }
-      },
-      {
-        "o" : "10.229",
-        "p" : {
-          "x" : 292,
-          "y" : 200
-        }
-      },
-      {
-        "o" : "10.262",
-        "p" : {
-          "x" : 293,
-          "y" : 200
-        }
-      },
-      {
-        "o" : "10.278",
-        "p" : {
-          "x" : 293,
-          "y" : 200
-        }
-      },
-      {
-        "o" : "10.295",
-        "p" : {
-          "x" : 293,
-          "y" : 200
-        }
-      },
-      {
-        "o" : "10.312",
-        "p" : {
-          "x" : 294,
-          "y" : 200
-        }
-      },
-      {
-        "o" : "10.328",
-        "p" : {
-          "x" : 296,
-          "y" : 197
-        }
-      },
-      {
-        "o" : "10.345",
-        "p" : {
-          "x" : 300,
-          "y" : 192
-        }
-      },
-      {
-        "o" : "10.362",
-        "p" : {
-          "x" : 305,
-          "y" : 186
-        }
-      },
-      {
-        "o" : "10.378",
-        "p" : {
-          "x" : 313,
-          "y" : 177
-        }
-      },
-      {
-        "o" : "10.395",
-        "p" : {
-          "x" : 322,
-          "y" : 169
-        }
-      },
-      {
-        "o" : "10.412",
-        "p" : {
-          "x" : 331,
-          "y" : 159
-        }
-      },
-      {
-        "o" : "10.428",
-        "p" : {
-          "x" : 340,
-          "y" : 151
-        }
-      },
-      {
-        "o" : "10.445",
-        "p" : {
-          "x" : 347,
-          "y" : 144
-        }
-      },
-      {
-        "o" : "10.462",
-        "p" : {
-          "x" : 353,
-          "y" : 138
-        }
-      },
-      {
-        "o" : "10.478",
-        "p" : {
-          "x" : 358,
-          "y" : 132
-        }
-      },
-      {
-        "o" : "10.495",
-        "p" : {
-          "x" : 361,
-          "y" : 128
-        }
-      },
-      {
-        "o" : "10.512",
-        "p" : {
-          "x" : 363,
-          "y" : 126
-        }
-      },
-      {
-        "o" : "10.528",
-        "p" : {
-          "x" : 363,
-          "y" : 125
-        }
-      },
-      {
-        "o" : "10.545",
-        "p" : {
-          "x" : 364,
-          "y" : 124
-        }
-      },
-      {
-        "o" : "10.612",
-        "p" : {
-          "x" : 364,
-          "y" : 125
-        }
-      },
-      {
-        "o" : "10.629",
-        "p" : {
-          "x" : 366,
-          "y" : 128
-        }
-      }
-    ]
-  },
-  {
-    "r" : 0,
-    "o" : "11.014",
-    "pointbeans" : [
-      {
-        "o" : "11.014",
-        "p" : {
-          "x" : 385,
-          "y" : 167
-        }
-      },
-      {
-        "o" : "11.044",
-        "p" : {
-          "x" : 390,
-          "y" : 170
-        }
-      },
-      {
-        "o" : "11.062",
-        "p" : {
-          "x" : 394,
-          "y" : 174
-        }
-      },
-      {
-        "o" : "11.079",
-        "p" : {
-          "x" : 398,
-          "y" : 178
-        }
-      },
-      {
-        "o" : "11.095",
-        "p" : {
-          "x" : 402,
-          "y" : 183
-        }
-      },
-      {
-        "o" : "11.112",
-        "p" : {
-          "x" : 405,
-          "y" : 187
-        }
-      },
-      {
-        "o" : "11.129",
-        "p" : {
-          "x" : 409,
-          "y" : 191
-        }
-      },
-      {
-        "o" : "11.145",
-        "p" : {
-          "x" : 413,
-          "y" : 195
-        }
-      },
-      {
-        "o" : "11.163",
-        "p" : {
-          "x" : 417,
-          "y" : 199
-        }
-      },
-      {
-        "o" : "11.179",
-        "p" : {
-          "x" : 421,
-          "y" : 204
-        }
-      },
-      {
-        "o" : "11.195",
-        "p" : {
-          "x" : 425,
-          "y" : 208
-        }
-      },
-      {
-        "o" : "11.213",
-        "p" : {
-          "x" : 428,
-          "y" : 212
-        }
-      },
-      {
-        "o" : "11.229",
-        "p" : {
-          "x" : 431,
-          "y" : 216
-        }
-      },
-      {
-        "o" : "11.244",
-        "p" : {
-          "x" : 435,
-          "y" : 220
-        }
-      },
-      {
-        "o" : "11.261",
-        "p" : {
-          "x" : 437,
-          "y" : 222
-        }
-      },
-      {
-        "o" : "11.261",
-        "p" : {
-          "x" : 437,
-          "y" : 222
-        }
-      },
-      {
-        "o" : "11.261",
-        "p" : {
-          "x" : 437,
-          "y" : 222
-        }
-      }
-    ]
-  },
-  {
-    "r" : 0,
-    "o" : "11.464",
-    "pointbeans" : [
-      {
-        "o" : "11.464",
-        "p" : {
-          "x" : 437,
-          "y" : 156
-        }
-      },
-      {
-        "o" : "11.494",
-        "p" : {
-          "x" : 437,
-          "y" : 156
-        }
-      },
-      {
-        "o" : "11.511",
-        "p" : {
-          "x" : 432,
-          "y" : 163
-        }
-      },
-      {
-        "o" : "11.528",
-        "p" : {
-          "x" : 428,
-          "y" : 169
-        }
-      },
-      {
-        "o" : "11.544",
-        "p" : {
-          "x" : 417,
-          "y" : 181
-        }
-      },
-      {
-        "o" : "11.561",
-        "p" : {
-          "x" : 402,
-          "y" : 194
-        }
-      },
-      {
-        "o" : "11.578",
-        "p" : {
-          "x" : 385,
-          "y" : 206
-        }
-      },
-      {
-        "o" : "11.594",
-        "p" : {
-          "x" : 369,
-          "y" : 217
-        }
-      },
-      {
-        "o" : "11.612",
-        "p" : {
-          "x" : 358,
-          "y" : 225
-        }
-      },
-      {
-        "o" : "11.628",
-        "p" : {
-          "x" : 351,
-          "y" : 230
-        }
-      },
-      {
-        "o" : "11.645",
-        "p" : {
-          "x" : 347,
-          "y" : 234
-        }
-      },
-      {
-        "o" : "11.662",
-        "p" : {
-          "x" : 344,
-          "y" : 236
-        }
-      },
-      {
-        "o" : "11.679",
-        "p" : {
-          "x" : 343,
-          "y" : 237
-        }
-      },
-      {
-        "o" : "11.694",
-        "p" : {
-          "x" : 341,
-          "y" : 239
-        }
-      }
-    ]
-  },
-  {
-    "r" : 0,
-    "o" : "12.745",
-    "pointbeans" : [
-      {
-        "o" : "12.745",
-        "p" : {
-          "x" : 90,
-          "y" : 233
-        }
-      },
-      {
-        "o" : "12.761",
-        "p" : {
-          "x" : 99,
-          "y" : 232
-        }
-      },
-      {
-        "o" : "12.778",
-        "p" : {
-          "x" : 112,
-          "y" : 232
-        }
-      },
-      {
-        "o" : "12.795",
-        "p" : {
-          "x" : 125,
-          "y" : 232
-        }
-      },
-      {
-        "o" : "12.811",
-        "p" : {
-          "x" : 142,
-          "y" : 232
-        }
-      },
-      {
-        "o" : "12.828",
-        "p" : {
-          "x" : 161,
-          "y" : 233
-        }
-      },
-      {
-        "o" : "12.845",
-        "p" : {
-          "x" : 181,
-          "y" : 234
-        }
-      },
-      {
-        "o" : "12.861",
-        "p" : {
-          "x" : 201,
-          "y" : 236
-        }
-      },
-      {
-        "o" : "12.878",
-        "p" : {
-          "x" : 220,
-          "y" : 238
-        }
-      },
-      {
-        "o" : "12.895",
-        "p" : {
-          "x" : 240,
-          "y" : 240
-        }
-      },
-      {
-        "o" : "12.911",
-        "p" : {
-          "x" : 264,
-          "y" : 243
-        }
-      },
-      {
-        "o" : "12.928",
-        "p" : {
-          "x" : 287,
-          "y" : 245
-        }
-      },
-      {
-        "o" : "12.945",
-        "p" : {
-          "x" : 315,
-          "y" : 247
-        }
-      },
-      {
-        "o" : "12.961",
-        "p" : {
-          "x" : 342,
-          "y" : 249
-        }
-      },
-      {
-        "o" : "12.978",
-        "p" : {
-          "x" : 367,
-          "y" : 251
-        }
-      },
-      {
-        "o" : "12.995",
-        "p" : {
-          "x" : 391,
-          "y" : 254
-        }
-      },
-      {
-        "o" : "13.011",
-        "p" : {
-          "x" : 413,
-          "y" : 257
-        }
-      },
-      {
-        "o" : "13.028",
-        "p" : {
-          "x" : 430,
-          "y" : 259
-        }
-      },
-      {
-        "o" : "13.045",
-        "p" : {
-          "x" : 444,
-          "y" : 261
-        }
-      },
-      {
-        "o" : "13.061",
-        "p" : {
-          "x" : 455,
-          "y" : 262
-        }
-      },
-      {
-        "o" : "13.078",
-        "p" : {
-          "x" : 462,
-          "y" : 262
-        }
-      },
-      {
-        "o" : "13.095",
-        "p" : {
-          "x" : 466,
-          "y" : 263
-        }
-      },
-      {
-        "o" : "13.110",
-        "p" : {
-          "x" : 468,
-          "y" : 265
-        }
-      }
-    ]
-  },
-  {
-    "r" : 0,
-    "o" : "13.383",
-    "pointbeans" : [
-      {
-        "o" : "13.383",
-        "p" : {
-          "x" : 74,
-          "y" : 258
-        }
-      },
-      {
-        "o" : "13.411",
-        "p" : {
-          "x" : 81,
-          "y" : 261
-        }
-      },
-      {
-        "o" : "13.429",
-        "p" : {
-          "x" : 92,
-          "y" : 262
-        }
-      },
-      {
-        "o" : "13.445",
-        "p" : {
-          "x" : 106,
-          "y" : 265
-        }
-      },
-      {
-        "o" : "13.461",
-        "p" : {
-          "x" : 125,
-          "y" : 269
-        }
-      },
-      {
-        "o" : "13.479",
-        "p" : {
-          "x" : 150,
-          "y" : 275
-        }
-      },
-      {
-        "o" : "13.496",
-        "p" : {
-          "x" : 175,
-          "y" : 281
-        }
-      },
-      {
-        "o" : "13.512",
-        "p" : {
-          "x" : 203,
-          "y" : 286
-        }
-      },
-      {
-        "o" : "13.529",
-        "p" : {
-          "x" : 229,
-          "y" : 289
-        }
-      },
-      {
-        "o" : "13.546",
-        "p" : {
-          "x" : 256,
-          "y" : 292
-        }
-      },
-      {
-        "o" : "13.562",
-        "p" : {
-          "x" : 282,
-          "y" : 295
-        }
-      },
-      {
-        "o" : "13.578",
-        "p" : {
-          "x" : 306,
-          "y" : 297
-        }
-      },
-      {
-        "o" : "13.596",
-        "p" : {
-          "x" : 325,
-          "y" : 300
-        }
-      },
-      {
-        "o" : "13.612",
-        "p" : {
-          "x" : 343,
-          "y" : 302
-        }
-      },
-      {
-        "o" : "13.628",
-        "p" : {
-          "x" : 359,
-          "y" : 305
-        }
-      },
-      {
-        "o" : "13.646",
-        "p" : {
-          "x" : 371,
-          "y" : 307
-        }
-      },
-      {
-        "o" : "13.662",
-        "p" : {
-          "x" : 381,
-          "y" : 308
-        }
-      },
-      {
-        "o" : "13.680",
-        "p" : {
-          "x" : 388,
-          "y" : 309
-        }
-      },
-      {
-        "o" : "13.695",
-        "p" : {
-          "x" : 393,
-          "y" : 310
-        }
-      },
-      {
-        "o" : "13.712",
-        "p" : {
-          "x" : 395,
-          "y" : 310
-        }
-      },
-      {
-        "o" : "13.729",
-        "p" : {
-          "x" : 395,
-          "y" : 311
-        }
-      },
-      {
-        "o" : "13.746",
-        "p" : {
-          "x" : 396,
-          "y" : 311
-        }
-      },
-      {
-        "o" : "13.762",
-        "p" : {
-          "x" : 396,
-          "y" : 311
-        }
-      },
-      {
-        "o" : "13.779",
-        "p" : {
-          "x" : 396,
-          "y" : 311
-        }
-      },
-      {
-        "o" : "13.796",
-        "p" : {
-          "x" : 396,
-          "y" : 311
-        }
-      },
-      {
-        "o" : "13.812",
-        "p" : {
-          "x" : 396,
-          "y" : 311
-        }
-      },
-      {
-        "o" : "13.829",
-        "p" : {
-          "x" : 396,
-          "y" : 312
-        }
-      },
-      {
-        "o" : "13.846",
-        "p" : {
-          "x" : 396,
-          "y" : 313
-        }
-      },
-      {
-        "o" : "13.863",
-        "p" : {
-          "x" : 395,
-          "y" : 315
-        }
-      }
-    ]
-  }
-];
+
                 this.historyStroker = drawData;
                 /*
                 var tempDrawJsonStr = sessionStorage.getItem("drawJson");
@@ -1844,12 +237,28 @@
                   this.showNumWin = 0;
                 }
             },
+            startPlay:function(){
+
+                if(startPauseTime != 0){
+                    stopPauseTime = (new Date()).getTime();
+                    //同时保存该次暂停的时间值
+                }
+                if(startPlayTime == 0){
+                    startPlayTime = (new Date()).getTime();
+                }
+
+                this.playing = true;
+            },
+            stopPlay:function(){
+                this.playing = false;
+                startPauseTime = (new Date()).getTime();
+
+            },
             play:function(){
-                this.playClickNum = this.playClickNum + 1;
-                window.playClickNum = this.playClickNum;
+
 
                 this.playing = !this.playing;
-              
+
                 if(!this.playing){
                   this.playBtnImg='img/play_stop.png';
                   this.showWin3();
@@ -1860,21 +269,19 @@
                   this.playBtnImg='img/play_start.png';
                   this.playMusic();
                   this.showTime();
+
                   this.startDraw();
-                  this.drawCanvas.testDraw(1);
+
                 }
 
-               
+
             },
             stopDraw:function(){
-                this.drawCanvas.supendDraw();
+                //this.drawCanvas.supendDraw();
+                stopTimeOutDraw();
             },
             startDraw:function(){
-                var options = {};
-                options.historyStroker = this.historyStroker;
-                var draw = new Drawing('canvas',options);
-                this.drawCanvas = draw;
-                draw.testDraw();
+               startTimeOutDraw();
             },
             goOnPlay:function(){
                 this.isShow = false;
@@ -1896,7 +303,7 @@
                 }catch(err){
                     window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.open.teachermanager";//android 下载地址
                 }
-  
+
             },
             openParentApp:function(){
                 try{
@@ -1906,12 +313,13 @@
                 }
             },
             setPlayUrl:function(){
+              /*
                 var self = this;
                 var audio = document.getElementById('myvideo');
                 audio.src = 'wrongResource/chengdu.mp3';
-                
+                */
 
-              
+
             },
             stopShowTime:function(){
                 clearInterval(this.showTimeSetIntervel);
@@ -1922,7 +330,7 @@
                 self.showTimeSetIntervel  = setInterval(function(){
                     var audio = document.getElementById('myvideo');
                     var playTime = audio.currentTime;
-                    
+
                     var minute=Math.floor(playTime/60%60);
                     var second=Math.floor(playTime%60);
                     if(minute<10){
@@ -1932,21 +340,21 @@
                       second = "0" + second;
                     }
                     self.playTimeShow = minute+":"+second;
-                    
+
 
                 },20);
-                
+
             },
             playMusic:function(){
-               // RongIMLib.RongIMVoice.init();
-               // RongIMLib.RongIMVoice.play(sessionStorage.getItem("amrData"));
+                RongIMLib.RongIMVoice.init();
+                RongIMLib.RongIMVoice.play(sessionStorage.getItem("amrData"));
+               /*
 
-              
                 var self = this;
                 var audio = document.getElementById('myvideo');
                 audio.play();
                 //音频播放完毕
-                audio.onended = function(){  
+                audio.onended = function(){
                    console.info("音频播放完毕。。。");
                    //self.playTimeShow = '00:00';
                    self.playTime = 0;
@@ -1954,8 +362,8 @@
                    //调用stopplay方法，
                    self.resetData();
 
-                };
-                
+                };*/
+
             },
             resetData:function(){
                 var self = this;
@@ -1963,26 +371,26 @@
                 setTimeout(function(){
                     self.playTimeShow = '00:00';
                 },1000)
-                
+
                 this.playing = false;
                 this.playBtnImg = 'img/play_stop.png';
                 this.isShow = true;
                 this.isShowWin4 = true;
             },
             stopMusic:function(){
-                
+                /*
                 var audio = document.getElementById('myvideo');
                 if(audio != null){
                     audio.pause();
-                }
-               // RongIMLib.RongIMVoice.stop(); 
+                }*/
+               RongIMLib.RongIMVoice.stop();
             },
             checkScreen:function(){
                 var self = this;
                 var mql = window.matchMedia("(orientation: portrait)");
                 if(mql.matches) {
                       self.isShow = true;
-                      self.isShowErrorWin = true;  
+                      self.isShowErrorWin = true;
                       if(self.isShowDownladAppWin){
                           self.showNumWin = 1;
                       }
@@ -1997,13 +405,13 @@
                       }
 
                       self.isShowWin3=false,
-                      self.isShowWin4=false,  
-                      self.isPageShow = false;                 
+                      self.isShowWin4=false,
+                      self.isPageShow = false;
                 }else{
-                     
-                      self.isShowErrorWin = false;   
+
+                      self.isShowErrorWin = false;
                       self.isPageShow = true;
-                       
+
 
                       if(self.showNumWin == 0){
                          self.isShow = false;
@@ -2028,15 +436,81 @@
         }
       });
 
-      function Drawing(canvas, options) {
-            typeof canvas == 'string' && (canvas = document.getElementById(canvas));
-            if (!canvas || !canvas.getContext) {
-                throw new Error(100, '你的浏览器不支持!');
-            }
-            this.starttime = 0;
-            this.init(canvas,options);
-      }
 
+
+
+
+
+
+
+
+
+
+    function startTimeOutDraw(){
+
+        for(var j=0;j<drawData.length;j++){
+            var tempPoints = drawData[j];
+            for(var i=0;i<tempPoints.pointbeans.length;i++){
+                var temp = tempDraw(j,i,tempPoints.pointbeans[i]);
+            }
+        }
+
+    }
+
+    function stopTimeOutDraw(){
+        console.info("currentLineIndex:"+currentLineIndex+"|| currentPointIndex:"+currentPointIndex);
+        //清楚之前点的timeout函数
+        var index = 0;
+        for(var i=0;i<currentLineIndex;i++){
+           
+            index = index + drawData[i].pointbeans.length;
+        }
+        index = index + currentPointIndex;
+
+        for(var i =index; i < timeOutArray.length; i++){
+            window.clearTimeout(timeOutArray[i]);
+        }
+
+
+    }
+
+
+
+
+    function tempDraw(lineIndex,pointIndex,point){
+
+        testcanvas = document.getElementById("canvas");
+        testcontext = testcanvas.getContext('2d');
+        testcontext.strokeStyle = "red";
+        testcontext.lineWidth=2;
+
+        var temp = setTimeout(function(){
+
+
+                console.info(lineIndex+'||'+pointIndex+"||"+point);
+
+                if(pointIndex == 0){
+                    testcontext.moveTo(point.p.x,point.p.y);
+                }
+                if(pointIndex > 0){
+                    testcontext.lineTo(point.p.x,point.p.y);
+
+
+                }
+                 testcontext.stroke();
+                currentLineIndex = lineIndex;
+                currentPointIndex = pointIndex;
+
+
+            },point.o*1000);
+        timeOutArray.push(temp);
+        
+    }
+
+
+
+
+/*
       Drawing.prototype = {
             init: function (canvas,options) {
                 this.isButtonDown = false;
@@ -2133,6 +607,6 @@
             }
         };
 
-
+*/
     </script>
 </body>

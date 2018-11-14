@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>新手指引</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="App-Config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="telephone=no,email=no" name="format-detection">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+    <link rel="stylesheet" type="text/css" href="css/error.css">
+
+    <script type="text/javascript">
+        (function(){
+            var currClientWidth,
+                fontValue,
+                originWidth;
+            originWidth = 750;//ui设计稿的宽度，一般750或640
+            __resize();
+
+            window.addEventListener('resize', __resize, false);
+
+            function __resize() {
+                currClientWidth = document.documentElement.clientWidth;
+                if (currClientWidth > 750){
+                    currClientWidth = 750;
+                }
+                if (currClientWidth < 320){
+                    currClientWidth = 320;
+                }
+                fontValue = currClientWidth;
+                document.documentElement.style.fontSize = fontValue/3.75 + 'px';
+            }
+        })();
+    </script>
+</head>
+
+<body>
+    <div class="page">
+        <div class="title_box">
+            <img class="go_back" src="img/back.png"/>
+            <p class="">新手指引</p>
+
+        </div>
+        <div class="content">
+            <img src="img/error.png" class="error_page">
+            <p>此页面暂无数据</p>
+        </div>
+    </div>
+</body>
+</html>
