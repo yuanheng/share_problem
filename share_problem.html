@@ -13,7 +13,11 @@
 	<script  type="text/javascript" src="js/jszip-utils.js"></script>
   	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue"></script>
   	<script type="text/javascript" src='https://cdn.jsdelivr.net/npm/vue-resource@1.5.1'></script>
-  	<script type="text/javascript">
+
+
+
+
+	<script type="text/javascript">
         (function(){
             var currClientWidth,
                 fontValue,
@@ -106,11 +110,11 @@
 						<img class="tip_icon" src="img/teacher_icon.png">
 						<div class="info_box">
 							<div class="info_name">【教师秘书】</div>
-							<div class="info_sologon">老师专属的随行小秘书</div>
+							<div class="info_sologon">比微信更好用的班级管理工具</div>
 						</div>
 					</div>
 					<div class="tip">
-					<span class="tip_blob">致老师：</span>告别易错、难懂知识点一讲再讲，不需要一对一当面讲解，一次录制，点对点发布；由家长监督完成错题查看，易错难题一讲即懂。
+						班级消息传达更加高效，拒绝微信通知的“假方便”，让教学更简单。
 					</div>
 				</div>
 				<h1></h1>
@@ -119,11 +123,11 @@
 						<img class="tip_icon" src="img/parent_icon.png">
 						<div class="info_box">
 							<div class="info_name">【家长帮手】</div>
-							<div class="info_sologon">智慧做父母，轻松当家长</div>
+							<div class="info_sologon">让家长辅导孩子不再是难题</div>
 						</div>
 					</div>
 					<div class="tip">
-					<span class="tip_blob">致家长：</span>家校互通，轻松掌握孩子所学疑难点，辅导孩子，不再是难题。
+						父母是孩子教育的第一步，关爱孩子家校共育，不做“失陪父母”。教师秘书
 					</div>
 				</div>
 				<div class="sharp_bg"></div>
@@ -167,7 +171,7 @@
 	</div>
 	
 	<script type="text/javascript">
-	
+
 		var page = new Vue({
   			el: '#body',
   			data:{
@@ -190,25 +194,63 @@
   			methods:{
   				getlist:function () {
                 //请求服务器的api获取到品牌的数据列表
-                	
+                    let version = navigator.userAgent.toLowerCase();
+                    let android = version.indexOf('Android');
+
+
+                    let device;
+                    if(android > -1){
+                        device = 'Android';
+					}else{
+                        device = 'iPhone'
+					}
                 	this.$http({
-                		url:'wrong.json',
+                		url:'wrong.txt',
                 		method: 'POST',
                 		data:'{"params":{"wrongTitleId":'+this.wrongTitleId+',"clazzId":'+this.clazzId+'}}',
-                		headers:{'Content-Type': 'application/json'}
+                		headers:{
+                		    'Content-Type': 'application/json',
+							'version':'2.4.0',
+							'device':device
+                		}
 
                 	}).then(function (response) {
                 			var result = response.body;
 	                    	
 	                    	//处理服务器异常信息提示
 	                    	if(response.status!=200 || result.code != 200){
-	                        	alert("请求错误，请重试！");
+	                        	window.location.href='error.html';
 	                        	return ;
 	                    	}
 	                    	this.clazzGroup = result.data.clazzGroup;
 	                    	var wrongTitle = result.data.wrongTitle;
+
+                        	//计算总的播放时长
+
+	                    	var videoTime = wrongTitle.videoTime;
+	                    	var tempTime = videoTime.split(":");
+	                    	var playTotalTime = tempTime[0] * 60 + tempTime[1];
+	                    	sessionStorage.setItem('playTotalTime',playTotalTime*1000);
+	                    	if(wrongTitle.likeCount){
+                                sessionStorage.setItem("likeCount",wrongTitle.likeCount);
+							}else{
+                                sessionStorage.setItem("likeCount",0);
+							}
+	                    	if(wrongTitle.commentCount){
+                                sessionStorage.setItem('commentCount',wrongTitle.commentCount);
+							}else{
+                                sessionStorage.setItem('commentCount',0);
+							}
+
+	                    	if(wrongTitle.collectCount){
+                                sessionStorage.setItem("collectCount",wrongTitle.collectCount);
+							}else{
+                                sessionStorage.setItem("collectCount",0);
+							}
+
 	                    	wrongTitle.picUrl = wrongTitle.pictures[0].url;
 	                    	this.wrongTitle = result.data.wrongTitle;
+
 	                    	var otherWrongTitleList = result.data.otherWrongTitleList;
 	                    	for(var i = 0; i < otherWrongTitleList.length; i++){
 	                    		var temp = otherWrongTitleList[i];
@@ -257,6 +299,26 @@
 									}
 									if(fileName.indexOf(".amr") != -1){
 										var amrData = zip.file(zip.files[key].name).async("base64");
+                                        var tempDatas = zip.file(zip.files[key].name).async("blob");
+
+                                        tempDatas.then(function(res){
+                                            console.info("*******:"+res);
+
+                                            var reader = new FileReader();
+                                            reader.onload = (function (file) {
+                                                return function (e) {
+                                                    sessionStorage.setItem("play_data",e.target.result);
+                                                }
+                                            })(res);
+
+                                            reader.readAsBinaryString(res);
+
+
+
+
+
+
+										});
 				                    	amrData.then(function (res) {
 				                        	
 				                            sessionStorage.setItem("amrData",res);
@@ -277,7 +339,7 @@
 				    }, 1000);
             	},
             	openPlayPage:function(id,event){
-            		window.location.href='play.html';
+            		window.location.href='play1.html';
             	},
   				showDownloadAppTip:function(){
   					this.isShow = !this.isShow;

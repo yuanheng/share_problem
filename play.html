@@ -76,16 +76,16 @@
 
               <div class="play_item_box favorite_margin_top">
                   <img  v-on:click='downloadApp' src="img/favorite.png"/>
-                  <div class="play_operator_num">18</div>
+                  <div class="play_operator_num">{{collectCount}}</div>
               </div>
 
               <div class="play_item_box">
                   <img  v-on:click='downloadApp' src="img/flower.png"/>
-                  <div class="play_operator_num">123</div>
+                  <div class="play_operator_num">{{likeCount}}</div>
               </div>
               <div class="play_item_box">
                   <img  v-on:click='downloadApp' src="img/comment.png"/>
-                  <div class="play_operator_num">54</div>
+                  <div class="play_operator_num">{{commentCount}}</div>
               </div>
           </div>
 
@@ -130,7 +130,7 @@
 
                   </div>
                   <div class="btn_box_4">
-                      <div class="download_paly_4" v-on:click='goOnPlay'>继续播放</div>
+                      <div class="download_paly_4" v-on:click='goDraw'>继续播放</div>
                   </div>
 
                   <div class="tip_bg"></div>
@@ -156,10 +156,13 @@
 
 
     var drawData =JSON.parse(sessionStorage.getItem("drawJson"));
+
+
     var testcanvas ;
     var testcontext;
     var playingTime = 0;
     var startPlayTime=0;
+    var playTotalTime= sessionStorage.getItem("playTotalTime");
     var lineIndex = 0;
     var pointIndex = 0;
     var currentLineIndex = 0;
@@ -171,6 +174,7 @@
     var startPauseTime = 0;
     var stopPauseTime = 0;
     var showPlayTimer;
+    var drawContext;
 
       //初始化
     RongIMLib.RongIMVoice.init();
@@ -208,12 +212,15 @@
         },
         methods:{
             getData:function(){
+                var commentCount = sessionStorage.getItem("commentCount");
+                var likeCount = sessionStorage.getItem("likeCount");
+                var collectCount = sessionStorage.getItem("collectCount");
 
                 this.historyStroker = drawData;
-                /*
-                var tempDrawJsonStr = sessionStorage.getItem("drawJson");
-                var tempDrawJson= JSON.parse(tempDrawJsonStr);
-                this.historyStroker = tempDrawJson;*/
+                this.likeCount = likeCount;
+                this.commentCount = commentCount;
+                this.collectCount = collectCount;
+
 
             },
             showDownloadAppWin:function(){
@@ -244,20 +251,30 @@
                     stopPauseTime = (new Date()).getTime();
                     //同时保存该次暂停的时间值
                     pauseTimeArray.push(stopPauseTime - startPauseTime);
+                    goDraw();
                 }
                 if(startPlayTime == 0){
                     startPlayTime = (new Date()).getTime();
+                    startTimeOutDraw();
                 }
 
                 this.playing = true;
                
-                showPlayTimer = setInterval(this.showTime,50);
+                showPlayTimer = setInterval(this.showTime,10);
+
+                drawContext = setInterval(drawPoint,10);
+                this.playMusic();
+
+
             },
             stopPlay:function(){
                 this.playing = false;
                 startPauseTime = (new Date()).getTime();
 
                 this.stopShowTime();
+
+                stopTimeOutDraw();
+                this.stopMusic();
             },
             play:function(){
 
@@ -280,18 +297,6 @@
                 }
 
 
-            },
-            stopDraw:function(){
-                //this.drawCanvas.supendDraw();
-                stopTimeOutDraw();
-            },
-            startDraw:function(){
-               startTimeOutDraw();
-            },
-            goOnPlay:function(){
-                this.isShow = false;
-                this.isShowWin3 = false;
-                this.play();
             },
             goBack:function(){
                 window.location.href='share_problem.html';
@@ -331,8 +336,9 @@
 
             },
             showTime:function(){
-                var self = this;
-                playingTime = playingTime+50;
+
+
+                playingTime = playingTime+10;
                 var playTime = playingTime / 1000;
                 var minute=Math.floor(playTime/60%60);
                 var second=Math.floor(playTime%60);
@@ -343,7 +349,25 @@
                       second = "0" + second;
                 }
 
-                self.playTimeShow = minute+":"+second;
+                this.playTimeShow = minute+":"+second;
+
+
+                if(playingTime > playTotalTime){
+                    this.stopShowTime();
+                    stopTimeOutDraw();
+
+                    //播放完毕重置所有操作
+                    this.resetData();
+                    this.playTimeShow = "00:00";
+                    var c=document.getElementById("canvas");
+                    var cxt=c.getContext("2d");
+
+                    cxt.fillStyle="#FFFFFF";
+                    cxt.beginPath();
+                    cxt.fillRect(0,0,c.width,c.height);
+                    cxt.closePath();
+
+                }
 
             },
             playMusic:function(){
@@ -367,16 +391,18 @@
 
             },
             resetData:function(){
-                var self = this;
-                this.playTime = 0;
-                setTimeout(function(){
-                    self.playTimeShow = '00:00';
-                },1000)
 
                 this.playing = false;
-                this.playBtnImg = 'img/play_stop.png';
                 this.isShow = true;
                 this.isShowWin4 = true;
+                //播放时间
+                playingTime = 0;
+                pauseTimeArray=[];
+                startPauseTime=0;
+                stopPauseTime=0;
+                currentLineIndex=0;
+                currentPointIndex=0;
+
             },
             stopMusic:function(){
                 /*
@@ -440,53 +466,69 @@
 
 
 
-
-
-
-
-
-
-
     function startTimeOutDraw(){
 
-        for(var j=0;j<drawData.length;j++){
+        for(var j = 0; j < drawData.length;j++){
             var tempPoints = drawData[j];
-            for(var i=0;i<tempPoints.pointbeans.length;i++){
-                var temp = tempDraw(j,i,tempPoints.pointbeans[i]);
+            for(var i=0; i<tempPoints.pointbeans.length;i++){
+                tempDraw(j,i,tempPoints.pointbeans[i]);
             }
         }
 
     }
 
+    function goDraw() {
+        //当前点
+        for(var i=currentPointIndex;i<drawData[currentLineIndex].pointbeans.length;i++){
+            tempDraw(currentLineIndex,i,drawData[currentLineIndex].pointbeans[i]);
+        }
+        for(var j=currentLineIndex;j < drawData.length;j++){
+            var tempPoints = drawData[j].pointbeans;
+
+            for(var i=0; i<tempPoints.length;i++){
+                tempDraw(j,i,tempPoints[i]);
+            }
+        }
+    }
     function stopTimeOutDraw(){
-        console.info("currentLineIndex:"+currentLineIndex+"|| currentPointIndex:"+currentPointIndex);
+        console.info("stop ===== currentLineIndex:"+currentLineIndex+"|| currentPointIndex:"+currentPointIndex);
         //清楚之前点的timeout函数
-        var index = 0;
-        for(var i=0;i<currentLineIndex;i++){
+        var pointNum = 0;
+        for(var i=0;i<drawData.length;i++){
            
-            index = index + drawData[i].pointbeans.length;
+            pointNum = pointNum + drawData[i].pointbeans.length;
         }
-        index = index + currentPointIndex;
 
-        for(var i =index; i < timeOutArray.length; i++){
+
+        for(var i =0; i < pointNum; i++){
             window.clearTimeout(timeOutArray[i]);
+
         }
 
-
+        timeOutArray=[];
     }
 
 
-
-
-    function tempDraw(lineIndex,pointIndex,point){
-
+    function drawPoint(){
         testcanvas = document.getElementById("canvas");
         testcontext = testcanvas.getContext('2d');
         testcontext.strokeStyle = "red";
         testcontext.lineWidth=2;
+        if(pointIndex == 0){
+
+        }
+    }
+
+    function tempDraw(lineIndex,pointIndex,point){
+
+
 
         var temp = setTimeout(function(){
 
+            testcanvas = document.getElementById("canvas");
+            testcontext = testcanvas.getContext('2d');
+            testcontext.strokeStyle = "red";
+            testcontext.lineWidth=2;
 
                 console.info(lineIndex+'||'+pointIndex+"||"+point);
 
@@ -498,12 +540,13 @@
 
 
                 }
-                 testcontext.stroke();
+                testcontext.stroke();
                 currentLineIndex = lineIndex;
                 currentPointIndex = pointIndex;
 
 
-            },point.o*1000);
+            },point.o*1000 - playingTime);
+
         timeOutArray.push(temp);
         
     }

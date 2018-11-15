@@ -1,0 +1,93 @@
+{
+    "code": 200,
+    "data": {
+        "otherWrongTitleList": [
+            {
+                "content": "这道题我讲过很多遍了，今天在讲一次，大家注意听讲",
+                "hasPicture": 0,
+                "videoTime": "00:05",
+                "pictures": [
+                    {
+                        "orderList": 1527565209296,
+                        "url": "http://10.98.24.67:8000/teacher/static/wrongtitle/ca3bf3b0b26642b3964b89f55227ffeb.jpg",
+                        "width": 1195,
+                        "height": 2124,
+                        "thu_url": "http://10.98.24.67:8000/teacher/static/wrongtitle/5ea38758fe4e4a7283e5e1e47333d34f.jpg",
+                        "thu_width": 281,
+                        "thu_height": 500,
+                        "identification": 7888
+                    }
+                ],
+                "modelType": "wrongtitle"
+            },
+            {
+                "content": "这个道题很容易犯错误",
+                "hasPicture": 0,
+                "videoTime": "00:07",
+                "pictures": [
+                    {
+                        "orderList": 1527563283337,
+                        "url": "http://10.98.24.67:8000/teacher/static/wrongtitle/fe1298f1a8404f698e3fa6c711973341.jpg",
+                        "width": 1062,
+                        "height": 598,
+                        "thu_url": "http://10.98.24.67:8000/teacher/static/wrongtitle/5d95c643b15a4357a0cc4f064bf83be5.jpg",
+                        "thu_width": 500,
+                        "thu_height": 282,
+                        "identification": 7887
+                    }
+                ],
+                "modelType": "wrongtitle"
+            },
+            {
+                "content": "这道题很重要希望大家能注意",
+                "hasPicture": 1,
+                "videoTime": "00:08",
+                "pictures": [
+                    {
+                        "orderList": 1527563114729,
+                        "url": "http://10.98.24.67:8000/teacher/static/wrongtitle/71c4d4619a664aa998fe559029a5a634.jpg",
+                        "width": 1062,
+                        "height": 598,
+                        "thu_url": "http://img.openonline.com.cn/teacher/static/wrongtitle/e7c9593ba7aa425b8bce1735a252cea4.jpg",
+                        "thu_width": 500,
+                        "thu_height": 282,
+                        "identification": 7886
+                    }
+                ],
+                "modelType": "wrongtitle"
+            }
+        ],
+        "wrongTitle": {
+            "content": "这道题很重点,希望大家都记住，考的发水粉经常能考到，数学应用题语文英语作地方",
+            "hasPicture": 1,
+            "zipUrl": "405a266e6dbc4d099ab33aff48912afc.zip",
+            "likeCount": 20,
+            "commentCount": 10,
+            "videoTime": "00:27",
+            "pictures": [
+                {
+                    "orderList": 1528250240413,
+                    "url": "source.jpg",
+                    "width": 701,
+                    "height": 540,
+                    "thu_url": "http://img.openonline.com.cn/teacher/static/wrongtitle/e7c9593ba7aa425b8bce1735a252cea4.jpg",
+                    "thu_width": 500,
+                    "thu_height": 385,
+                    "identification": 7910
+                }
+            ],
+            "nickname": "叮叮当当",
+            "courseName": "数学",
+            "modelType": "三年级一班错题"
+        },
+        "clazzGroup": {
+            "homeworkCount": 0,
+            "code": "100277",
+            "wrongTitleCount": 31,
+            "clazzNoticeCount": 6,
+            "clazzTempName": "三年级一班"
+        }
+    },
+    "time": 1541666995499,
+    "message": ""
+}

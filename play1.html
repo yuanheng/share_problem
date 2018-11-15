@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>错题播放</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+  	<meta name="App-Config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+  	<meta content="yes" name="apple-mobile-web-app-capable">
+  	<meta content="yes" name="apple-touch-fullscreen">
+  	<meta content="telephone=no,email=no" name="format-detection">
+  	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+  	<link rel="stylesheet" type="text/css" href="css/play.css">
+
+  	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="js/lib/pcmdata.min.js"></script>
+    <script src="js/lib/swfobject.js"></script>
+    <script src="js/lib/mediacapture.min.js"></script>
+
+
+    <!-- Development -->
+    <script src="js/src/libamr-nb.js"></script>
+    <script src="js/src/util.js"></script>
+    <script src="js/src/amr.js"></script>
+    <script src="js/src/decoder.js"></script>
+    <script src="js/src/encoder.js"></script>
+    <script src="js/io.js"></script>
+
+	  <script type="text/javascript">
+        (function(){
+             
+              var currClientWidth,
+                 fontValue,
+                 originWidth;
+                 originWidth = 667;//ui设计稿的宽度，一般750或640
+                 __resize();
+
+                 window.addEventListener('resize', __resize, false);
+
+                function __resize() {
+                    currClientWidth = document.documentElement.clientWidth;
+                    if (currClientWidth > 667){
+                        currClientWidth = 667;
+                    } 
+                    if (currClientWidth < 320){
+                        currClientWidth = 320;
+                    } 
+                    fontValue = currClientWidth;
+                    document.documentElement.style.fontSize = fontValue/6.67 + 'px';
+
+                };
+                var mql = window.matchMedia("(orientation: portrait)");
+                function onMatchMeidaChange(mql){
+                    if(mql.matches) {
+                        // 竖屏
+                        console.info("竖屏");
+                        
+                    }
+                }
+                onMatchMeidaChange(mql);
+                mql.addListener(onMatchMeidaChange);
+        })();
+    </script>
+</head>
+<body id="page_body">
+    <div id='play_page' class="play_page" >
+        <div class="play_box" v-show="isPageShow">
+          <div class="play_btn_box">
+            <div class="play_btn_bg"></div>
+            <div class="play_back_box">
+                <img class="play_back" v-on:click='goBack' style="transform: rotate(90deg);" src="img/play_back.png"/>
+                <div class="play_back_txt">返回</div>
+            </div>
+
+            <div class="play_start_box">
+
+                <img v-show='playing' class="play" style="transform: rotate(90deg);" v-on:click="stopPlay" src="img/play_start.png"/>
+
+                <img v-show='!playing'  class="play" style="transform: rotate(90deg);" v-on:click="startPlay" src="img/play_stop.png"/>
+
+                <div class="play_back_txt">{{playTimeShow}}</div>
+            </div>
+            
+          </div>   
+          <div class="play_canvas_box">
+              <div class="play_canvas">
+                  <canvas id='canvas'  width="510" height="320" class="" style="background-image:url('source.jpg')"/>
+              </div>
+          </div>
+          <div class="play_operator_box">
+
+              <div class="play_item_box favorite_margin_top">
+                  <img  v-on:click='downloadApp' src="img/favorite.png"/>
+                  <div class="play_operator_num">{{collectCount}}</div>
+              </div>
+
+              <div class="play_item_box">
+                  <img  v-on:click='downloadApp' src="img/flower.png"/>
+                  <div class="play_operator_num">{{likeCount}}</div>
+              </div>
+              <div class="play_item_box">
+                  <img  v-on:click='downloadApp' src="img/comment.png"/>
+                  <div class="play_operator_num">{{commentCount}}</div>
+              </div>
+          </div>
+
+          <audio id="myvideo"  preload='load'  controls="controls" hidden="hidden"></audio>
+
+        </div>
+
+        <div id="win_bg" class="win_bg_box" v-show='isShow' style="display:none">
+            <div class="win_bg"></div>
+            <div class="download_app_tip" v-show='isShowDownladAppWin' style="display:none" ref='downloadAppTip'>
+                <div class="closed_box" v-on:click="showDownloadAppWin"></div>
+                <div class="win_title">提示</div>
+                <div class="tip_message">
+                    <div class="class_num">245524</div>
+                    <div class="tip_message">请牢记此班级号（加入班级时使用）</div>
+                </div>
+                <div class="app_type_box">
+                    <div class="teacher_box">
+                        <img class="teacher_icon" src="img/teacher_icon.png">
+                        <div class="app_name">【教师秘书】</div>
+                    </div>
+                    <div class="teacher_box">
+                        <img class="teacher_icon" src="img/parent_icon.png">
+                        <div class="app_name">【家长帮手】</div>
+                    </div>
+                </div>
+                <div class="download_btn_box">
+                    <div class="download_app_btn" v-on:click="openTeacherApp">老师请下载</div>
+                    <div class="download_app_btn" v-on:click="openParentApp">家长请下载</div>
+                </div>
+                <div class="download_app_bg"></div>
+            </div>
+            <div class="download_tip" v-show='isShowWin3' style="display:none" ref="downloadTip">
+                <div class="closed_box" v-on:click="showWin3"></div>
+                <div class="win_title">提示</div>
+                <div class="tip_download_message_play">
+                    <p class="tip_message_p">下载APP，观看体验更好，还可查看更多本班错题信息哦！</p>
+                </div>
+                <div class="tip_download_btn_box">
+                  <div class="btn_box_3">
+                      <div class="download_paly_3" v-on:click='downloadApp'>下载APP</div>
+
+                  </div>
+                  <div class="btn_box_4">
+                      <div class="download_paly_4" v-on:click='goDraw'>继续播放</div>
+                  </div>
+
+                  <div class="tip_bg"></div>
+                </div>
+            </div>
+            <div class="download_tip" v-show='isShowWin4' style="display:none"  ref="downloadTip">
+                <div class="closed_box" v-on:click="showWin4"></div>
+                <div class="win_title">提示</div>
+                <div class="tip_download_message">下载APP后，还有更多班级内容等您查看哦！</div>
+                <div class="tip_download_bt" v-on:click="downloadApp">下载APP</div>
+                <div class="tip_bg"></div>
+            </div>
+            <div class="download_tip_shu" v-show='isShowErrorWin' style="display:none"  ref="downloadTip">
+
+                <div class="win_title_shu">提示</div>
+                <div class="tip_download_message_shu">仅支持横屏播放哦！</div>
+
+                <div class="tip_bg_shu"></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+
+    var drawData =JSON.parse(sessionStorage.getItem("drawJson"));
+
+
+    var testcanvas ;
+    var testcontext;
+    var playingTime = 0;
+    var startPlayTime=0;
+    var playTotalTime= sessionStorage.getItem("playTotalTime");
+    var lineIndex = 0;
+    var pointIndex = 0;
+    var currentLineIndex = 0;
+    var currentPointIndex = 0;
+
+    var timeOutArray=[]
+
+    var pauseTimeArray=[];
+    var startPauseTime = 0;
+    var stopPauseTime = 0;
+    var showPlayTimer;
+    var drawContext;
+
+    var page = new Vue({
+        el: '#play_page',
+        data:{
+          isPageShow:false,
+          isShow:false,
+          isShowDownladAppWin:false,
+          isShowWin3:false,
+          isShowWin4:false,
+          playBtnImg:'img/play_stop.png',
+          playing:false,
+          playTimeShow:'00:00',
+          showTimeSetIntervel:null,
+          playTime:0,
+          drawCanvas:null,
+          isShowErrorWin:false,
+          historyStroker:[],
+          showNumWin:0,
+          prePointDealTime:0,
+          playClickNum:0,
+
+        },
+        created:function(){
+          this.setPlayUrl();
+          this.getData();
+          this.checkScreen();
+          window.addEventListener('resize', this.checkScreen, false);
+          var tempPlayData = sessionStorage.getItem("play_data");
+          var samples = new AMR({
+                benchmark: true
+            }).decode(tempPlayData);
+
+          AMR.util.init(samples);
+
+
+        },
+        mounted:function(){
+
+        },
+        methods:{
+            getData:function(){
+                var commentCount = sessionStorage.getItem("commentCount");
+                var likeCount = sessionStorage.getItem("likeCount");
+                var collectCount = sessionStorage.getItem("collectCount");
+
+                this.historyStroker = drawData;
+                this.likeCount = likeCount;
+                this.commentCount = commentCount;
+                this.collectCount = collectCount;
+
+
+            },
+            showDownloadAppWin:function(){
+                this.isShow = !this.isShow;
+
+                this.isShowDownladAppWin = !this.isShowDownladAppWin;
+                if(!this.isShowDownladAppWin){
+                  this.showNumWin = 0;
+                }
+            },
+            showWin3:function(){
+                this.isShow = !this.isShow;
+                this.isShowWin3 = !this.isShowWin3;
+                if(!this.isShowWin3){
+                  this.showNumWin = 0;
+                }
+            },
+            showWin4:function(){
+                this.isShow = !this.isShow;
+                this.isShowWin4 = !this.isShowWin4;
+                 if(!this.isShowWin4){
+                  this.showNumWin = 0;
+                }
+            },
+            startPlay:function(){
+
+                if(startPauseTime != 0){
+                    stopPauseTime = (new Date()).getTime();
+                    //同时保存该次暂停的时间值
+                    pauseTimeArray.push(stopPauseTime - startPauseTime);
+                    goDraw();
+                }
+                if(startPlayTime == 0){
+                    startPlayTime = (new Date()).getTime();
+                    startTimeOutDraw();
+                }
+
+                this.playing = true;
+               
+                showPlayTimer = setInterval(this.showTime,10);
+
+                drawContext = setInterval(drawPoint,10);
+                this.playMusic();
+
+
+            },
+            stopPlay:function(){
+                this.playing = false;
+                startPauseTime = (new Date()).getTime();
+
+                this.stopShowTime();
+
+                stopTimeOutDraw();
+                this.stopMusic();
+            },
+            play:function(){
+
+
+                this.playing = !this.playing;
+
+                if(!this.playing){
+                  this.playBtnImg='img/play_stop.png';
+                  this.showWin3();
+                  this.stopMusic();
+                  this.stopShowTime();
+                  this.stopDraw();
+                }else{
+                  this.playBtnImg='img/play_start.png';
+                  this.playMusic();
+                  this.showTime();
+
+                  this.startDraw();
+
+                }
+
+
+            },
+            goBack:function(){
+                window.location.href='share_problem.html';
+            },
+            downloadApp:function(){
+                this.isShow = true;
+                this.isShowWin3 = false;
+                this.isShowWin4 = false;
+                this.isShowDownladAppWin = true;
+            },
+            openTeacherApp:function(){
+                try {
+                    window.location.href = "openteacher://open?code=&openType=joinClazz&clazzId=";//
+                }catch(err){
+                    window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.open.teachermanager";//android 下载地址
+                }
+
+            },
+            openParentApp:function(){
+                try{
+                    window.location.href = "openparents://open?code=&openType=joinClazz&clazzId=";//
+                }catch(err){
+                    window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.open.parentmanager";//android 下载地址
+                }
+            },
+            setPlayUrl:function(){
+              /*
+                var self = this;
+                var audio = document.getElementById('myvideo');
+                audio.src = 'wrongResource/chengdu.mp3';
+                */
+
+
+            },
+            stopShowTime:function(){
+                clearInterval(showPlayTimer);
+
+            },
+            showTime:function(){
+
+
+                playingTime = playingTime+10;
+                var playTime = playingTime / 1000;
+                var minute=Math.floor(playTime/60%60);
+                var second=Math.floor(playTime%60);
+                if(minute<10){
+                        minute = "0" + minute;
+                }
+                if(second<10){
+                      second = "0" + second;
+                }
+
+                this.playTimeShow = minute+":"+second;
+
+
+                if(playingTime > playTotalTime){
+                    this.stopShowTime();
+                    stopTimeOutDraw();
+
+                    //播放完毕重置所有操作
+                    this.resetData();
+                    this.playTimeShow = "00:00";
+                    var c=document.getElementById("canvas");
+                    var cxt=c.getContext("2d");
+
+                    cxt.fillStyle="#FFFFFF";
+                    cxt.beginPath();
+                    cxt.fillRect(0,0,c.width,c.height);
+                    cxt.closePath();
+
+                }
+
+            },
+            playMusic:function(){
+
+                AMR.util.play();
+                /*
+                RongIMLib.RongIMVoice.init();
+                RongIMLib.RongIMVoice.play(sessionStorage.getItem("amrData"));
+                */
+
+               /*
+
+                var self = this;
+                var audio = document.getElementById('myvideo');
+                audio.play();
+                //音频播放完毕
+                audio.onended = function(){
+                   console.info("音频播放完毕。。。");
+                   //self.playTimeShow = '00:00';
+                   self.playTime = 0;
+                   clearInterval(self.showTimeSetIntervel);
+                   //调用stopplay方法，
+                   self.resetData();
+
+                };*/
+
+            },
+            resetData:function(){
+
+                this.playing = false;
+                this.isShow = true;
+                this.isShowWin4 = true;
+                //播放时间
+                playingTime = 0;
+                pauseTimeArray=[];
+                startPauseTime=0;
+                stopPauseTime=0;
+                currentLineIndex=0;
+                currentPointIndex=0;
+
+            },
+            stopMusic:function(){
+                /*
+                var audio = document.getElementById('myvideo');
+                if(audio != null){
+                    audio.pause();
+                }*/
+               RongIMLib.RongIMVoice.stop();
+            },
+            checkScreen:function(){
+                var self = this;
+                var mql = window.matchMedia("(orientation: portrait)");
+                if(mql.matches) {
+                      self.isShow = true;
+                      self.isShowErrorWin = true;
+                      if(self.isShowDownladAppWin){
+                          self.showNumWin = 1;
+                      }
+
+                      self.isShowDownladAppWin=false;
+
+                      if(self.isShowWin3){
+                          self.showNumWin = 2;
+                      }
+                      if (self.isShowWin4) {
+                          self.showNumWin = 3;
+                      }
+
+                      self.isShowWin3=false,
+                      self.isShowWin4=false,
+                      self.isPageShow = false;
+                }else{
+
+                      self.isShowErrorWin = false;
+                      self.isPageShow = true;
+
+
+                      if(self.showNumWin == 0){
+                         self.isShow = false;
+                       } else{
+
+                             if(self.showNumWin == 1){
+                                self.isShowDownladAppWin = true;
+                              }
+
+                              if(self.showNumWin == 2){
+                                self.isShowWin3 = true;
+                              }
+
+                              if(self.showNumWin == 3){
+                                self.isShowWin4 = true;
+                              }
+                       }
+
+                }
+
+            }
+        }
+      });
+
+
+
+
+    function startTimeOutDraw(){
+
+        for(var j = 0; j < drawData.length;j++){
+            var tempPoints = drawData[j];
+            for(var i=0; i<tempPoints.pointbeans.length;i++){
+                tempDraw(j,i,tempPoints.pointbeans[i]);
+            }
+        }
+
+    }
+
+    function goDraw() {
+        //当前点
+        for(var i=currentPointIndex;i<drawData[currentLineIndex].pointbeans.length;i++){
+            tempDraw(currentLineIndex,i,drawData[currentLineIndex].pointbeans[i]);
+        }
+        for(var j=currentLineIndex;j < drawData.length;j++){
+            var tempPoints = drawData[j].pointbeans;
+
+            for(var i=0; i<tempPoints.length;i++){
+                tempDraw(j,i,tempPoints[i]);
+            }
+        }
+    }
+    function stopTimeOutDraw(){
+        console.info("stop ===== currentLineIndex:"+currentLineIndex+"|| currentPointIndex:"+currentPointIndex);
+        //清楚之前点的timeout函数
+        var pointNum = 0;
+        for(var i=0;i<drawData.length;i++){
+           
+            pointNum = pointNum + drawData[i].pointbeans.length;
+        }
+
+
+        for(var i =0; i < pointNum; i++){
+            window.clearTimeout(timeOutArray[i]);
+
+        }
+
+        timeOutArray=[];
+    }
+
+
+    function drawPoint(){
+        testcanvas = document.getElementById("canvas");
+        testcontext = testcanvas.getContext('2d');
+        testcontext.strokeStyle = "red";
+        testcontext.lineWidth=2;
+        if(pointIndex == 0){
+
+        }
+    }
+
+    function tempDraw(lineIndex,pointIndex,point){
+
+
+
+        var temp = setTimeout(function(){
+
+            testcanvas = document.getElementById("canvas");
+            testcontext = testcanvas.getContext('2d');
+            testcontext.strokeStyle = "red";
+            testcontext.lineWidth=2;
+
+                console.info(lineIndex+'||'+pointIndex+"||"+point);
+
+                if(pointIndex == 0){
+                    testcontext.moveTo(point.p.x,point.p.y);
+                }
+                if(pointIndex > 0){
+                    testcontext.lineTo(point.p.x,point.p.y);
+
+
+                }
+                testcontext.stroke();
+                currentLineIndex = lineIndex;
+                currentPointIndex = pointIndex;
+
+
+            },point.o*1000 - playingTime);
+
+        timeOutArray.push(temp);
+        
+    }
+
+
+
+
+/*
+      Drawing.prototype = {
+            init: function (canvas,options) {
+                this.isButtonDown = false;
+                this.historyStroker = options.historyStroker;
+                this.curStroker = { color: '#000000', path: [] };
+                this.lastX = 0;
+                this.lastY = 0;
+                this.curColor = '#000000';
+                this.toolbarspos = {};
+                this.lineIndex=0;
+                this.pointIndex = 0;
+                this.intervalHandle = null;
+                this.testcanvas = null;
+                this.testcontext = null;
+
+            },
+            testDraw: function (flag) {
+              
+                var self = this;
+               
+                if (!this.startplay) {
+                    this.startplay = (new Date()).getTime();
+                }
+                if (!this.lineIndex) {
+                    this.lineIndex = 0;
+                }
+                var p = this.historyStroker;
+                var curLine = p[this.lineIndex], curColor = 'red', p2;
+                var pointIndex = this.pointIndex;
+                self.lineIndex = this.lineIndex;
+                if (!self.testcanvas) {
+                    self.testcanvas = document.getElementById("canvas");
+                    self.testcontext = this.testcanvas.getContext('2d');
+                    self.testcontext.beginPath();
+                }
+
+                //self.intervalHandle = null;
+        　　    
+                self.testcontext.strokeStyle = "#ff0000";
+                if (this.intervalHandle) return;
+
+                self.intervalHandle = window.setInterval(function (flag) {
+                    console.info("开始方法："+(new Date()).getTime());
+                    var deltatime = (new Date()).getTime() - self.startplay;
+
+                    if(window.playClickNum > 2){
+
+                        deltatime = deltatime + p[self.lineIndex].o * 1000;
+                    }
+                    p2 = p[self.lineIndex].pointbeans[pointIndex];
+
+                   
+
+                    //绘制完成一条线
+                    if (!p2) {
+                        window.clearInterval(self.intervalHandle);
+                        self.pointIndex = 0;
+                        self.intervalHandle = null;
+                        if (self.lineIndex < p.length - 1) {
+                            self.lineIndex = self.lineIndex + 1;
+                            self.testDraw();
+                
+                        }
+                       
+                        
+                    }
+
+                   
+
+                    if(p2){
+                        if (deltatime >= p2.o * 1000) {
+                            self.testcontext.strokeStyle = "#ff0000";
+                            
+                            if (pointIndex == 0) {
+                                self.testcontext.moveTo(p2.p.x, p2.p.y);
+
+                              // self.testcontext.moveTo(3, 54);
+                            }
+                            pointIndex = pointIndex + 1;
+                            self.pointIndex = pointIndex;
+                            console.info("开始画："+(new Date()).getTime());
+                            self.testcontext.lineTo(p2.p.x, p2.p.y);
+                           
+                            self.testcontext.stroke();
+                       
+                        }
+                    }
+                    
+                }, 10);
+
+            },
+            supendDraw: function () {
+                clearInterval(this.intervalHandle);
+            }
+        };
+
+*/
+    </script>
+</body>
