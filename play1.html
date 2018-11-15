@@ -271,8 +271,9 @@
                     goDraw();
                 }
                 if(startPlayTime == 0){
+                   startTimeOutDraw();
                     startPlayTime = (new Date()).getTime();
-                    startTimeOutDraw();
+                   
                 }
 
                 this.playing = true;
@@ -432,7 +433,10 @@
                 if(audio != null){
                     audio.pause();
                 }*/
-               RongIMLib.RongIMVoice.stop();
+
+                 AMR.util.pause();
+
+               
             },
             checkScreen:function(){
                 var self = this;

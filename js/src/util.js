@@ -45,6 +45,9 @@
         , play: function (floats) {
 
             this.element.play();
+        },
+        pause:function(){
+             this.element.pause();
         }
 
         /**
