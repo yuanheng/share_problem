@@ -143,7 +143,7 @@
 
                   </div>
                   <div class="btn_box_4">
-                      <div class="download_paly_4" v-on:click='goDraw'>继续播放</div>
+                      <div class="download_paly_4" v-on:click='startPlay'>继续播放</div>
                   </div>
 
                   <div class="tip_bg"></div>
@@ -169,14 +169,14 @@
 
 
     var drawData =JSON.parse(sessionStorage.getItem("drawJson"));
-
+    var videoTime = sessionStorage.getItem("videoTime");
 
     var testcanvas ;
     var testcontext;
     var playingTime = 0;
     var startPlayTime=0;
-    var playTotalTime= sessionStorage.getItem("playTotalTime");
-    var lineIndex = 0;
+
+    var playEnd = 0;
     var pointIndex = 0;
     var currentLineIndex = 0;
     var currentPointIndex = 0;
@@ -211,6 +211,7 @@
 
         },
         created:function(){
+            var self = this;
           this.setPlayUrl();
           this.getData();
           this.checkScreen();
@@ -221,6 +222,18 @@
             }).decode(tempPlayData);
 
           AMR.util.init(samples);
+
+          AMR.util.element.onended = function(){
+              self.stopShowTime();
+              stopTimeOutDraw();
+              //播放完毕重置所有操作
+              self.resetData();
+              self.playTimeShow = videoTime;
+              startPlayTime = 0;
+              playEnd = 1;
+              playingTime = 0;
+
+          };
 
 
         },
@@ -258,21 +271,26 @@
             showWin4:function(){
                 this.isShow = !this.isShow;
                 this.isShowWin4 = !this.isShowWin4;
-                 if(!this.isShowWin4){
+                if(!this.isShowWin4){
                   this.showNumWin = 0;
                 }
             },
             startPlay:function(){
 
+                if(playEnd == 1){
+                    playEnd = 0;
+                    testcontext.clearRect(0,0,testcanvas.width,testcanvas.height);
+
+                }
+
                 if(startPauseTime != 0){
-                    stopPauseTime = (new Date()).getTime();
-                    //同时保存该次暂停的时间值
-                    pauseTimeArray.push(stopPauseTime - startPauseTime);
+
                     goDraw();
+                    this.showWin3();
                 }
                 if(startPlayTime == 0){
                    startTimeOutDraw();
-                    startPlayTime = (new Date()).getTime();
+                   startPlayTime = (new Date()).getTime();
                    
                 }
 
@@ -280,7 +298,7 @@
                
                 showPlayTimer = setInterval(this.showTime,10);
 
-                drawContext = setInterval(drawPoint,10);
+
                 this.playMusic();
 
 
@@ -293,28 +311,7 @@
 
                 stopTimeOutDraw();
                 this.stopMusic();
-            },
-            play:function(){
-
-
-                this.playing = !this.playing;
-
-                if(!this.playing){
-                  this.playBtnImg='img/play_stop.png';
-                  this.showWin3();
-                  this.stopMusic();
-                  this.stopShowTime();
-                  this.stopDraw();
-                }else{
-                  this.playBtnImg='img/play_start.png';
-                  this.playMusic();
-                  this.showTime();
-
-                  this.startDraw();
-
-                }
-
-
+                this.showWin3();
             },
             goBack:function(){
                 window.location.href='share_problem.html';
@@ -341,11 +338,6 @@
                 }
             },
             setPlayUrl:function(){
-              /*
-                var self = this;
-                var audio = document.getElementById('myvideo');
-                audio.src = 'wrongResource/chengdu.mp3';
-                */
 
 
             },
@@ -354,63 +346,25 @@
 
             },
             showTime:function(){
+                var currentPlayTime = AMR.util.currentTime();
 
+                console.info("currentPlayTime:"+currentPlayTime);
 
-                playingTime = playingTime+10;
-                var playTime = playingTime / 1000;
-                var minute=Math.floor(playTime/60%60);
-                var second=Math.floor(playTime%60);
+                playingTime = currentPlayTime * 1000;
+                var minute=Math.floor(currentPlayTime/60%60);
+                var second=Math.floor(currentPlayTime%60);
                 if(minute<10){
-                        minute = "0" + minute;
+                    minute = "0" + minute;
                 }
                 if(second<10){
-                      second = "0" + second;
+                    second = "0" + second;
                 }
 
                 this.playTimeShow = minute+":"+second;
-
-
-                if(playingTime > playTotalTime){
-                    this.stopShowTime();
-                    stopTimeOutDraw();
-
-                    //播放完毕重置所有操作
-                    this.resetData();
-                    this.playTimeShow = "00:00";
-                    var c=document.getElementById("canvas");
-                    var cxt=c.getContext("2d");
-
-                    cxt.fillStyle="#FFFFFF";
-                    cxt.beginPath();
-                    cxt.fillRect(0,0,c.width,c.height);
-                    cxt.closePath();
-
-                }
-
             },
             playMusic:function(){
 
                 AMR.util.play();
-                /*
-                RongIMLib.RongIMVoice.init();
-                RongIMLib.RongIMVoice.play(sessionStorage.getItem("amrData"));
-                */
-
-               /*
-
-                var self = this;
-                var audio = document.getElementById('myvideo');
-                audio.play();
-                //音频播放完毕
-                audio.onended = function(){
-                   console.info("音频播放完毕。。。");
-                   //self.playTimeShow = '00:00';
-                   self.playTime = 0;
-                   clearInterval(self.showTimeSetIntervel);
-                   //调用stopplay方法，
-                   self.resetData();
-
-                };*/
 
             },
             resetData:function(){
@@ -418,6 +372,7 @@
                 this.playing = false;
                 this.isShow = true;
                 this.isShowWin4 = true;
+
                 //播放时间
                 playingTime = 0;
                 pauseTimeArray=[];
@@ -516,6 +471,7 @@
             }
         }
     }
+
     function stopTimeOutDraw(){
         console.info("stop ===== currentLineIndex:"+currentLineIndex+"|| currentPointIndex:"+currentPointIndex);
         //清楚之前点的timeout函数
@@ -535,20 +491,8 @@
     }
 
 
-    function drawPoint(){
-        testcanvas = document.getElementById("canvas");
-        testcontext = testcanvas.getContext('2d');
-        testcontext.strokeStyle = "red";
-        testcontext.lineWidth=2;
-        if(pointIndex == 0){
-
-        }
-    }
-
     function tempDraw(lineIndex,pointIndex,point){
-
-
-
+        console.info("每个点的延迟时间："+point.o*1000);
         var temp = setTimeout(function(){
 
             testcanvas = document.getElementById("canvas");
@@ -556,7 +500,7 @@
             testcontext.strokeStyle = "red";
             testcontext.lineWidth=2;
 
-                console.info(lineIndex+'||'+pointIndex+"||"+point);
+
 
                 if(pointIndex == 0){
                     testcontext.moveTo(point.p.x,point.p.y);
@@ -577,106 +521,5 @@
         
     }
 
-
-
-
-/*
-      Drawing.prototype = {
-            init: function (canvas,options) {
-                this.isButtonDown = false;
-                this.historyStroker = options.historyStroker;
-                this.curStroker = { color: '#000000', path: [] };
-                this.lastX = 0;
-                this.lastY = 0;
-                this.curColor = '#000000';
-                this.toolbarspos = {};
-                this.lineIndex=0;
-                this.pointIndex = 0;
-                this.intervalHandle = null;
-                this.testcanvas = null;
-                this.testcontext = null;
-
-            },
-            testDraw: function (flag) {
-              
-                var self = this;
-               
-                if (!this.startplay) {
-                    this.startplay = (new Date()).getTime();
-                }
-                if (!this.lineIndex) {
-                    this.lineIndex = 0;
-                }
-                var p = this.historyStroker;
-                var curLine = p[this.lineIndex], curColor = 'red', p2;
-                var pointIndex = this.pointIndex;
-                self.lineIndex = this.lineIndex;
-                if (!self.testcanvas) {
-                    self.testcanvas = document.getElementById("canvas");
-                    self.testcontext = this.testcanvas.getContext('2d');
-                    self.testcontext.beginPath();
-                }
-
-                //self.intervalHandle = null;
-        　　    
-                self.testcontext.strokeStyle = "#ff0000";
-                if (this.intervalHandle) return;
-
-                self.intervalHandle = window.setInterval(function (flag) {
-                    console.info("开始方法："+(new Date()).getTime());
-                    var deltatime = (new Date()).getTime() - self.startplay;
-
-                    if(window.playClickNum > 2){
-
-                        deltatime = deltatime + p[self.lineIndex].o * 1000;
-                    }
-                    p2 = p[self.lineIndex].pointbeans[pointIndex];
-
-                   
-
-                    //绘制完成一条线
-                    if (!p2) {
-                        window.clearInterval(self.intervalHandle);
-                        self.pointIndex = 0;
-                        self.intervalHandle = null;
-                        if (self.lineIndex < p.length - 1) {
-                            self.lineIndex = self.lineIndex + 1;
-                            self.testDraw();
-                
-                        }
-                       
-                        
-                    }
-
-                   
-
-                    if(p2){
-                        if (deltatime >= p2.o * 1000) {
-                            self.testcontext.strokeStyle = "#ff0000";
-                            
-                            if (pointIndex == 0) {
-                                self.testcontext.moveTo(p2.p.x, p2.p.y);
-
-                              // self.testcontext.moveTo(3, 54);
-                            }
-                            pointIndex = pointIndex + 1;
-                            self.pointIndex = pointIndex;
-                            console.info("开始画："+(new Date()).getTime());
-                            self.testcontext.lineTo(p2.p.x, p2.p.y);
-                           
-                            self.testcontext.stroke();
-                       
-                        }
-                    }
-                    
-                }, 10);
-
-            },
-            supendDraw: function () {
-                clearInterval(this.intervalHandle);
-            }
-        };
-
-*/
     </script>
 </body>

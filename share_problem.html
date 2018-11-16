@@ -228,9 +228,9 @@
                         	//计算总的播放时长
 
 	                    	var videoTime = wrongTitle.videoTime;
-	                    	var tempTime = videoTime.split(":");
-	                    	var playTotalTime = tempTime[0] * 60 + tempTime[1];
-	                    	sessionStorage.setItem('playTotalTime',playTotalTime*1000);
+
+
+	                    	sessionStorage.setItem('videoTime',videoTime);
 	                    	if(wrongTitle.likeCount){
                                 sessionStorage.setItem("likeCount",wrongTitle.likeCount);
 							}else{

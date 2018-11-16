@@ -91,8 +91,7 @@ AMRDecoder.prototype.process = function (data) {
 	}
 	
 	while (offset < data.length) {	
-		/* Benchmarking */
-		benchmark && console.time('decode_packet_offset_' + offset);
+
 
 		/* Read bits */
 		len = this.read(offset, data);
@@ -103,8 +102,6 @@ AMRDecoder.prototype.process = function (data) {
   		/* Write the samples to the output buffer */
   		this.write(output_offset, this.frame_size, buffer_addr);
 
-  		/* Benchmarking */
-  		benchmark && console.timeEnd('decode_packet_offset_' + offset);
 
   		offset += len + 1;
   		output_offset += this.frame_size;

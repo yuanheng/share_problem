@@ -1,6 +1,6 @@
 (function (global) {
     global.util = {
-        element:'',
+        element: '',
         toString: function (data, fn) {
             var BlobBuilder = global["WebKitBlobBuilder"] || global["MozBlobBuilder"] || global["BlobBuilder"];
 
@@ -12,48 +12,47 @@
                 fn(e.target.result);
             };
             reader.readAsBinaryString(bb.getBlob());
-        }
-
-        , parseInt: function (chr) {
+        },
+        parseInt: function (chr) {
             return Binary.toUint8(chr);
-        }
-
-        , mozPlay: function (floats) {
+        },
+        mozPlay: function (floats) {
             var audio, pos = 0, size;
             if ((audio = new Audio())["mozSetup"]) {
                 audio.mozSetup(1, 8000);
 
                 while (pos < floats.length) {
                     size = (floats.length - pos > 800) ? 800 : floats.length - pos;
-                    audio.mozWriteAudio(floats.subarray(pos, pos+size));
+                    audio.mozWriteAudio(floats.subarray(pos, pos + size));
                     pos += size;
                 }
             }
-        }
-        ,init:function(floats){
+        },
+        init: function (floats) {
             var waveData = PCMData.encode({
                 sampleRate: 8000,
-                channelCount:   1,
+                channelCount: 1,
                 bytesPerSample: 2,
                 data: floats
             });
 
             var element = new Audio();
-            element.src = "data:audio/wav;base64,"+btoa(waveData);
+            element.src = "data:audio/wav;base64," + btoa(waveData);
+
             this.element = element;
-        }
-        , play: function (floats) {
+
+        },
+        play: function (floats) {
 
             this.element.play();
         },
-        pause:function(){
-             this.element.pause();
-        }
-
-        /**
-         * @author LearnBoost
-         */
-        , merge: function (target, additional, deep, lastseen) {
+        pause: function () {
+            this.element.pause();
+        },
+        currentTime:function(){
+            return this.element.currentTime;
+        },
+        merge: function (target, additional, deep, lastseen) {
             var seen = lastseen || []
                 , depth = typeof deep == 'undefined' ? 2 : deep
                 , prop;
@@ -70,13 +69,10 @@
             }
 
             return target;
-        }
-
-        /**
-         * @author LearnBoost
-         */
-        , inherit: function (ctor, ctor2) {
-            function f() {};
+        },
+        inherit: function (ctor, ctor2) {
+            function f() {
+            };
             f.prototype = ctor2.prototype;
             ctor.prototype = new f;
         }

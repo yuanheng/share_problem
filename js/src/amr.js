@@ -8,19 +8,19 @@ function AMR(params) {
 
 	this.ring_size = 2304 || params.ring_size;
 	
-  this.linoffset = 0;
+  	this.linoffset = 0;
 
-  this.ringoffset = 0;
+  	this.ringoffset = 0;
 
-  this.modoffset = 0;
+  	this.modoffset = 0;
     
-  this.linbuf = new Int16Array(this.frame_size);
+  	this.linbuf = new Int16Array(this.frame_size);
 
-  this.ring = new Int16Array(this.ring_size * 2);
+  	this.ring = new Int16Array(this.ring_size * 2);
 
-  this.modframes = new Int16Array(this.frame_size);
+  	this.modframes = new Int16Array(this.frame_size);
   
-  this.framesbuf = [];
+  	this.framesbuf = [];
 	
 	this.decoder = new AMRDecoder(params);
 	this.encoder = new AMREncoder(params);	
