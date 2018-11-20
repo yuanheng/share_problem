@@ -40,12 +40,15 @@ html,body {
     width: 0.29rem;
     height: 0.29rem;
 }
-.title_box p{
+.title_box div{
+    height: 0.29rem;
+    line-height: 0.29rem;
     font-family: HiraginoSansGB-W3;
     font-size: 0.20rem;
     color: #333333;
     letter-spacing: 0;
-    margin-left: 1.035rem;
+    text-align: center;
+    width: 100%;
 }
 .content{
     flex: 1;

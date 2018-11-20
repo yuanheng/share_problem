@@ -122,7 +122,7 @@ html,body {
 	width: 0.3945rem;
 	height: 0.3945rem;
 	margin: 0 auto;
-	transform: rotate(90deg);
+	
 	z-index: 100;
 }
 .play_operator_num{
@@ -240,7 +240,7 @@ html,body {
 	letter-spacing: 0;
 	line-height: 0.33rem;
 	text-align: center;
-
+	z-index:300;
 }
 .teacher_box{
 	display: flex;

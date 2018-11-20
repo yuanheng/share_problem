@@ -247,17 +247,10 @@
                 }else{
                     device = 'iPhone'
                 }
-                let data={
-                    "params":{
-                        "identification":this.wrongTitleId,
-                        "clazzGroupId":this.clazzId
-                    }
-                }
-
                 this.$http({
                     url:url,
                     method: 'POST',
-                    data:data,
+                    data:'{"params":{"wrongTitleId":'+this.wrongTitleId+',"clazzId":'+this.clazzId+'}}',
                     headers:{
                         'Content-Type': 'application/json',
                         'version':'2.4.0',
@@ -265,10 +258,10 @@
                     }
 
                 }).then(function (response) {
-                    var result = response.data;
+                    var result = response.body;
 
                     //处理服务器异常信息提示
-                    if(result.code != 200){
+                    if(response.status!=200 || result.code != 200){
                         window.location.href='error.html';
                         return;
                     }

@@ -45,9 +45,9 @@
 <body id="page_body">
 	<div class="page" id="body">
 		<div class="container">
-			<div class="title_box">
-				<img src="img/back.png">
-				<p>错题分享</p>
+			<div class="title_box" v-show="weixin">
+
+				<div>错题分享</div>
 			</div>
 			<div class="problem_box">
 				<div class="problem_title_box">
@@ -74,7 +74,7 @@
 					<p class="problem_author">发布者：{{wrongTitle.nickname}}</p>
 				</div>
 				<div class="problem_desc">
-					<div class="problem_desc_title">{{wrongTitle.modelType}}：</div>
+					<div class="problem_desc_title">{{clazzGroup.clazzTempName}}：</div>
 					<h1></h1>
 					<div class="problem_desc_content">
 						{{wrongTitle.content}}
@@ -127,7 +127,7 @@
 						</div>
 					</div>
 					<div class="tip">
-						父母是孩子教育的第一步，关爱孩子家校共育，不做“失陪父母”。教师秘书
+						父母是孩子教育的第一步，关爱孩子家校共育，不做“失陪父母”。
 					</div>
 				</div>
 				<div class="sharp_bg"></div>
@@ -171,6 +171,22 @@
 	</div>
 	
 	<script type="text/javascript">
+        //var url = "http://10.98.24.67:8082/business/wrongtitle/getShareWrongTitleByIdAndClazzId.json";
+
+        var url = "wrong.txt";
+
+        //判断是否是微信浏览器的函数
+        function isWeiXin(){
+            //window.navigator.userAgent属性包含了浏览器类型、版本、操作系统类型、浏览器引擎类型等信息，这个属性可以用来判断浏览器类型
+            var ua = window.navigator.userAgent.toLowerCase();
+            //通过正则表达式匹配ua中是否含有MicroMessenger字符串
+            if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
 
 		var page = new Vue({
   			el: '#body',
@@ -181,7 +197,8 @@
   				wrongTitle:{},
   				otherWrongTitleList:[],
   				clazzId:0,
-  				wrongTitleId:0
+  				wrongTitleId:0,
+				weixin:false
 
   			},
   			created:function(){
@@ -190,6 +207,7 @@
   				console.info("classId:"+classId);
   				var wrongtitleId = this.getParam('wrongtitleId');
   				console.log('wrongTitleId:'+wrongtitleId);
+  				this.weixin = !isWeiXin();
   			},
   			methods:{
   				getlist:function () {
@@ -205,7 +223,7 @@
                         device = 'iPhone'
 					}
                 	this.$http({
-                		url:'wrong.txt',
+                		url:url,
                 		method: 'POST',
                 		data:'{"params":{"wrongTitleId":'+this.wrongTitleId+',"clazzId":'+this.clazzId+'}}',
                 		headers:{
@@ -220,9 +238,10 @@
 	                    	//处理服务器异常信息提示
 	                    	if(response.status!=200 || result.code != 200){
 	                        	window.location.href='error.html';
-	                        	return ;
+	                        	return;
 	                    	}
 	                    	this.clazzGroup = result.data.clazzGroup;
+	                    	sessionStorage.setItem("code",result.data.clazzGroup.code);
 	                    	var wrongTitle = result.data.wrongTitle;
 
                         	//计算总的播放时长
@@ -249,7 +268,10 @@
 							}
 
 	                    	wrongTitle.picUrl = wrongTitle.pictures[0].url;
+
 	                    	this.wrongTitle = result.data.wrongTitle;
+
+	                    	sessionStorage.setItem("sourceImg",wrongTitle.picUrl);
 
 	                    	var otherWrongTitleList = result.data.otherWrongTitleList;
 	                    	for(var i = 0; i < otherWrongTitleList.length; i++){
@@ -371,19 +393,24 @@
   					this.showDownloadAppTip();
   				},
   				openTeacherApp:function(){
-  					try {
-   						window.location.href = "openteacher://open?code=&openType=joinClazz&clazzId=";//
-					}catch(err){
-     					window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.open.teachermanager";//android 下载地址
-					}
+
+                    window.location.href = "openteacher://open?code=&openType=joinClazz&clazzId=";
+
+                    setTimeout(function () {
+                        window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.open.teachermanager";//android 下载地址
+
+                    },2000);
+
+
 	
   				},
   				openParentApp:function(){
-  					try{
-  						window.location.href = "openparents://open?code=&openType=joinClazz&clazzId=";//
-  					}catch(err){
-						window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.open.parentmanager";//android 下载地址
-  					}
+                    window.location.href = "openparents://open?code=&openType=joinClazz&clazzId=";
+
+                    setTimeout(function(){
+                        window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.open.parentmanager";
+					},2000);
+
   				},
   				getParam:function(paramName) { 
     				paramValue = "", isFound = !1; 

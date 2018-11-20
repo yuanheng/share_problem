@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
 	<title>错题播放</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
@@ -47,16 +47,7 @@
                     document.documentElement.style.fontSize = fontValue/6.67 + 'px';
 
                 };
-                var mql = window.matchMedia("(orientation: portrait)");
-                function onMatchMeidaChange(mql){
-                    if(mql.matches) {
-                        // 竖屏
-                        console.info("竖屏");
-                        
-                    }
-                }
-                onMatchMeidaChange(mql);
-                mql.addListener(onMatchMeidaChange);
+
         })();
     </script>
 </head>
@@ -82,6 +73,9 @@
           </div>   
           <div class="play_canvas_box">
               <div class="play_canvas">
+                  <!--
+                  <canvas id='canvas'  width="510" height="320" class="" style="background-image:url('source.jpg')"/>
+                  -->
                   <canvas id='canvas'  width="510" height="320" class="" style="background-image:url('source.jpg')"/>
               </div>
           </div>
@@ -109,10 +103,10 @@
         <div id="win_bg" class="win_bg_box" v-show='isShow' style="display:none">
             <div class="win_bg"></div>
             <div class="download_app_tip" v-show='isShowDownladAppWin' style="display:none" ref='downloadAppTip'>
-                <div class="closed_box" v-on:click="showDownloadAppWin"></div>
+                <div class="closed_box" v-on:click="closeDownloadApp"></div>
                 <div class="win_title">提示</div>
                 <div class="tip_message">
-                    <div class="class_num">245524</div>
+                    <div class="class_num">{{code}}</div>
                     <div class="tip_message">请牢记此班级号（加入班级时使用）</div>
                 </div>
                 <div class="app_type_box">
@@ -132,7 +126,7 @@
                 <div class="download_app_bg"></div>
             </div>
             <div class="download_tip" v-show='isShowWin3' style="display:none" ref="downloadTip">
-                <div class="closed_box" v-on:click="showWin3"></div>
+                <div class="closed_box" v-on:click="closeWin3"></div>
                 <div class="win_title">提示</div>
                 <div class="tip_download_message_play">
                     <p class="tip_message_p">下载APP，观看体验更好，还可查看更多本班错题信息哦！</p>
@@ -150,12 +144,15 @@
                 </div>
             </div>
             <div class="download_tip" v-show='isShowWin4' style="display:none"  ref="downloadTip">
-                <div class="closed_box" v-on:click="showWin4"></div>
+                <div class="closed_box" v-on:click="closeWin4"></div>
                 <div class="win_title">提示</div>
                 <div class="tip_download_message">下载APP后，还有更多班级内容等您查看哦！</div>
                 <div class="tip_download_bt" v-on:click="downloadApp">下载APP</div>
                 <div class="tip_bg"></div>
             </div>
+
+        </div>
+        <div id="win_bg_error" class="win_bg_box" v-show="isShowErrorWin" style="display: none">
             <div class="download_tip_shu" v-show='isShowErrorWin' style="display:none"  ref="downloadTip">
 
                 <div class="win_title_shu">提示</div>
@@ -175,19 +172,16 @@
     var testcontext;
     var playingTime = 0;
     var startPlayTime=0;
-
     var playEnd = 0;
-    var pointIndex = 0;
     var currentLineIndex = 0;
     var currentPointIndex = 0;
-
-    var timeOutArray=[]
-
-    var pauseTimeArray=[];
     var startPauseTime = 0;
     var stopPauseTime = 0;
     var showPlayTimer;
-    var drawContext;
+    var currentWinIndex = 0;
+
+    var drawCanvasInterval;
+    var code = sessionStorage.getItem("code");
 
     var page = new Vue({
         el: '#play_page',
@@ -195,6 +189,7 @@
           isPageShow:false,
           isShow:false,
           isShowDownladAppWin:false,
+          isErrorShow:false,
           isShowWin3:false,
           isShowWin4:false,
           playBtnImg:'img/play_stop.png',
@@ -209,12 +204,14 @@
           prePointDealTime:0,
           playClickNum:0,
 
+
         },
         created:function(){
-            var self = this;
-          this.setPlayUrl();
+          var self = this;
+
           this.getData();
           this.checkScreen();
+
           window.addEventListener('resize', this.checkScreen, false);
           var tempPlayData = sessionStorage.getItem("play_data");
           var samples = new AMR({
@@ -225,13 +222,18 @@
 
           AMR.util.element.onended = function(){
               self.stopShowTime();
-              stopTimeOutDraw();
+              stopDrawLinePoint();
+              self.showWin4();
               //播放完毕重置所有操作
               self.resetData();
               self.playTimeShow = videoTime;
               startPlayTime = 0;
               playEnd = 1;
               playingTime = 0;
+              testcanvas = null;
+              testcontext = null;
+
+
 
           };
 
@@ -245,8 +247,11 @@
                 var commentCount = sessionStorage.getItem("commentCount");
                 var likeCount = sessionStorage.getItem("likeCount");
                 var collectCount = sessionStorage.getItem("collectCount");
+                var code = sessionStorage.getItem("code")
+                if(!code){
+                    window.location.href='error.html';
+                }
 
-                this.historyStroker = drawData;
                 this.likeCount = likeCount;
                 this.commentCount = commentCount;
                 this.collectCount = collectCount;
@@ -254,91 +259,137 @@
 
             },
             showDownloadAppWin:function(){
-                this.isShow = !this.isShow;
+                this.isShow = true;
+                this.isShowDownladAppWin = true;
 
-                this.isShowDownladAppWin = !this.isShowDownladAppWin;
-                if(!this.isShowDownladAppWin){
-                  this.showNumWin = 0;
-                }
+            },
+            closeDownloadApp:function(){
+                this.isShow = false;
+                this.isShowDownladAppWin = false;
+
+
+
             },
             showWin3:function(){
-                this.isShow = !this.isShow;
-                this.isShowWin3 = !this.isShowWin3;
-                if(!this.isShowWin3){
-                  this.showNumWin = 0;
-                }
+                this.isShow = true;
+                this.isShowWin3 = true;
+
+            },
+            closeWin3:function(){
+                this.isShow = false;
+                this.isShowWin3 = false;
+
             },
             showWin4:function(){
-                this.isShow = !this.isShow;
-                this.isShowWin4 = !this.isShowWin4;
-                if(!this.isShowWin4){
-                  this.showNumWin = 0;
-                }
+                this.isShow = true;
+                this.isShowWin4 = true;
+
+            },
+            closeWin4:function(){
+                this.isShow = false;
+                this.isShowWin4 = false;
+            },
+            showErrorWin:function(){
+                this.isPageShow = false;
+
+                this.isShowErrorWin = true;
+                //记录一下当前显示的窗口
+
+
+
+            },
+            closeErrorWin:function(){
+                this.isPageShow = true;
+                this.isShowErrorWin = false;
+
+
             },
             startPlay:function(){
 
+                if(!testcontext){
+                    testcanvas = document.getElementById("canvas");
+                    testcontext = testcanvas.getContext('2d');
+                    testcontext.strokeStyle = "red";
+                    testcontext.lineWidth=2;
+                }
+
                 if(playEnd == 1){
                     playEnd = 0;
-                    testcontext.clearRect(0,0,testcanvas.width,testcanvas.height);
+                   // testcontext.clearRect(0,0,testcanvas.width,testcanvas.height);
+                    testcanvas = document.getElementById("canvas");
+                    testcanvas.height = 320;
+                    testcanvas.width = 510;
+                    testcontext = testcanvas.getContext('2d');
+                    testcontext.strokeStyle = "red";
+                    testcontext.lineWidth=2;
 
                 }
 
                 if(startPauseTime != 0){
 
-                    goDraw();
-                    this.showWin3();
+                    drawCanvasInterval = setInterval(startDrawLinePoint,10);
+                    this.closeWin3();
                 }
                 if(startPlayTime == 0){
-                   startTimeOutDraw();
-                   startPlayTime = (new Date()).getTime();
+                    //startTimeOutDraw();
+
+                    drawCanvasInterval = setInterval(startDrawLinePoint,10);
+                    startPlayTime = (new Date()).getTime();
                    
                 }
 
                 this.playing = true;
                
                 showPlayTimer = setInterval(this.showTime,10);
-
-
                 this.playMusic();
 
 
             },
             stopPlay:function(){
+                this.showWin3();
+
                 this.playing = false;
                 startPauseTime = (new Date()).getTime();
 
                 this.stopShowTime();
 
-                stopTimeOutDraw();
+                stopDrawLinePoint();
                 this.stopMusic();
                 this.showWin3();
             },
             goBack:function(){
-                window.location.href='share_problem.html';
+                location.href='share_problem.html';
             },
             downloadApp:function(){
-                this.isShow = true;
-                this.isShowWin3 = false;
-                this.isShowWin4 = false;
-                this.isShowDownladAppWin = true;
-            },
-            openTeacherApp:function(){
-                try {
-                    window.location.href = "openteacher://open?code=&openType=joinClazz&clazzId=";//
-                }catch(err){
-                    window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.open.teachermanager";//android 下载地址
+                if(startPlayTime > 0){
+                    this.stopPlay();
+                    this.closeWin3();
                 }
+
+                this.closeWin4();
+                this.showDownloadAppWin();
+
+
+            },
+
+            openTeacherApp:function(){
+
+                window.location.href = "openteacher://open?code=&openType=joinClazz&clazzId=";
+
+                setTimeout(function () {
+                    window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.open.teachermanager";//android 下载地址
+
+                },2000);
+
+
 
             },
             openParentApp:function(){
-                try{
-                    window.location.href = "openparents://open?code=&openType=joinClazz&clazzId=";//
-                }catch(err){
-                    window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.open.parentmanager";//android 下载地址
-                }
-            },
-            setPlayUrl:function(){
+                window.location.href = "openparents://open?code=&openType=joinClazz&clazzId=";
 
+                setTimeout(function(){
+                    window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.open.parentmanager";
+                },2000);
 
             },
             stopShowTime:function(){
@@ -347,8 +398,6 @@
             },
             showTime:function(){
                 var currentPlayTime = AMR.util.currentTime();
-
-                console.info("currentPlayTime:"+currentPlayTime);
 
                 playingTime = currentPlayTime * 1000;
                 var minute=Math.floor(currentPlayTime/60%60);
@@ -370,16 +419,14 @@
             resetData:function(){
 
                 this.playing = false;
-                this.isShow = true;
-                this.isShowWin4 = true;
-
                 //播放时间
                 playingTime = 0;
-                pauseTimeArray=[];
+
                 startPauseTime=0;
                 stopPauseTime=0;
                 currentLineIndex=0;
                 currentPointIndex=0;
+
 
             },
             stopMusic:function(){
@@ -397,46 +444,47 @@
                 var self = this;
                 var mql = window.matchMedia("(orientation: portrait)");
                 if(mql.matches) {
-                      self.isShow = true;
-                      self.isShowErrorWin = true;
-                      if(self.isShowDownladAppWin){
-                          self.showNumWin = 1;
-                      }
 
-                      self.isShowDownladAppWin=false;
+                     //如果当前切换到竖屏正在播放则 暂停播放提示下载窗口
+                    if(startPlayTime > 0){
+                        self.stopPlay();
 
-                      if(self.isShowWin3){
-                          self.showNumWin = 2;
-                      }
-                      if (self.isShowWin4) {
-                          self.showNumWin = 3;
-                      }
+                    }
+                    //判断当前是否有窗口展示
+                    if(self.isShowDownladAppWin){
+                        currentWinIndex = 1;
+                    }
 
-                      self.isShowWin3=false,
-                      self.isShowWin4=false,
-                      self.isPageShow = false;
+                    if(self.isShowWin3){
+                        currentWinIndex = 2;
+                    }
+
+                    if(self.isShowWin4){
+                        currentWinIndex = 3;
+                    }
+                    self.closeDownloadApp();
+                    self.closeWin3();
+                    self.closeWin4();
+
+                    self.showErrorWin();
                 }else{
+                    self.closeErrorWin();
+                    if(startPlayTime > 0 && currentWinIndex != 2){
+                       self.startPlay();
+                    }
+                    if(currentWinIndex == 1){
+                        self.showDownloadAppWin();
+                    }
+                    if(currentWinIndex == 2){
+                        self.showWin3();
+                    }
+                    if(currentWinIndex == 3){
+                        self.showWin4();
+                    }
+                    currentWinIndex = 0;
 
-                      self.isShowErrorWin = false;
-                      self.isPageShow = true;
 
 
-                      if(self.showNumWin == 0){
-                         self.isShow = false;
-                       } else{
-
-                             if(self.showNumWin == 1){
-                                self.isShowDownladAppWin = true;
-                              }
-
-                              if(self.showNumWin == 2){
-                                self.isShowWin3 = true;
-                              }
-
-                              if(self.showNumWin == 3){
-                                self.isShowWin4 = true;
-                              }
-                       }
 
                 }
 
@@ -445,81 +493,50 @@
       });
 
 
+    function stopDrawLinePoint(){
+        clearInterval(drawCanvasInterval);
+    }
+    function startDrawLinePoint() {
+        if(currentPointIndex == drawData[currentLineIndex].pointbeans.length){
+            currentLineIndex = currentLineIndex + 1;
+            currentPointIndex = 0;
+        }
+        if(currentLineIndex == drawData.length){
+            currentLineIndex = 0;
+            currentPointIndex = 0;
+            clearInterval(drawCanvasInterval);
+        }
+        var point = drawData[currentLineIndex].pointbeans[currentPointIndex];
 
 
-    function startTimeOutDraw(){
+        if((playingTime - point.o*1000) > 0){
 
-        for(var j = 0; j < drawData.length;j++){
-            var tempPoints = drawData[j];
-            for(var i=0; i<tempPoints.pointbeans.length;i++){
-                tempDraw(j,i,tempPoints.pointbeans[i]);
+            if(currentPointIndex == 0){
+
+                testcontext.moveTo(point.p.x,point.p.y);
+
             }
-        }
+            var tempPoint = drawData[currentLineIndex].pointbeans[currentPointIndex];
 
-    }
+            if(currentPointIndex > 0){
 
-    function goDraw() {
-        //当前点
-        for(var i=currentPointIndex;i<drawData[currentLineIndex].pointbeans.length;i++){
-            tempDraw(currentLineIndex,i,drawData[currentLineIndex].pointbeans[i]);
-        }
-        for(var j=currentLineIndex;j < drawData.length;j++){
-            var tempPoints = drawData[j].pointbeans;
-
-            for(var i=0; i<tempPoints.length;i++){
-                tempDraw(j,i,tempPoints[i]);
+                testcontext.lineTo(tempPoint.p.x,tempPoint.p.y);
             }
+            testcontext.stroke();
+            currentPointIndex = currentPointIndex + 1;
+
+
         }
     }
 
-    function stopTimeOutDraw(){
-        console.info("stop ===== currentLineIndex:"+currentLineIndex+"|| currentPointIndex:"+currentPointIndex);
-        //清楚之前点的timeout函数
-        var pointNum = 0;
-        for(var i=0;i<drawData.length;i++){
-           
-            pointNum = pointNum + drawData[i].pointbeans.length;
-        }
-
-
-        for(var i =0; i < pointNum; i++){
-            window.clearTimeout(timeOutArray[i]);
-
-        }
-
-        timeOutArray=[];
-    }
-
-
-    function tempDraw(lineIndex,pointIndex,point){
-        console.info("每个点的延迟时间："+point.o*1000);
-        var temp = setTimeout(function(){
-
-            testcanvas = document.getElementById("canvas");
-            testcontext = testcanvas.getContext('2d');
-            testcontext.strokeStyle = "red";
-            testcontext.lineWidth=2;
 
 
 
-                if(pointIndex == 0){
-                    testcontext.moveTo(point.p.x,point.p.y);
-                }
-                if(pointIndex > 0){
-                    testcontext.lineTo(point.p.x,point.p.y);
 
 
-                }
-                testcontext.stroke();
-                currentLineIndex = lineIndex;
-                currentPointIndex = pointIndex;
 
 
-            },point.o*1000 - playingTime);
 
-        timeOutArray.push(temp);
-        
-    }
 
     </script>
 </body>

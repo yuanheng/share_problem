@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="3dc800b1-0a94-426c-ade7-e860792b7591" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/play11.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wrongtitle_share.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/405a266e6dbc4d099ab33aff48912afc/154657811.amr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/405a266e6dbc4d099ab33aff48912afc/completed.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/405a266e6dbc4d099ab33aff48912afc/draw.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/405a266e6dbc4d099ab33aff48912afc/source.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/error.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/error.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/play.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/play.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/share_problem.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/share_problem.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ddb7acf5ffc541409617c5597bcb8c49/222810303.amr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ddb7acf5ffc541409617c5597bcb8c49/completed.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ddb7acf5ffc541409617c5597bcb8c49/draw.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/error.html" beforeDir="false" afterPath="$PROJECT_DIR$/error.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/comment.png" beforeDir="false" afterPath="$PROJECT_DIR$/img/comment.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/favorite.png" beforeDir="false" afterPath="$PROJECT_DIR$/img/favorite.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/flower.png" beforeDir="false" afterPath="$PROJECT_DIR$/img/flower.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/lib/mediacapture.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/lib/pcmdata.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/lib/swfobject.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/src/amr.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/src/decoder.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/src/encoder.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/src/libamr-nb.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/src/util.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/voice.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/play.html" beforeDir="false" afterPath="$PROJECT_DIR$/play.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/play1.html" beforeDir="false" afterPath="$PROJECT_DIR$/play1_bk.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/share_problem.html" beforeDir="false" afterPath="$PROJECT_DIR$/share_problem_bk.html" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="885479303">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="12" />
+          <entry key="project.open.time.0" value="1" />
+          <entry key="project.open.time.1" value="2" />
+          <entry key="project.open.time.10" value="1" />
+          <entry key="project.open.time.2" value="4" />
+          <entry key="project.open.time.4" value="2" />
+          <entry key="project.open.time.6" value="1" />
+          <entry key="project.open.time.8" value="1" />
+          <entry key="project.open.time.9" value="1" />
+          <entry key="project.opened" value="13" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="css" value="8" />
+          <entry key="html" value="21" />
+          <entry key="js" value="7" />
+          <entry key="json" value="4" />
+          <entry key="png" value="1" />
+          <entry key="ts" value="2" />
+          <entry key="txt" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="CSS" value="8" />
+          <entry key="HTML" value="21" />
+          <entry key="Image" value="1" />
+          <entry key="JSON" value="4" />
+          <entry key="JavaScript" value="7" />
+          <entry key="PLAIN_TEXT" value="1" />
+          <entry key="TypeScript" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="css" value="444" />
+          <entry key="html" value="9933" />
+          <entry key="js" value="332" />
+          <entry key="txt" value="5" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="CSS" value="444" />
+          <entry key="HTML" value="9933" />
+          <entry key="JavaScript" value="332" />
+          <entry key="PLAIN_TEXT" value="5" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/wrong.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1170">
+              <caret line="65" column="33" lean-forward="true" selection-start-line="65" selection-start-column="33" selection-end-line="65" selection-end-column="33" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>playTimeShow</find>
+      <find>playBtnImg</find>
+      <find>showNumWin</find>
+      <find>prePointDealTime</find>
+      <find>playClickNum</find>
+      <find>historyStroker</find>
+      <find>playing</find>
+      <find>startDrawLinePoint</find>
+      <find>showTimeSetIntervel</find>
+      <find>drawCanvas</find>
+      <find>wrongRe</find>
+      <find>新手指引</find>
+      <find>sessionStorage</find>
+      <find>title_box</find>
+      <find>v-show</find>
+      <find>play_data</find>
+      <find>amrData</find>
+      <find>videoTime</find>
+      <find>playData</find>
+      <find>drawData</find>
+      <find>cod</find>
+      <find>sourceImg</find>
+      <find>collectCount</find>
+      <find>goback</find>
+      <find>play1.html</find>
+      <find>getData</find>
+      <find>code</find>
+      <find>play</find>
+      <find>play1</find>
+      <find>this.code</find>
+    </findStrings>
+    <replaceStrings>
+      <replace />
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/wrongResource/test.html" />
+        <option value="$PROJECT_DIR$/test.html" />
+        <option value="$PROJECT_DIR$/wrong.json" />
+        <option value="$PROJECT_DIR$/test1.html" />
+        <option value="$PROJECT_DIR$/js/io.js" />
+        <option value="$PROJECT_DIR$/js/microphone.js" />
+        <option value="$PROJECT_DIR$/js/src/amr.js" />
+        <option value="$PROJECT_DIR$/js/src/decoder.js" />
+        <option value="$PROJECT_DIR$/js/src/util.js" />
+        <option value="$PROJECT_DIR$/wrong.txt" />
+        <option value="$PROJECT_DIR$/js/lib/mediacapture.min.js" />
+        <option value="$PROJECT_DIR$/css/play.css" />
+        <option value="$PROJECT_DIR$/css/share_problem.css" />
+        <option value="$PROJECT_DIR$/share_problem.html" />
+        <option value="$PROJECT_DIR$/error.html" />
+        <option value="$PROJECT_DIR$/css/error.css" />
+        <option value="$PROJECT_DIR$/play1.html" />
+        <option value="$PROJECT_DIR$/share_problem_bk.html" />
+        <option value="$PROJECT_DIR$/wrongtitle_share.html" />
+        <option value="$PROJECT_DIR$/play.html" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="41" />
+    <option name="y" value="23" />
+    <option name="width" value="1639" />
+    <option name="height" value="1027" />
+  </component>
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="share_problem" type="b2602c69:ProjectViewProjectNode" />
+              <item name="share_problem" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542698852796" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/js" />
+      <recent name="$PROJECT_DIR$/img" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3dc800b1-0a94-426c-ade7-e860792b7591" name="Default Changelist" comment="" />
+      <created>1542158906442</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1542158906442</updated>
+      <workItem from="1542158907759" duration="20452000" />
+      <workItem from="1542200113916" duration="4971000" />
+      <workItem from="1542250390423" duration="5398000" />
+      <workItem from="1542263872522" duration="1896000" />
+      <workItem from="1542266536041" duration="228000" />
+      <workItem from="1542270139497" duration="5356000" />
+      <workItem from="1542337477718" duration="7433000" />
+      <workItem from="1542415223273" duration="7045000" />
+      <workItem from="1542431101452" duration="12678000" />
+      <workItem from="1542465993453" duration="2622000" />
+      <workItem from="1542594766531" duration="7090000" />
+      <workItem from="1542611253871" duration="4034000" />
+      <workItem from="1542683713532" duration="2418000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="81621000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="41" y="23" width="1639" height="1027" extended-state="0" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25582862" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="Designer" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Capture Tool" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="10" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info anchor="right" id="Palette&#9;" order="6" />
+      <window_info anchor="right" id="Database" order="7" />
+      <window_info anchor="right" id="Maven Projects" order="8" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/img/back.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25686">
+          <caret line="1427" column="67" selection-start-line="1427" selection-start-column="67" selection-end-line="1427" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30060">
+          <caret line="1670" column="4" selection-start-line="1670" selection-start-column="4" selection-end-line="1673" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/microphone.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/src/decoder.js" />
+    <entry file="file://$PROJECT_DIR$/js/src/util.js" />
+    <entry file="file://$PROJECT_DIR$/js/lib/mediacapture.min.js" />
+    <entry file="file://$PROJECT_DIR$/js/src/amr.js" />
+    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="307692">
+          <caret line="17107" column="17" selection-start-line="17107" selection-start-column="17" selection-end-line="17107" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wrongResource/draw.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/play.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4176">
+          <caret line="232" selection-start-line="232" selection-end-line="232" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/io.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2178">
+          <caret line="121" selection-start-line="121" selection-end-line="121" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/jszip.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100314">
+          <caret line="5583" column="9" selection-start-line="5583" selection-start-column="3" selection-end-line="5583" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/share_problem.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1718">
+          <caret line="39" column="1" lean-forward="true" selection-start-line="39" selection-start-column="1" selection-end-line="39" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/error.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="584">
+          <caret line="48" column="22" lean-forward="true" selection-start-line="48" selection-start-column="22" selection-end-line="48" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/error.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="604">
+          <caret line="41" column="16" selection-start-line="41" selection-start-column="16" selection-end-line="41" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/play11.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4842">
+          <caret line="269" column="57" selection-start-line="269" selection-start-column="57" selection-end-line="269" selection-end-column="57" />
+          <folding>
+            <element signature="n#style#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zip2.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/share_problem_bk.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-121">
+          <caret line="172" column="35" selection-start-line="172" selection-start-column="35" selection-end-line="172" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/play.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2283">
+          <caret line="281" column="57" lean-forward="true" selection-start-line="281" selection-start-column="57" selection-end-line="281" selection-end-column="57" />
+          <folding>
+            <element signature="n#style#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/play1_bk.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="265">
+          <caret line="178" column="26" lean-forward="true" selection-start-line="178" selection-start-column="26" selection-end-line="178" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wrongtitle_share.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-157">
+          <caret line="169" column="14" lean-forward="true" selection-start-line="169" selection-start-column="14" selection-end-line="169" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wrong.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1170">
+          <caret line="65" column="33" lean-forward="true" selection-start-line="65" selection-start-column="33" selection-end-line="65" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
