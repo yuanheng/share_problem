@@ -21,7 +21,7 @@
                 "modelType": "wrongtitle"
             },
             {
-                "content": "这个道题很容易犯错误",
+                "content": "这个道题很容易",
                 "hasPicture": 0,
                 "videoTime": "00:07",
                 "pictures": [
@@ -39,7 +39,7 @@
                 "modelType": "wrongtitle"
             },
             {
-                "content": "这道题很重要希望大家能注意",
+                "content": "这",
                 "hasPicture": 1,
                 "videoTime": "00:08",
                 "pictures": [

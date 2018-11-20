@@ -13,7 +13,7 @@
 	<script  type="text/javascript" src="js/jszip-utils.js"></script>
   	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue"></script>
   	<script type="text/javascript" src='https://unpkg.com/axios/dist/axios.min.js'></script>
-
+  	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
 
 
 
@@ -77,8 +77,8 @@
 					<p class="problem_author">发布者：{{wrongTitle.nickname}}</p>
 				</div>
 				<div class="problem_desc">
-					<div class="problem_desc_title">{{clazzGroup.clazzTempName}}：</div>
-					<h1></h1>
+					<div class="problem_desc_title">{{clazzGroup.clazzTempName}}错题：</div>
+					
 					<div class="problem_desc_content">
 						{{wrongTitle.content}}
 					</div>
@@ -139,12 +139,14 @@
 		</div>
 		<div class="win_bg_box"   v-show="isShow"  @touchmove.prevent v-bind:style="{height: screentHeight + 'px' }">
 			<div class="win_bg"  v-bind:style="{height: screentHeight + 'px' }"></div>
+			
 			<div class="download_app_tip" style="display:none" ref='downloadAppTip'>
+				
 				<div class="closed_box" v-on:click="showDownloadAppTip">
 				</div>
 				<div class="win_title">提示</div>
 				<div class="tip_message">
-					<div class="class_num">245524</div>
+					<div class="class_num">{{clazzGroup.code}}</div>
 					<div class="tip_message">请牢记此班级号（加入班级时使用）</div>
 				</div>
 				<div class="app_type_box">
@@ -162,6 +164,7 @@
 					<div class="download_app_btn" v-on:click="openParentApp">家长请下载</div>
 				</div>
 				<div class="download_app_bg"></div>
+			
 			</div>
 		    <div class="download_tip" style="display:none" ref="downloadTip">
 		    	<div class="closed_box" v-on:click="showDownloadTip"></div>
@@ -347,7 +350,8 @@
   						body.style.overflow = '';
   						this.$refs.downloadAppTip.style.display = 'none';
   					}
-  					this.screentHeight = window.screen.height;
+  					
+  					this.screentHeight = window.innerHeight;
   					
   				},
   				showDownloadTip:function(){
@@ -360,7 +364,8 @@
   						body.style.overflow = '';
   						this.$refs.downloadTip.style.display = 'none';
   					}
-  					this.screentHeight = window.screen.height;
+  					
+  					this.screentHeight = window.innerHeight;
   				},
   				downloadApp:function(){
   					this.showDownloadTip();
@@ -373,7 +378,7 @@
                     setTimeout(function () {
                         window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.open.teachermanager";//android 下载地址
 
-                    },2000);
+                    },500);
 
 
 	
@@ -383,7 +388,7 @@
 
                     setTimeout(function(){
                         window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.open.parentmanager";
-					},2000);
+					},500);
 
   				},
   				getParam:function(paramName) { 

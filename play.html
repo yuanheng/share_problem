@@ -27,6 +27,7 @@
     <script src="js/amr/decoder.js"></script>
     <script src="js/amr/encoder.js"></script>
     <script src="js/io.js"></script>
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
 
     <script type="text/javascript">
         (function(){
@@ -69,7 +70,7 @@
 
                 <img v-show='playing' class="play" style="transform: rotate(90deg);" v-on:click="stopPlay" src="img/play_start.png"/>
 
-                <img v-show='!playing'  class="play" style="transform: rotate(90deg);" v-on:click="startPlay" src="img/play_stop.png"/>
+                <img v-show='!playing'  class="play" style="transform: rotate(90deg);" v-on:click="startPlay" src="img/play_stop.png" id="play"/>
 
                 <div class="play_back_txt">{{playTimeShow}}</div>
             </div>
@@ -108,7 +109,7 @@
             <div class="win_title">提示</div>
             <div class="tip_message">
                 <div class="class_num">{{clazzGroup.code}}</div>
-                <div class="tip_message">请牢记此班级号（加入班级时使用）</div>
+                <div class="tip_message">加入班级参与互动，请牢记此班级号（加入班级时使用）</div>
             </div>
             <div class="app_type_box">
                 <div class="teacher_box">
@@ -214,7 +215,8 @@
             commentCount:0,
             clazzGroup:{},
             weixin:false,
-            code:0
+            code:0,
+            isThan3Second:false,
 
         },
         created:function(){
@@ -372,10 +374,12 @@
                                                     playingTime = 0;
                                                     testcanvas = null;
                                                     testcontext = null;
+                                                    self.isThan3Second = false;
+                                                    
 
                                                 };
 
-
+                                                
 
                                             }
                                         })(res);
@@ -514,7 +518,7 @@
                 setTimeout(function () {
                     window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.open.teachermanager";//android 下载地址
 
-                },2000);
+                },500);
 
 
 
@@ -524,7 +528,7 @@
 
                 setTimeout(function(){
                     window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.open.parentmanager";
-                },2000);
+                },500);
 
             },
             stopShowTime:function(){
@@ -535,6 +539,7 @@
                 var currentPlayTime = AMR.util.currentTime();
 
                 playingTime = currentPlayTime * 1000;
+
                 var minute=Math.floor(currentPlayTime/60%60);
                 var second=Math.floor(currentPlayTime%60);
                 if(minute<10){
@@ -545,6 +550,11 @@
                 }
 
                 this.playTimeShow = minute+":"+second;
+                if(playingTime - 3000 > 0 && !this.isThan3Second){
+                    this.isThan3Second = true;
+                    this.stopPlay();
+                }
+
             },
             playMusic:function(){
 
