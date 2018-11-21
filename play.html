@@ -236,7 +236,7 @@
             this.clazzId = this.getParam("clazzId");
             this.wrongTitleId = this.getParam("wrongTitleId");
             this.weixin = !isWeiXin();
-            if(window.location.search.indexOf('teacherasst.openonline.com.cn') > 0){
+            if(window.location.host.indexOf('teacherasst.openonline.com.cn') > 0){
                 this.url = url;
             }else{
                 this.url = testUrl;
