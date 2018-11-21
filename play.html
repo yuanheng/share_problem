@@ -172,6 +172,34 @@
 </div>
 <script type="text/javascript">
 
+;!function(pkg, undefined){
+  var STATE = 'x-back';
+  var element;
+  var onPopState = function(event){
+    event.state === STATE && fire();
+  }
+  var record = function(state){
+    history.pushState(state, null, location.href);
+  }
+  var fire = function(){
+    var event = document.createEvent('Events');
+    event.initEvent(STATE, false, false);
+    element.dispatchEvent(event);
+  }
+  var listen = function(listener){
+    element.addEventListener(STATE, listener, false);
+  }
+  ;!function(){
+    element = document.createElement('span');
+    window.addEventListener('popstate', onPopState);
+    this.listen = listen;
+    record(STATE);
+  }.call(window[pkg] = window[pkg] || {});
+}('XBack');
+
+
+
+
     //var testUrl = "http://10.98.24.198:8080/teacher_business/business/wrongtitle/getShareWrongTitleByIdAndClazzId.json";
     //var url = "http://teacherasst.openonline.com.cn/business/wrongtitle/getShareWrongTitleByIdAndClazzId.json";
     var testUrl='wrong.txt';
@@ -233,6 +261,20 @@
 
         },
         created:function(){
+            var self = this;    
+            var hiddenProperty = 'hidden' in document ? 'hidden' : 
+　　　　　　　　　　'webkitHidden' in document ? 'webkitHidden' : 
+　　　　　　　　　　'mozHidden' in document ? 'mozHidden' : 
+　　　　　　　　　　null;
+            var visibilityChangeEvent = hiddenProperty.replace(/hidden/i, 'visibilitychange');
+            var onVisibilityChange = function(){
+            　　if (document[hiddenProperty]) { 
+                    self.stopPlay();
+            　　}
+            }
+            document.addEventListener(visibilityChangeEvent, onVisibilityChange);
+           
+
             this.clazzId = this.getParam("clazzId");
             this.wrongTitleId = this.getParam("wrongTitleId");
             this.weixin = !isWeiXin();
@@ -732,6 +774,11 @@
                 }
 
             },
+            goHome:function(){
+               
+                 window.location.href='wrongtitle_share.html?clazzId='+this.clazzId+"&wrongTitleId="+this.wrongTitleId;
+
+            },
             getParam:function(paramName) {
                 paramValue = "", isFound = !1;
                 if (window.location.search.indexOf("?") == 0 && window.location.search.indexOf("=") > 1) {
@@ -739,12 +786,8 @@
                     while (i < arrSource.length && !isFound) arrSource[i].indexOf("=") > 0 && arrSource[i].split("=")[0].toLowerCase() == paramName.toLowerCase() && (paramValue = arrSource[i].split("=")[1], isFound = !0), i++
                 }
                 return paramValue == "" && (paramValue = null), paramValue
-            },
-            goHome:function(){
-
-                this.stopPlay();
-
             }
+
 
         }
     });
