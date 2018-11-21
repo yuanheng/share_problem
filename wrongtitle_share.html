@@ -60,6 +60,7 @@
 							<p class="">错题（{{clazzGroup.wrongTitleCount}}）</p>
 						</div>
 					</div>
+
 				</div>
 				<div class="problem_video_box">
 					<div class="opacity_box_container">
@@ -87,7 +88,7 @@
 					下载APP，观看更多班级内容！
 				</div>
 			</div>
-			<div class="other_problems_box" v-show="otherWrongTitleList.length > 1">
+			<div class="other_problems_box" v-show="otherWrongTitleList.length > 0">
 				<div class="other_problem_title">
 					本班错题其他错题：
 				</div>
@@ -95,12 +96,12 @@
 				<div class="other_problem_list">
 					<div class="other_problem_item"  v-for="otherWrong in otherWrongTitleList">
 						<div class="other_problem_image_box">
-							<div class="other_problem_image" :style="{'background-image': 'url('+otherWrong.picUrl+')'}">
-								<img v-on:click="showDownloadTip" src="img/start.png" class="other_start_btn">
+							<div class="other_problem_image" v-if="otherWrong.picUrl"  :style="{'background-image': 'url('+otherWrong.picUrl+')'}">
+								<img v-on:click="showDownloadTip"  v-if="otherWrong.picUrl"  src="img/start.png" class="other_start_btn" >
 							</div>
-							<div class="other_timer_bar">{{otherWrong.videoTime}}</div>
+							<div v-if="otherWrong.picUrl"  class="other_timer_bar" >{{otherWrong.videoTime}}</div>
 						</div>
-						<div class="other_problem_desc">
+						<div v-if="otherWrong.picUrl"  class="other_problem_desc">
 							{{otherWrong.content}}
 						</div>
 					</div>
@@ -139,10 +140,41 @@
 		</div>
 		<div class="win_bg_box"   v-show="isShow"  @touchmove.prevent v-bind:style="{height: screentHeight + 'px' }">
 			<div class="win_bg"  v-bind:style="{height: screentHeight + 'px' }"></div>
-			
-			<div class="download_app_tip" style="display:none" ref='downloadAppTip'>
+
+
+			<div class="download_app_tip_heng" v-show="isHengWinShow"  v-bind:style="{width: hengWinWidth + 'px',height: hengWinHeight + 'px' }" ref='downloadAppTipHeng'>
+
+				<div class="closed_box_heng" v-on:click="closeDownloadAppTip">
+				</div>
+				<div class="win_title_heng">提示</div>
+				<div class="tip_message_heng">
+					<div class="class_num_heng">{{clazzGroup.code}}</div>
+					<div class="tip_message_heng_join">请牢记此班级号（加入班级时使用）</div>
+				</div>
+				<div class="app_type_box_heng">
+					<div class="teacher_box_heng">
+						<img class="teacher_icon_heng" src="img/teacher_icon.png">
+						<div class="app_name_heng">【教师秘书】</div>
+					</div>
+					<div class="teacher_box_heng">
+						<img class="teacher_icon_heng" src="img/parent_icon.png">
+						<div class="app_name_heng">【家长帮手】</div>
+					</div>
+				</div>
+				<div class="download_btn_box_heng">
+					<div class="download_app_btn_heng" v-on:click="openTeacherApp">老师请下载</div>
+					<div class="download_app_btn_heng" v-on:click="openParentApp">家长请下载</div>
+				</div>
+				<div class="download_app_bg_heng"></div>
+
+			</div>
+
+
+
+
+			<div class="download_app_tip" v-show="isDownloadAppTipShow">
 				
-				<div class="closed_box" v-on:click="showDownloadAppTip">
+				<div class="closed_box" v-on:click="closeDownloadAppTip">
 				</div>
 				<div class="win_title">提示</div>
 				<div class="tip_message">
@@ -166,13 +198,14 @@
 				<div class="download_app_bg"></div>
 			
 			</div>
-		    <div class="download_tip" style="display:none" ref="downloadTip">
-		    	<div class="closed_box" v-on:click="showDownloadTip"></div>
+		    <div class="download_tip" v-show="isDownloadTipShow">
+		    	<div class="closed_box" v-on:click="closeDownloadAppTip"></div>
 				<div class="win_title">提示</div>
 				<div class="tip_download_message">下载APP后，在班级中才能观看哦！</div>
 				<div class="tip_download_bt" v-on:click="downloadApp">下载app</div>
 				<div class="tip_bg"></div>
 		    </div>
+
 		</div>
 	</div>
 	
@@ -208,7 +241,13 @@
 				weixin:false,
 				code:0,
 				clazzId:0,
-				url:''
+				url:'',
+                hengWinHeight:0,
+				hengWinWidth:0,
+                isHengWin:false,
+                isHengWinShow:false,
+                isDownloadAppTipShow:false,
+                isDownloadTipShow:false,
 
   			},
   			created:function(){
@@ -217,17 +256,21 @@
 				this.wrongTitleId = this.getParam('wrongTitleId');
   				this.weixin = !isWeiXin();
   				console.log(window.location.host)
-  				if(window.location.host.indexOf('10.98.24.198:8080') <0){
+  				if(window.location.host.indexOf('teacherasst.openonline.com.cn') > 0){
                 	this.url = url;
             	}else{
                 	this.url = testUrl;
             	}
 
+
+				this.checkScreen();
                 this.getlist();
+
 
   			},
   			methods:{
   				getlist:function () {
+
   					var self = this;
                 //请求服务器的api获取到品牌的数据列表
                     let version = navigator.userAgent.toLowerCase();
@@ -276,99 +319,77 @@
 
 
 	                    	var otherWrongTitleList = result.data.otherWrongTitleList;
-	                    	for(var i = 0; i < otherWrongTitleList.length; i++){
+	                    	var picSize = otherWrongTitleList.length;
+	                    	if(picSize > 3){
+	                    	    picSize = 3;
+							}
+							var tempOtherPic = [];
+	                    	for(var i = 0; i < picSize; i++){
 	                    		var temp = otherWrongTitleList[i];
 	                    		if(temp.hasPicture != 1){
 	                    			temp.picUrl='img/u2.jpg';
 	                    		}else{
 	                    			temp.picUrl = temp.pictures[0].thu_url;
 	                    		}
-	                    		otherWrongTitleList[i] = temp;
+                                tempOtherPic.push(temp);
+
 	                    	}
-	                    	self.otherWrongTitleList = result.data.otherWrongTitleList;
+	                    	if(tempOtherPic.length == 2){
+	                    	    var temp = {};
+	                    	    temp.picUrl = "";
+                                tempOtherPic.push(temp);
+							}
+	                    	self.otherWrongTitleList = tempOtherPic;
+
+
+
                     	}).catch(function (error) {
                     	    console.log(error);
                     	 });
-
-                	/* this.$http({
-                		url:this.url,
-                		method: 'POST',
-                		params:{data},
-                		headers:{
-                		    'Content-Type': 'application/json',
-							'version':'2.4.0',
-							'device':'ios',
-							'UserAgent':'teacher'
-                		}
-						
-                	}).then(function (response) {
-                		    console.log(data)
-                			var result = response.body;
-	                    	//处理服务器异常信息提示
-	                    	 if(response.status!=200 || result.code != 200){
-	                        	window.location.href='error.html';
-	                        	return;
-	                    	} 
-	                    	this.clazzGroup = result.data.clazzGroup;
-	                    	this.code = this.clazzGroup.code;
-
-	                    	sessionStorage.setItem("code",result.data.clazzGroup.code);
-	                    	var wrongTitle = result.data.wrongTitle;
-
-
-	                    	wrongTitle.picUrl = wrongTitle.pictures[0].url;
-
-	                    	this.wrongTitle = result.data.wrongTitle;
-
-
-	                    	var otherWrongTitleList = result.data.otherWrongTitleList;
-	                    	for(var i = 0; i < otherWrongTitleList.length; i++){
-	                    		var temp = otherWrongTitleList[i];
-	                    		if(temp.hasPicture != 1){
-	                    			temp.picUrl='img/u2.jpg';
-	                    		}else{
-	                    			temp.picUrl = temp.pictures[0].thu_url;
-	                    		}
-	                    		otherWrongTitleList[i] = temp;
-	                    	}
-	                    	this.otherWrongTitleList = result.data.otherWrongTitleList;
-
-
-                	}); */
                 
             	},
             	openPlayPage:function(id,event){
             		window.location.href='play.html?clazzId='+this.clazzId+'&wrongTitleId='+this.wrongTitleId;
             	},
+				closeDownloadAppTip:function(){
+                    this.isShow = false;
+                    this.isHengWinShow = false;
+					this.isDownloadAppTipShow = false;
+					this.isDownloadTipShow = false;
+                    var body = document.getElementById('page_body');
+                    body.style.overflow='';
+				},
   				showDownloadAppTip:function(){
-  					this.isShow = !this.isShow;
+
+  					this.isShow = true;
+
   					var body = document.getElementById('page_body');
-  					if(this.isShow){
-  						body.style.overflow='hidden';
-  						this.$refs.downloadAppTip.style.display = 'block';
-  					}else{
-  						body.style.overflow = '';
-  						this.$refs.downloadAppTip.style.display = 'none';
-  					}
-  					
+                    body.style.overflow='hidden';
+
+                    if(this.hengPing()){
+                        this.isHengWinShow = true;
+					}else{
+                        this.isDownloadAppTipShow = true;
+					}
+
+					window.addEventListener("resize",this.checkScreen,false);
+
   					this.screentHeight = window.innerHeight;
-  					
+
   				},
+
   				showDownloadTip:function(){
-  					this.isShow = !this.isShow;
+  					this.isShow = true;
   					var body = document.getElementById('page_body');
-  					if(this.isShow){
-  						body.style.overflow='hidden';
-  						this.$refs.downloadTip.style.display = 'block';
-  					}else{
-  						body.style.overflow = '';
-  						this.$refs.downloadTip.style.display = 'none';
-  					}
+
+                    body.style.overflow='hidden';
+
+                    this.isDownloadTipShow = true;
   					
   					this.screentHeight = window.innerHeight;
   				},
   				downloadApp:function(){
-  					this.showDownloadTip();
+  					this.closeDownloadAppTip();
   					this.showDownloadAppTip();
   				},
   				openTeacherApp:function(){
@@ -391,6 +412,41 @@
 					},500);
 
   				},
+                checkScreen:function(){
+  				    console.info("屏幕发生了变化。。。。"+(new Date()).getTime());
+  				    var self = this;
+
+                    this.screentHeight = window.innerHeight;
+
+                    var innerHeight = window.innerHeight;
+                    var winHeight = innerHeight * 0.65;
+                    this.hengWinHeight = Math.floor(winHeight);
+
+                    var winWidth = 1.5 * winHeight;
+                    this.hengWinWidth = Math.floor(winWidth);
+
+                    console.info("checkScreen:"+this.hengPing());
+
+                    if(this.hengPing()){
+                        if(this.isShow && this.isDownloadAppTipShow){
+                            this.isHengWinShow = true;
+                            this.isDownloadAppTipShow = false;
+						}
+					}else{
+						if(this.isShow && this.isHengWinShow){
+                            this.isHengWinShow = false;
+                            this.isDownloadAppTipShow = true;
+						}
+					}
+
+
+
+
+				},
+                hengPing:function(){
+                    var mql = window.matchMedia("(orientation: portrait)");
+                    return !mql.matches;
+                },
   				getParam:function(paramName) { 
     				paramValue = "", isFound = !1; 
     				if (window.location.search.indexOf("?") == 0 && window.location.search.indexOf("=") > 1) { 
@@ -400,6 +456,8 @@
     					return paramValue == "" && (paramValue = null), paramValue 
 					} 
   				}
+
+
   		});
 
 	</script>

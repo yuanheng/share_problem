@@ -11,7 +11,8 @@
     <link rel="stylesheet" type="text/css" href="css/play.css">
 
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-    <script type="text/javascript" src='https://cdn.jsdelivr.net/npm/vue-resource@1.5.1'></script>
+
+    <script type="text/javascript" src='https://unpkg.com/axios/dist/axios.min.js'></script>
 
     <script  type="text/javascript" src="js/jszip.js"></script>
     <script  type="text/javascript" src="js/jszip-utils.js"></script>
@@ -58,19 +59,24 @@
 </head>
 <body id="page_body">
 <div id='play_page' class="play_page" >
+
     <div class="play_box" v-show="isPageShow">
+        <div class="title_box" v-show="isTitleShow">
+            <div class="title_content">
+                <p>查看更多班级内容请</p>
+                <div class="btn"  v-on:click='downloadApp'>下载App</div>
+                <img class='title_close' v-on:click="closeTitleWin" src="img/title_close.png">
+            </div>
+        </div>
         <div class="play_btn_box">
             <div class="play_btn_bg"></div>
-            <div class="play_back_box" v-show="weixin">
-                <img class="play_back" v-on:click='goBack' style="transform: rotate(90deg);" src="img/play_back.png"/>
-                <div class="play_back_txt">返回</div>
-            </div>
+
 
             <div class="play_start_box">
 
-                <img v-show='playing' class="play" style="transform: rotate(90deg);" v-on:click="stopPlay" src="img/play_start.png"/>
+                <img  v-show='playing' class="play" style="transform: rotate(90deg);" v-on:click="stopPlay" src="img/play_start.png"/>
 
-                <img v-show='!playing'  class="play" style="transform: rotate(90deg);" v-on:click="startPlay" src="img/play_stop.png" id="play"/>
+                <img v-show='!playing'  id='play_btn' class="play" style="transform: rotate(90deg);" v-on:click="startPlay" src="img/play_stop.png" id="play"/>
 
                 <div class="play_back_txt">{{playTimeShow}}</div>
             </div>
@@ -104,12 +110,12 @@
 
     <div id="win_bg" class="win_bg_box" v-show='isShow' style="display:none">
         <div class="win_bg"></div>
-        <div class="download_app_tip" v-show='isShowDownladAppWin' style="display:none" ref='downloadAppTip'>
+        <div class="download_app_tip" v-bind:style="{width: winWidth + 'px',height: winHeight + 'px' }"  v-show='isShowDownladAppWin' style="display:none" ref='downloadAppTip'>
             <div class="closed_box" v-on:click="closeDownloadApp"></div>
             <div class="win_title">提示</div>
             <div class="tip_message">
                 <div class="class_num">{{clazzGroup.code}}</div>
-                <div class="tip_message">加入班级参与互动，请牢记此班级号（加入班级时使用）</div>
+                <div class="tip_message_content">加入班级参与互动，请牢记此班级号（加入班级时使用）</div>
             </div>
             <div class="app_type_box">
                 <div class="teacher_box">
@@ -165,8 +171,12 @@
     </div>
 </div>
 <script type="text/javascript">
-    //var url = "http://10.98.24.67:8082/business/wrongtitle/getShareWrongTitleByIdAndClazzId.json";
-    var url = "wrong.txt";
+
+    //var testUrl = "http://10.98.24.198:8080/teacher_business/business/wrongtitle/getShareWrongTitleByIdAndClazzId.json";
+    //var url = "http://teacherasst.openonline.com.cn/business/wrongtitle/getShareWrongTitleByIdAndClazzId.json";
+    var testUrl='wrong.txt';
+    var url='wrong.txt';
+
     //判断是否是微信浏览器的函数
     function isWeiXin(){
         //window.navigator.userAgent属性包含了浏览器类型、版本、操作系统类型、浏览器引擎类型等信息，这个属性可以用来判断浏览器类型
@@ -217,18 +227,26 @@
             weixin:false,
             code:0,
             isThan3Second:false,
+            winHeight:0,
+            winWidth:0,
+            isTitleShow:false,
 
         },
         created:function(){
             this.clazzId = this.getParam("clazzId");
             this.wrongTitleId = this.getParam("wrongTitleId");
             this.weixin = !isWeiXin();
+            if(window.location.search.indexOf('teacherasst.openonline.com.cn') > 0){
+                this.url = url;
+            }else{
+                this.url = testUrl;
+            }
             this.getlist();
 
             this.checkScreen();
 
             window.addEventListener('resize', this.checkScreen, false);
-
+            window.addEventListener('popstate',this.goHome,false);
         },
         mounted:function(){
 
@@ -256,26 +274,29 @@
                     }
                 }
 
-                this.$http({
-                    url:url,
+
+                var self = this;
+
+                axios({
+                    url:this.url,
                     method: 'POST',
                     data:data,
                     headers:{
                         'Content-Type': 'application/json',
                         'version':'2.4.0',
-                        'device':device
+                        'device':'ios',
+                        'UserAgent':'teacher'
                     }
-
-                }).then(function (response) {
+                }).then(function(response) {
                     var result = response.data;
-
                     //处理服务器异常信息提示
                     if(result.code != 200){
+
                         window.location.href='error.html';
                         return;
                     }
-                    this.clazzGroup = result.data.clazzGroup;
-                    this.code = this.clazzGroup.code;
+                    self.clazzGroup = result.data.clazzGroup;
+                    self.code = self.clazzGroup.code;
                     sessionStorage.setItem("code",result.data.clazzGroup.code);
                     var wrongTitle = result.data.wrongTitle;
 
@@ -284,34 +305,99 @@
                     var videoTime = wrongTitle.videoTime;
 
 
-                    this.videoTime = videoTime;
+                    self.videoTime = videoTime;
                     if(wrongTitle.likeCount){
-                        this.likeCount = wrongTitle.likeCount;
+                        self.likeCount = wrongTitle.likeCount;
                     }else{
-                        this.likeCount = 0;
+                        self.likeCount = 0;
                     }
                     if(wrongTitle.commentCount){
-                        this.commentCount = wrongTitle.commentCount;
+                        self.commentCount = wrongTitle.commentCount;
                     }else{
-                        this.commentCount = 0;
+                        self.commentCount = 0;
                     }
 
 
 
                     if(wrongTitle.collectCount){
-                        this.collectCount = wrongTitle.collectCount;
+                        self.collectCount = wrongTitle.collectCount;
                     }else{
-                        this.collectCount = 0;
+                        self.collectCount = 0;
                     }
 
                     wrongTitle.picUrl = wrongTitle.pictures[0].url;
 
-                    this.wrongTitle = result.data.wrongTitle;
-                    this.sourceImg = wrongTitle.picUrl;
+                    self.wrongTitle = result.data.wrongTitle;
+                    self.sourceImg = wrongTitle.picUrl;
 
-                    this.unZipData(wrongTitle.zipUrl);
+                    self.unZipData(wrongTitle.zipUrl);
 
+                }).catch(function (error) {
+                    console.log(error);
                 });
+
+
+
+
+                /*
+
+                                this.$http({
+                                    url:url,
+                                    method: 'POST',
+                                    data:data,
+                                    headers:{
+                                        'Content-Type': 'application/json',
+                                        'version':'2.4.0',
+                                        'device':device
+                                    }
+
+                                }).then(function (response) {
+                                    var result = response.data;
+
+                                    //处理服务器异常信息提示
+                                    if(result.code != 200){
+                                        window.location.href='error.html';
+                                        return;
+                                    }
+                                    this.clazzGroup = result.data.clazzGroup;
+                                    this.code = this.clazzGroup.code;
+                                    sessionStorage.setItem("code",result.data.clazzGroup.code);
+                                    var wrongTitle = result.data.wrongTitle;
+
+                                    //计算总的播放时长
+
+                                    var videoTime = wrongTitle.videoTime;
+
+
+                                    this.videoTime = videoTime;
+                                    if(wrongTitle.likeCount){
+                                        this.likeCount = wrongTitle.likeCount;
+                                    }else{
+                                        this.likeCount = 0;
+                                    }
+                                    if(wrongTitle.commentCount){
+                                        this.commentCount = wrongTitle.commentCount;
+                                    }else{
+                                        this.commentCount = 0;
+                                    }
+
+
+
+                                    if(wrongTitle.collectCount){
+                                        this.collectCount = wrongTitle.collectCount;
+                                    }else{
+                                        this.collectCount = 0;
+                                    }
+
+                                    wrongTitle.picUrl = wrongTitle.pictures[0].url;
+
+                                    this.wrongTitle = result.data.wrongTitle;
+                                    this.sourceImg = wrongTitle.picUrl;
+
+                                    this.unZipData(wrongTitle.zipUrl);
+
+                                });
+                                */
 
             },
 
@@ -362,6 +448,7 @@
 
                                                 AMR.util.init(samples);
 
+
                                                 AMR.util.element.onended = function(){
                                                     self.stopShowTime();
                                                     stopDrawLinePoint();
@@ -374,12 +461,12 @@
                                                     playingTime = 0;
                                                     testcanvas = null;
                                                     testcontext = null;
+
                                                     self.isThan3Second = false;
-                                                    
 
                                                 };
 
-                                                
+
 
                                             }
                                         })(res);
@@ -403,7 +490,20 @@
                     i++;
                 }, 1000);
             },
+            closeTitleWin:function(){
+                this.isTitleShow = false;
+            },
             showDownloadAppWin:function(){
+                //计算一下窗口的高度和
+                var innerHeight = window.innerHeight;
+                var winHeight = innerHeight * 0.65;
+                this.winHeight = Math.floor(winHeight);
+
+                var winWidth = 1.5 * winHeight;
+                this.winWidth = Math.floor(winWidth);
+
+
+
                 this.isShow = true;
                 this.isShowDownladAppWin = true;
 
@@ -418,6 +518,7 @@
                 this.isShowWin3 = true;
 
             },
+
             closeWin3:function(){
                 this.isShow = false;
                 this.isShowWin3 = false;
@@ -433,6 +534,7 @@
                 this.isShowWin4 = false;
             },
             showErrorWin:function(){
+
                 this.isPageShow = false;
                 this.isShowErrorWin = true;
 
@@ -449,7 +551,8 @@
                     testcanvas = document.getElementById("canvas");
                     testcontext = testcanvas.getContext('2d');
                     testcontext.strokeStyle = "red";
-                    testcontext.lineWidth=2;
+                    //testcontext.lineWidth=window.devicePixelRatio;
+                    testcontext.lineWidth=1;
                 }
 
                 if(playEnd == 1){
@@ -460,7 +563,8 @@
                     testcanvas.width = 510;
                     testcontext = testcanvas.getContext('2d');
                     testcontext.strokeStyle = "red";
-                    testcontext.lineWidth=2;
+                    //testcontext.lineWidth=window.devicePixelRatio;
+                    testcontext.lineWidth=1;
 
                 }
 
@@ -551,8 +655,9 @@
 
                 this.playTimeShow = minute+":"+second;
                 if(playingTime - 3000 > 0 && !this.isThan3Second){
-                    this.isThan3Second = true;
-                    this.stopPlay();
+
+                    this.isTitleShow = true;
+                    this.isThan3Second  = true;
                 }
 
             },
@@ -634,6 +739,11 @@
                     while (i < arrSource.length && !isFound) arrSource[i].indexOf("=") > 0 && arrSource[i].split("=")[0].toLowerCase() == paramName.toLowerCase() && (paramValue = arrSource[i].split("=")[1], isFound = !0), i++
                 }
                 return paramValue == "" && (paramValue = null), paramValue
+            },
+            goHome:function(){
+
+                this.stopPlay();
+
             }
 
         }
@@ -645,6 +755,7 @@
     }
     function startDrawLinePoint() {
         if(currentPointIndex == drawData[currentLineIndex].pointbeans.length){
+
             currentLineIndex = currentLineIndex + 1;
             currentPointIndex = 0;
         }
@@ -662,12 +773,22 @@
 
                 testcontext.moveTo(point.p.x,point.p.y);
 
+
             }
+
             var tempPoint = drawData[currentLineIndex].pointbeans[currentPointIndex];
 
             if(currentPointIndex > 0){
+                var prePoint = drawData[currentLineIndex].pointbeans[currentPointIndex-1];
+                var currentPoint = drawData[currentLineIndex].pointbeans[currentPointIndex];
 
-                testcontext.lineTo(tempPoint.p.x,tempPoint.p.y);
+                var c = (prePoint.p.x + currentPoint.p.x) / 2;
+                var d = (prePoint.p.y + currentPoint.p.y) / 2;
+
+
+
+                testcontext.quadraticCurveTo(currentPoint.p.x,currentPoint.p.y,c,d);
+                //testcontext.lineTo(prePoint.p.x+0.5,prePoint.p.y+0.5);
             }
             testcontext.stroke();
             currentPointIndex = currentPointIndex + 1;
