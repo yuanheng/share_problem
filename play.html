@@ -28,7 +28,6 @@
     <script src="js/amr/decoder.js"></script>
     <script src="js/amr/encoder.js"></script>
     <script src="js/io.js"></script>
-    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
 
     <script type="text/javascript">
         (function(){
@@ -82,10 +81,9 @@
             </div>
 
         </div>
+
         <div class="play_canvas_box">
-            <div class="play_canvas">
-                <canvas id='canvas'  width="510" height="320" class="" v-bind:style="{backgroundImage:'url(' + sourceImg + ')'}"/>
-            </div>
+            <canvas id='canvas'  width="510" height="320" class="" v-bind:style="{backgroundImage:'url(' + sourceImg + ')'}"/>
         </div>
         <div class="play_operator_box">
 
@@ -164,7 +162,7 @@
         <div class="download_tip_shu" v-show='isShowErrorWin' style="display:none"  ref="downloadTip">
 
             <div class="win_title_shu">提示</div>
-            <div class="tip_download_message_shu">仅支持横屏播放哦！</div>
+            <div class="tip_download_message_shu">{{messageTip}}</div>
 
             <div class="tip_bg_shu"></div>
         </div>
@@ -172,30 +170,30 @@
 </div>
 <script type="text/javascript">
 
-;!function(pkg, undefined){
-  var STATE = 'x-back';
-  var element;
-  var onPopState = function(event){
-    event.state === STATE && fire();
-  }
-  var record = function(state){
-    history.pushState(state, null, location.href);
-  }
-  var fire = function(){
-    var event = document.createEvent('Events');
-    event.initEvent(STATE, false, false);
-    element.dispatchEvent(event);
-  }
-  var listen = function(listener){
-    element.addEventListener(STATE, listener, false);
-  }
-  ;!function(){
-    element = document.createElement('span');
-    window.addEventListener('popstate', onPopState);
-    this.listen = listen;
-    record(STATE);
-  }.call(window[pkg] = window[pkg] || {});
-}('XBack');
+    ;!function(pkg, undefined){
+        var STATE = 'x-back';
+        var element;
+        var onPopState = function(event){
+            event.state === STATE && fire();
+        }
+        var record = function(state){
+            history.pushState(state, null, location.href);
+        }
+        var fire = function(){
+            var event = document.createEvent('Events');
+            event.initEvent(STATE, false, false);
+            element.dispatchEvent(event);
+        }
+        var listen = function(listener){
+                element.addEventListener(STATE, listener, false);
+            }
+        ;!function(){
+            element = document.createElement('span');
+            window.addEventListener('popstate', onPopState);
+            this.listen = listen;
+            record(STATE);
+        }.call(window[pkg] = window[pkg] || {});
+    }('XBack');
 
 
 
@@ -258,27 +256,35 @@
             winHeight:0,
             winWidth:0,
             isTitleShow:false,
+            messageTip:"仅支持横屏播放哦！"
 
         },
         created:function(){
-            var self = this;    
-            var hiddenProperty = 'hidden' in document ? 'hidden' : 
-　　　　　　　　　　'webkitHidden' in document ? 'webkitHidden' : 
-　　　　　　　　　　'mozHidden' in document ? 'mozHidden' : 
-　　　　　　　　　　null;
+
+
+            var self = this;
+            var hiddenProperty = 'hidden' in document ? 'hidden' :
+                'webkitHidden' in document ? 'webkitHidden' :
+                    'mozHidden' in document ? 'mozHidden' :
+                        null;
+
             var visibilityChangeEvent = hiddenProperty.replace(/hidden/i, 'visibilitychange');
+
             var onVisibilityChange = function(){
-            　　if (document[hiddenProperty]) { 
-                    self.stopPlay();
-            　　}
+                if (document[hiddenProperty]) {
+                    if(playingTime > 0){
+                        self.stopPlay();
+                    }
+
+                }
             }
             document.addEventListener(visibilityChangeEvent, onVisibilityChange);
-           
+
 
             this.clazzId = this.getParam("clazzId");
             this.wrongTitleId = this.getParam("wrongTitleId");
             this.weixin = !isWeiXin();
-            if(window.location.host.indexOf('teacherasst.openonline.com.cn') > 0){
+            if(window.location.host.indexOf('teacherasst.openonline.com.cn') == 0){
                 this.url = url;
             }else{
                 this.url = testUrl;
@@ -289,6 +295,10 @@
 
             window.addEventListener('resize', this.checkScreen, false);
             window.addEventListener('popstate',this.goHome,false);
+
+
+
+
         },
         mounted:function(){
 
@@ -299,17 +309,17 @@
             },
             getlist:function () {
                 //请求服务器的api获取到品牌的数据列表
-                let version = navigator.userAgent.toLowerCase();
-                let android = version.indexOf('Android');
+                var version = navigator.userAgent.toLowerCase();
+                var android = version.indexOf('Android');
 
 
-                let device;
+                var device;
                 if(android > -1){
                     device = 'Android';
                 }else{
                     device = 'iPhone'
                 }
-                let data={
+                var data={
                     "params":{
                         "identification":this.wrongTitleId,
                         "clazzGroupId":this.clazzId
@@ -577,6 +587,14 @@
             },
             showErrorWin:function(){
 
+                var ua = window.navigator.userAgent.toLowerCase();
+                //通过正则表达式匹配ua中是否含有MicroMessenger字符串
+                if(ua.match(/QQ/i) == "qq"){
+                    this.messageTip = "请在浏览器中查看";
+                }else{
+                    this.messageTip = "仅支持横屏播放哦！";
+                }
+
                 this.isPageShow = false;
                 this.isShowErrorWin = true;
 
@@ -588,15 +606,11 @@
 
             },
             startPlay:function(){
-
                 if(!testcontext){
                     testcanvas = document.getElementById("canvas");
                     testcontext = testcanvas.getContext('2d');
-                    testcontext.strokeStyle = "red";
-                    //testcontext.lineWidth=window.devicePixelRatio;
-                    testcontext.lineWidth=1;
-                }
 
+                }
                 if(playEnd == 1){
                     playEnd = 0;
                     // testcontext.clearRect(0,0,testcanvas.width,testcanvas.height);
@@ -607,28 +621,19 @@
                     testcontext.strokeStyle = "red";
                     //testcontext.lineWidth=window.devicePixelRatio;
                     testcontext.lineWidth=1;
-
                 }
-
                 if(startPauseTime != 0){
-
-                    drawCanvasInterval = setInterval(startDrawLinePoint,10);
+                    drawCanvasInterval = setInterval(startDrawLinePoint,1);
                     this.closeWin3();
                 }
                 if(startPlayTime == 0){
                     //startTimeOutDraw();
-
-                    drawCanvasInterval = setInterval(startDrawLinePoint,10);
+                    drawCanvasInterval = setInterval(startDrawLinePoint,1);
                     startPlayTime = (new Date()).getTime();
-
                 }
-
                 this.playing = true;
-
                 showPlayTimer = setInterval(this.showTime,10);
                 this.playMusic();
-
-
             },
             stopPlay:function(){
                 this.showWin3();
@@ -652,6 +657,7 @@
                 }
 
                 this.closeWin4();
+
                 this.showDownloadAppWin();
 
 
@@ -733,8 +739,10 @@
                     //如果当前切换到竖屏正在播放则 暂停播放提示下载窗口
                     if(startPlayTime > 0){
                         self.stopPlay();
+                        self.closeWin3();
 
                     }
+
                     //判断当前是否有窗口展示
                     if(self.isShowDownladAppWin){
                         currentWinIndex = 1;
@@ -748,7 +756,7 @@
                         currentWinIndex = 3;
                     }
                     self.closeDownloadApp();
-                    self.closeWin3();
+
                     self.closeWin4();
 
                     self.showErrorWin();
@@ -775,8 +783,8 @@
 
             },
             goHome:function(){
-               
-                 window.location.href='wrongtitle_share.html?clazzId='+this.clazzId+"&wrongTitleId="+this.wrongTitleId;
+
+                window.location.href='wrongtitle_share.html?clazzId='+this.clazzId+"&wrongTitleId="+this.wrongTitleId;
 
             },
             getParam:function(paramName) {
@@ -798,7 +806,6 @@
     }
     function startDrawLinePoint() {
         if(currentPointIndex == drawData[currentLineIndex].pointbeans.length){
-
             currentLineIndex = currentLineIndex + 1;
             currentPointIndex = 0;
         }
@@ -808,35 +815,27 @@
             clearInterval(drawCanvasInterval);
         }
         var point = drawData[currentLineIndex].pointbeans[currentPointIndex];
-
-
         if((playingTime - point.o*1000) > 0){
 
-            if(currentPointIndex == 0){
-
-                testcontext.moveTo(point.p.x,point.p.y);
-
-
-            }
-
-            var tempPoint = drawData[currentLineIndex].pointbeans[currentPointIndex];
 
             if(currentPointIndex > 0){
+
                 var prePoint = drawData[currentLineIndex].pointbeans[currentPointIndex-1];
+                testcontext.beginPath();
+                testcontext.lineJoin="round";
+                testcontext.lineCap="round";
+                testcontext.moveTo(prePoint.p.x,prePoint.p.y);
+
                 var currentPoint = drawData[currentLineIndex].pointbeans[currentPointIndex];
 
-                var c = (prePoint.p.x + currentPoint.p.x) / 2;
-                var d = (prePoint.p.y + currentPoint.p.y) / 2;
-
-
-
-                testcontext.quadraticCurveTo(currentPoint.p.x,currentPoint.p.y,c,d);
-                //testcontext.lineTo(prePoint.p.x+0.5,prePoint.p.y+0.5);
+                testcontext.lineTo(currentPoint.p.x,currentPoint.p.y);
+                testcontext.strokeStyle="red";
+                testcontext.lineWidth=2;
+                testcontext.stroke();
             }
-            testcontext.stroke();
+
+
             currentPointIndex = currentPointIndex + 1;
-
-
         }
     }
 

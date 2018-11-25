@@ -139,5 +139,5 @@ $('.changeUrl').click(function () {
 })
 ```
 
-**_delete()**
+**_devare()**
 >* 删除该图片

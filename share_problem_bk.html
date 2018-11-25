@@ -212,11 +212,11 @@
   			methods:{
   				getlist:function () {
                 //请求服务器的api获取到品牌的数据列表
-                    let version = navigator.userAgent.toLowerCase();
-                    let android = version.indexOf('Android');
+                    var version = navigator.userAgent.toLowerCase();
+                    var android = version.indexOf('Android');
 
 
-                    let device;
+                    var device;
                     if(android > -1){
                         device = 'Android';
 					}else{

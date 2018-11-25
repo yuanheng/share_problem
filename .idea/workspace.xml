@@ -2,14 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3dc800b1-0a94-426c-ade7-e860792b7591" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/img/title_bg.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/title_close.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/css/play2.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/css/playtest.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/js/fabric.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/play1.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/play2.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wrongtitle_share_bk.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wrongtitle_share_temp1.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/amr.html" beforeDir="false" afterPath="$PROJECT_DIR$/amr.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/error.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/error.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/css/play.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/play.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/css/share_problem.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/share_problem.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/error.html" beforeDir="false" afterPath="$PROJECT_DIR$/error.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/img/play_bg.png" beforeDir="false" afterPath="$PROJECT_DIR$/img/play_bg.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/play.html" beforeDir="false" afterPath="$PROJECT_DIR$/play.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/play11.html" beforeDir="false" afterPath="$PROJECT_DIR$/play11.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/share_problem_bk.html" beforeDir="false" afterPath="$PROJECT_DIR$/share_problem_bk.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/temp/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/temp/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/temp/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/temp/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/temp/js/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/temp/js/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wrong.txt" beforeDir="false" afterPath="$PROJECT_DIR$/wrong.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wrongtitle_share.html" beforeDir="false" afterPath="$PROJECT_DIR$/wrongtitle_share.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,55 +34,58 @@
     <session id="885479303">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="14" />
+          <entry key="project.closed" value="21" />
           <entry key="project.open.time.0" value="2" />
-          <entry key="project.open.time.1" value="2" />
+          <entry key="project.open.time.1" value="4" />
           <entry key="project.open.time.10" value="1" />
-          <entry key="project.open.time.2" value="5" />
+          <entry key="project.open.time.2" value="6" />
           <entry key="project.open.time.4" value="2" />
           <entry key="project.open.time.5" value="1" />
-          <entry key="project.open.time.6" value="1" />
-          <entry key="project.open.time.8" value="1" />
+          <entry key="project.open.time.6" value="2" />
+          <entry key="project.open.time.7" value="1" />
+          <entry key="project.open.time.8" value="2" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="16" />
+          <entry key="project.opened" value="22" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="css" value="12" />
-          <entry key="html" value="27" />
-          <entry key="jpg" value="1" />
-          <entry key="js" value="8" />
-          <entry key="json" value="4" />
-          <entry key="png" value="4" />
-          <entry key="ts" value="2" />
-          <entry key="txt" value="1" />
+          <entry key="cs" value="1" />
+          <entry key="css" value="15" />
+          <entry key="html" value="41" />
+          <entry key="jpg" value="2" />
+          <entry key="js" value="17" />
+          <entry key="json" value="5" />
+          <entry key="png" value="7" />
+          <entry key="ts" value="3" />
+          <entry key="txt" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="CSS" value="12" />
-          <entry key="HTML" value="27" />
-          <entry key="Image" value="5" />
-          <entry key="JSON" value="4" />
-          <entry key="JavaScript" value="8" />
-          <entry key="PLAIN_TEXT" value="1" />
-          <entry key="TypeScript" value="2" />
+          <entry key="C#" value="1" />
+          <entry key="CSS" value="15" />
+          <entry key="HTML" value="41" />
+          <entry key="Image" value="9" />
+          <entry key="JSON" value="5" />
+          <entry key="JavaScript" value="17" />
+          <entry key="PLAIN_TEXT" value="2" />
+          <entry key="TypeScript" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="css" value="1045" />
-          <entry key="html" value="13414" />
-          <entry key="js" value="332" />
+          <entry key="css" value="1196" />
+          <entry key="html" value="15958" />
+          <entry key="js" value="440" />
           <entry key="txt" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="CSS" value="1045" />
-          <entry key="HTML" value="13414" />
-          <entry key="JavaScript" value="332" />
+          <entry key="CSS" value="1196" />
+          <entry key="HTML" value="15958" />
+          <entry key="JavaScript" value="440" />
           <entry key="PLAIN_TEXT" value="8" />
         </counts>
       </usages-collector>
@@ -79,19 +94,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wrong.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="386">
-              <caret line="34" column="42" selection-start-line="34" selection-start-column="42" selection-end-line="34" selection-end-column="42" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wrongtitle_share.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="432" column="62" lean-forward="true" selection-start-line="432" selection-start-column="62" selection-end-line="432" selection-end-column="62" />
+            <state relative-caret-position="493">
+              <caret line="295" column="38" lean-forward="true" selection-end-line="468" selection-end-column="7" />
               <folding>
                 <element signature="n#div#2;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
                 <element signature="n#div#0;n#div#3;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
@@ -101,10 +107,13 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/error.html">
+        <entry file="file://$PROJECT_DIR$/playtest.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-15">
-              <caret line="7" column="20" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="20" />
+            <state relative-caret-position="225">
+              <caret line="1691" selection-start-line="1691" selection-end-line="1691" />
+              <folding>
+                <element signature="n#style#0;n#canvas#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -112,11 +121,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/play.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="177">
-              <caret line="117" column="47" selection-start-line="117" selection-start-column="47" selection-end-line="117" selection-end-column="47" />
+            <state relative-caret-position="363">
+              <caret line="822" column="51" lean-forward="true" selection-start-line="822" selection-start-column="51" selection-end-line="822" selection-end-column="51" />
               <folding>
-                <element signature="n#style#0;n#img#0;n#div#2;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#1;n#div#2;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#div#1;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#1;n#div#1;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#2;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -129,24 +138,46 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/amr/util.js">
+        <entry file="file://$PROJECT_DIR$/test1.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="296">
-              <caret line="30" column="8" selection-start-line="30" selection-start-column="8" selection-end-line="30" selection-end-column="8" />
+            <state relative-caret-position="854">
+              <caret line="1670" column="4" selection-start-line="1670" selection-start-column="4" selection-end-line="1673" selection-end-column="28" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/zip2.html">
-          <provider selected="true" editor-type-id="text-editor" />
+        <entry file="file://$PROJECT_DIR$/test.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="854">
+              <caret line="1427" column="67" selection-start-line="1427" selection-start-column="67" selection-end-line="1427" selection-end-column="67" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/play2.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="651">
+              <caret line="54" column="50" selection-start-line="54" selection-start-column="50" selection-end-line="54" selection-end-column="50" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/css/play.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="342">
+              <caret line="19" selection-start-line="19" selection-end-line="23" selection-end-column="1" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/css/play.css">
+        <entry file="file://$PROJECT_DIR$/css/playtest.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="314">
-              <caret line="187" column="4" selection-start-line="187" selection-start-column="4" selection-end-line="187" selection-end-column="4" />
+            <state relative-caret-position="720">
+              <caret line="40" column="1" lean-forward="true" selection-start-line="40" selection-start-column="1" selection-end-line="40" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -154,8 +185,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/css/share_problem.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="277">
-              <caret line="531" column="12" selection-start-line="531" selection-start-column="1" selection-end-line="531" selection-end-column="12" />
+            <state relative-caret-position="314">
+              <caret line="501" column="27" lean-forward="true" selection-end-line="669" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/play1.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-11805">
+              <caret line="192" column="45" lean-forward="true" selection-start-line="192" selection-start-column="45" selection-end-line="192" selection-end-column="45" />
             </state>
           </provider>
         </entry>
@@ -164,36 +204,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>showDownloadAppWin</find>
-      <find>v-style</find>
-      <find>v:bind-style</find>
-      <find>v-bind:style</find>
-      <find>win_bg_box</find>
-      <find>/*</find>
-      <find>showDown</find>
-      <find>download_app_tip</find>
-      <find>app_name_heng</find>
-      <find>play_box</find>
-      <find>app_name</find>
-      <find>checkScreen</find>
-      <find>download_app_bg_heng</find>
-      <find>showError</find>
-      <find>download_btn</find>
-      <find>showDownloadAppTip</find>
-      <find>testUrl</find>
-      <find>closeDownloadAppTip</find>
-      <find>title_box</find>
-      <find>play_btn_box</find>
-      <find>moveT</find>
-      <find>&gt;</find>
-      <find>isThan</find>
-      <find>错题</find>
-      <find>isTitleShow</find>
-      <find>onended</find>
-      <find>isHengPing</find>
       <find>downloadapp</find>
-      <find>tip_message</find>
       <find>checkSc</find>
+      <find>tip_message</find>
+      <find>download</find>
+      <find>lineCanvas</find>
+      <find>Image300</find>
+      <find>_renderFill</find>
+      <find>drawImage</find>
+      <find>play</find>
+      <find>startPlay</find>
+      <find>play_canvas</find>
+      <find>play_canvas_box</find>
+      <find>play1</find>
+      <find>playTime</find>
+      <find>playingTime</find>
+      <find>host</find>
+      <find>showErro</find>
+      <find>isWeiXin</find>
+      <find>canvas</find>
+      <find>begin</find>
+      <find>仅支持横屏</find>
+      <find>start</find>
+      <find>startplay</find>
+      <find>showError</find>
+      <find>var</find>
+      <find>alert</find>
+      <find>myvideo</find>
+      <find>play_start_box</find>
+      <find>play_box</find>
+      <find>play_btn_box</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -217,14 +257,23 @@
         <option value="$PROJECT_DIR$/js/lib/mediacapture.min.js" />
         <option value="$PROJECT_DIR$/share_problem.html" />
         <option value="$PROJECT_DIR$/css/error.css" />
-        <option value="$PROJECT_DIR$/play1.html" />
         <option value="$PROJECT_DIR$/share_problem_bk.html" />
         <option value="$PROJECT_DIR$/css/share_problem.css" />
         <option value="$PROJECT_DIR$/error.html" />
-        <option value="$PROJECT_DIR$/wrong.txt" />
+        <option value="$PROJECT_DIR$/js/fac.js" />
+        <option value="$PROJECT_DIR$/js/fabric.js" />
+        <option value="$PROJECT_DIR$/play1.html" />
+        <option value="$PROJECT_DIR$/wrongtitle_share_bk.html" />
         <option value="$PROJECT_DIR$/wrongtitle_share.html" />
-        <option value="$PROJECT_DIR$/play.html" />
+        <option value="$PROJECT_DIR$/wrongtitle_share_temp.html" />
+        <option value="$PROJECT_DIR$/wrongtitle_share_temp1.html" />
+        <option value="$PROJECT_DIR$/wrong.txt" />
+        <option value="$PROJECT_DIR$/css/play2.css" />
+        <option value="$PROJECT_DIR$/play2.html" />
         <option value="$PROJECT_DIR$/css/play.css" />
+        <option value="$PROJECT_DIR$/play.html" />
+        <option value="$PROJECT_DIR$/playtest.html" />
+        <option value="$PROJECT_DIR$/css/playtest.css" />
       </list>
     </option>
   </component>
@@ -247,6 +296,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -258,31 +308,31 @@
             <path>
               <item name="share_problem" type="b2602c69:ProjectViewProjectNode" />
               <item name="share_problem" type="462c0819:PsiDirectoryNode" />
-              <item name="img" type="462c0819:PsiDirectoryNode" />
+              <item name="css" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542808324164" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543134286512" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/img" />
+      <recent name="$PROJECT_DIR$/css" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/js" />
+      <recent name="$PROJECT_DIR$/img" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -322,18 +372,24 @@
       <workItem from="1542683713532" duration="2418000" />
       <workItem from="1542764053129" duration="16133000" />
       <workItem from="1542786090762" duration="1518000" />
-      <workItem from="1542791348009" duration="12857000" />
+      <workItem from="1542791348009" duration="13192000" />
+      <workItem from="1542808799736" duration="598000" />
+      <workItem from="1542850284414" duration="2751000" />
+      <workItem from="1542855354064" duration="907000" />
+      <workItem from="1542937739789" duration="8327000" />
+      <workItem from="1542961679208" duration="13347000" />
+      <workItem from="1543121552692" duration="887000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="112129000" />
+    <option name="totallyTimeSpent" value="144519000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="1027" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16646191" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.3046683" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -354,10 +410,10 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Pavarte" order="3" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="right" id="Theme Preview" order="5" />
-      <window_info anchor="right" id="Palette&#9;" order="6" />
+      <window_info anchor="right" id="Pavarte&#9;" order="6" />
       <window_info anchor="right" id="Database" order="7" />
       <window_info anchor="right" id="Maven Projects" order="8" />
     </layout>
@@ -373,7 +429,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/wrongtitle_share.html</url>
-          <line>271</line>
+          <line>270</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
@@ -383,34 +439,10 @@
     <entry file="file://$PROJECT_DIR$/img/back.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/test.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25686">
-          <caret line="1427" column="67" selection-start-line="1427" selection-start-column="67" selection-end-line="1427" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test1.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30060">
-          <caret line="1670" column="4" selection-start-line="1670" selection-start-column="4" selection-end-line="1673" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/microphone.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/src/decoder.js" />
     <entry file="file://$PROJECT_DIR$/js/src/util.js" />
     <entry file="file://$PROJECT_DIR$/js/lib/mediacapture.min.js" />
     <entry file="file://$PROJECT_DIR$/js/src/amr.js" />
-    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="307692">
-          <caret line="17107" column="17" selection-start-line="17107" selection-start-column="17" selection-end-line="17107" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/wrongResource/draw.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -421,28 +453,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/jszip.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100314">
-          <caret line="5583" column="9" selection-start-line="5583" selection-start-column="3" selection-end-line="5583" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/css/error.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="584">
           <caret line="48" column="22" lean-forward="true" selection-start-line="48" selection-start-column="22" selection-end-line="48" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/play11.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4842">
-          <caret line="269" column="57" selection-start-line="269" selection-start-column="57" selection-end-line="269" selection-end-column="57" />
-          <folding>
-            <element signature="n#style#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -460,43 +474,79 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zip2.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wrong.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="386">
-          <caret line="34" column="42" selection-start-line="34" selection-start-column="42" selection-end-line="34" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/img/play_bg.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/img/title_bg.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$USER_HOME$/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/12f483f88c82a6b534571f220a9c0943/Message/MessageTemp/1c79dc8b3791c9f1148edcc9b4976cf5/Image/2011542801525_.pic.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
+    <entry file="file://$USER_HOME$/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/12f483f88c82a6b534571f220a9c0943/Message/MessageTemp/1c79dc8b3791c9f1148edcc9b4976cf5/Image/2011542801525_.pic.jpg" />
     <entry file="file://$PROJECT_DIR$/error.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-15">
+        <state relative-caret-position="126">
           <caret line="7" column="20" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="831">
+          <caret line="3252" column="4" selection-start-line="3252" selection-start-column="4" selection-end-line="3252" selection-end-column="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/amr/util.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
+        <state relative-caret-position="540">
           <caret line="30" column="8" selection-start-line="30" selection-start-column="8" selection-end-line="30" selection-end-column="8" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wrongtitle_share.html">
+    <entry file="file://$PROJECT_DIR$/source.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/img/play_bg.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/img/comment.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wrongtitle_share_bk.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="432" column="62" lean-forward="true" selection-start-line="432" selection-start-column="62" selection-end-line="432" selection-end-column="62" />
+        <state relative-caret-position="-1080">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zip2.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ddb7acf5ffc541409617c5597bcb8c49/draw.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="522">
+          <caret line="29" column="20" selection-start-line="29" selection-start-column="20" selection-end-line="29" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/play11.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4842">
+          <caret line="269" column="57" selection-start-line="269" selection-start-column="57" selection-end-line="269" selection-end-column="57" />
+          <folding>
+            <element signature="n#style#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/amr/amr.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="16" column="25" selection-start-line="16" selection-start-column="25" selection-end-line="16" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wrongtitle_share_temp1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="387">
+          <caret line="284" column="41" selection-start-line="279" selection-start-column="19" selection-end-line="284" selection-end-column="41" />
           <folding>
             <element signature="n#div#2;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
             <element signature="n#div#0;n#div#3;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
@@ -504,20 +554,107 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/css/share_problem.css">
+    <entry file="file://$PROJECT_DIR$/js/jszip.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="531" column="12" selection-start-line="531" selection-start-column="1" selection-end-line="531" selection-end-column="12" />
+        <state relative-caret-position="800">
+          <caret line="5580" column="49" selection-start-line="5580" selection-start-column="49" selection-end-line="5580" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/fabric.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="6159" column="19" lean-forward="true" selection-start-line="6159" selection-start-column="19" selection-end-line="6159" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/axios.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/amr/swfobject.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/amr/libamr-nb.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wrong.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="669">
+          <caret line="62" column="59" selection-start-line="62" selection-start-column="59" selection-end-line="62" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/microphone.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/amr.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/play2.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="349">
+          <caret line="72" column="20" lean-forward="true" selection-start-line="72" selection-start-column="20" selection-end-line="72" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/play2.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="651">
+          <caret line="54" column="50" selection-start-line="54" selection-start-column="50" selection-end-line="54" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/play1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-11805">
+          <caret line="192" column="45" lean-forward="true" selection-start-line="192" selection-start-column="45" selection-end-line="192" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="854">
+          <caret line="1670" column="4" selection-start-line="1670" selection-start-column="4" selection-end-line="1673" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="854">
+          <caret line="1427" column="67" selection-start-line="1427" selection-start-column="67" selection-end-line="1427" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wrongtitle_share.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="295" column="38" lean-forward="true" selection-end-line="468" selection-end-column="7" />
+          <folding>
+            <element signature="n#div#2;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#div#0;n#div#3;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/play.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="117" column="47" selection-start-line="117" selection-start-column="47" selection-end-line="117" selection-end-column="47" />
+        <state relative-caret-position="363">
+          <caret line="822" column="51" lean-forward="true" selection-start-line="822" selection-start-column="51" selection-end-line="822" selection-end-column="51" />
           <folding>
-            <element signature="n#style#0;n#img#0;n#div#2;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#1;n#div#2;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#div#1;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#1;n#div#1;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#2;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -528,10 +665,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/css/play.css">
+    <entry file="file://$PROJECT_DIR$/css/share_problem.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="314">
-          <caret line="187" column="4" selection-start-line="187" selection-start-column="4" selection-end-line="187" selection-end-column="4" />
+          <caret line="501" column="27" lean-forward="true" selection-end-line="669" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/play.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="19" selection-start-line="19" selection-end-line="23" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/playtest.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="1691" selection-start-line="1691" selection-end-line="1691" />
+          <folding>
+            <element signature="n#style#0;n#canvas#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/playtest.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="720">
+          <caret line="40" column="1" lean-forward="true" selection-start-line="40" selection-start-column="1" selection-end-line="40" selection-end-column="1" />
         </state>
       </provider>
     </entry>

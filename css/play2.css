@@ -72,7 +72,6 @@ html,body {
 
 	width: 0.865rem;
 	height: 100%;
-
 }
 
 .play_btn_bg {
@@ -110,6 +109,8 @@ html,body {
 	width: 100%;
 	justify-content: center;
 	flex-direction: column;
+	align-items: center;
+	background: red;
 }
 .play_back_box,.play_item_box {
 	display: flex;
@@ -160,10 +161,9 @@ html,body {
 }
 
 .play_canvas {
-	background: red;
 }
 
-#canvas {
+.play_canvas canvas {
 	background-size: contain;
 	background-repeat: no-repeat;
 	background-position: center;

@@ -2,7 +2,7 @@
  * @version 8.3.22
  * @date 2018-09-12
  */
-a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,canvas,caption,center,cite,code,dd,del,details,dfn,div,dl,dt,em,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,html,i,iframe,img,ins,kbd,label,legend,li,mark,menu,nav,object,ol,p,pre,q,s,samp,section,small,span,strike,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var,video {
+a,abbr,acronym,address,appvar,article,aside,audio,b,big,blockquote,body,canvas,caption,center,cite,code,dd,del,details,dfn,div,dl,dt,em,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,html,i,iframe,img,ins,kbd,label,legend,li,mark,menu,nav,object,ol,p,pre,q,s,samp,section,small,span,strike,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var,video {
     margin: 0;
     padding: 0;
     border: 0;
@@ -46,7 +46,7 @@ html,body {
     font-family: HiraginoSansGB-W3;
     font-size: 0.20rem;
     color: #333333;
-    letter-spacing: 0;
+    varter-spacing: 0;
     text-align: center;
     width: 100%;
 }
@@ -63,7 +63,7 @@ html,body {
     font-family: PingFangSC-Medium;
     font-size: 0.14rem;
     color: #999999;
-    letter-spacing: 0;
+    varter-spacing: 0;
     text-align: center;
     margin-top: 0.175rem;
 }

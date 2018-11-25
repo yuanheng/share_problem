@@ -251,14 +251,14 @@
       }
     })
     // 删除图片
-    $('.deletePic').click(function () {
+    $('.devarePic').click(function () {
       var nowPhoto = canvas.getNowPhoto();
       if (!nowPhoto) {
         alert('未选中任何图片');
         return;
       } else {
         var nowPhotoInfo = nowPhoto.getPhotoInfo();
-        nowPhoto._delete();
+        nowPhoto._devare();
         console.log('成功重置')
       }
     })
@@ -420,7 +420,7 @@
       <button class="narrow">缩小选中图片</button>
       <button class="changeUrl">更改选中图片的url</button>
       <button class="autoScale">重置选中图片</button>
-      <button class="deletePic">删除选中图片</button>
+      <button class="devarePic">删除选中图片</button>
     </div>
     <div class="set">
       <h3>输出图片：</h3>

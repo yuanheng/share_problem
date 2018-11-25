@@ -11,7 +11,8 @@
     <link rel="stylesheet" type="text/css" href="css/play.css">
 
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-    <script type="text/javascript" src='https://cdn.jsdelivr.net/npm/vue-resource@1.5.1'></script>
+
+    <script type="text/javascript" src='https://unpkg.com/axios/dist/axios.min.js'></script>
 
     <script  type="text/javascript" src="js/jszip.js"></script>
     <script  type="text/javascript" src="js/jszip-utils.js"></script>
@@ -27,6 +28,7 @@
     <script src="js/amr/decoder.js"></script>
     <script src="js/amr/encoder.js"></script>
     <script src="js/io.js"></script>
+    <script src="js/fabric.js"></script>
 
     <script type="text/javascript">
         (function(){
@@ -57,26 +59,31 @@
 </head>
 <body id="page_body">
 <div id='play_page' class="play_page" >
+
     <div class="play_box" v-show="isPageShow">
+        <div class="title_box" v-show="isTitleShow">
+            <div class="title_content">
+                <p>查看更多班级内容请</p>
+                <div class="btn"  v-on:click='downloadApp'>下载App</div>
+                <img class='title_close' v-on:click="closeTitleWin" src="img/title_close.png">
+            </div>
+        </div>
         <div class="play_btn_box">
             <div class="play_btn_bg"></div>
-            <div class="play_back_box" v-show="weixin">
-                <img class="play_back" v-on:click='goBack' style="transform: rotate(90deg);" src="img/play_back.png"/>
-                <div class="play_back_txt">返回</div>
-            </div>
+
 
             <div class="play_start_box">
 
-                <img v-show='playing' class="play" style="transform: rotate(90deg);" v-on:click="stopPlay" src="img/play_start.png"/>
+                <img  v-show='playing' class="play" style="transform: rotate(90deg);" v-on:click="stopPlay" src="img/play_start.png"/>
 
-                <img v-show='!playing'  class="play" style="transform: rotate(90deg);" v-on:click="startPlay" src="img/play_stop.png"/>
+                <img v-show='!playing'  id='play_btn' class="play" style="transform: rotate(90deg);" v-on:click="startPlay" src="img/play_stop.png" id="play"/>
 
                 <div class="play_back_txt">{{playTimeShow}}</div>
             </div>
 
         </div>
         <div class="play_canvas_box">
-            <div class="play_canvas">
+            <div class="play_canvas" id="play_canvas_box">
                 <canvas id='canvas'  width="510" height="320" class="" v-bind:style="{backgroundImage:'url(' + sourceImg + ')'}"/>
             </div>
         </div>
@@ -103,12 +110,12 @@
 
     <div id="win_bg" class="win_bg_box" v-show='isShow' style="display:none">
         <div class="win_bg"></div>
-        <div class="download_app_tip" v-show='isShowDownladAppWin' style="display:none" ref='downloadAppTip'>
+        <div class="download_app_tip" v-bind:style="{width: winWidth + 'px',height: winHeight + 'px' }"  v-show='isShowDownladAppWin' style="display:none" ref='downloadAppTip'>
             <div class="closed_box" v-on:click="closeDownloadApp"></div>
             <div class="win_title">提示</div>
             <div class="tip_message">
                 <div class="class_num">{{clazzGroup.code}}</div>
-                <div class="tip_message">请牢记此班级号（加入班级时使用）</div>
+                <div class="tip_message_content">加入班级参与互动，请牢记此班级号（加入班级时使用）</div>
             </div>
             <div class="app_type_box">
                 <div class="teacher_box">
@@ -164,8 +171,40 @@
     </div>
 </div>
 <script type="text/javascript">
-    //var url = "http://10.98.24.67:8082/business/wrongtitle/getShareWrongTitleByIdAndClazzId.json";
-    var url = "wrong.txt";
+
+;!function(pkg, undefined){
+  var STATE = 'x-back';
+  var element;
+  var onPopState = function(event){
+    event.state === STATE && fire();
+  }
+  var record = function(state){
+    history.pushState(state, null, location.href);
+  }
+  var fire = function(){
+    var event = document.createEvent('Events');
+    event.initEvent(STATE, false, false);
+    element.dispatchEvent(event);
+  }
+  var listen = function(listener){
+    element.addEventListener(STATE, listener, false);
+  }
+  ;!function(){
+    element = document.createElement('span');
+    window.addEventListener('popstate', onPopState);
+    this.listen = listen;
+    record(STATE);
+  }.call(window[pkg] = window[pkg] || {});
+}('XBack');
+
+
+
+
+    //var testUrl = "http://10.98.24.198:8080/teacher_business/business/wrongtitle/getShareWrongTitleByIdAndClazzId.json";
+    //var url = "http://teacherasst.openonline.com.cn/business/wrongtitle/getShareWrongTitleByIdAndClazzId.json";
+    var testUrl='wrong.txt';
+    var url='wrong.txt';
+
     //判断是否是微信浏览器的函数
     function isWeiXin(){
         //window.navigator.userAgent属性包含了浏览器类型、版本、操作系统类型、浏览器引擎类型等信息，这个属性可以用来判断浏览器类型
@@ -214,18 +253,47 @@
             commentCount:0,
             clazzGroup:{},
             weixin:false,
-            code:0
+            code:0,
+            isThan3Second:false,
+            winHeight:0,
+            winWidth:0,
+            isTitleShow:false,
 
         },
         created:function(){
+
+
+            var self = this;    
+            var hiddenProperty = 'hidden' in document ? 'hidden' : 
+　　　　　　　　　　'webkitHidden' in document ? 'webkitHidden' : 
+　　　　　　　　　　'mozHidden' in document ? 'mozHidden' : 
+　　　　　　　　　　null;
+            var visibilityChangeEvent = hiddenProperty.replace(/hidden/i, 'visibilitychange');
+            var onVisibilityChange = function(){
+            　　if (document[hiddenProperty]) { 
+                    self.stopPlay();
+            　　}
+            }
+            document.addEventListener(visibilityChangeEvent, onVisibilityChange);
+           
+
             this.clazzId = this.getParam("clazzId");
             this.wrongTitleId = this.getParam("wrongTitleId");
             this.weixin = !isWeiXin();
+            if(window.location.host.indexOf('teacherasst.openonline.com.cn') > 0){
+                this.url = url;
+            }else{
+                this.url = testUrl;
+            }
             this.getlist();
 
             this.checkScreen();
 
             window.addEventListener('resize', this.checkScreen, false);
+            window.addEventListener('popstate',this.goHome,false);
+
+
+
 
         },
         mounted:function(){
@@ -247,26 +315,36 @@
                 }else{
                     device = 'iPhone'
                 }
-                this.$http({
-                    url:url,
+                var data={
+                    "params":{
+                        "identification":this.wrongTitleId,
+                        "clazzGroupId":this.clazzId
+                    }
+                }
+
+
+                var self = this;
+
+                axios({
+                    url:this.url,
                     method: 'POST',
-                    data:'{"params":{"wrongTitleId":'+this.wrongTitleId+',"clazzId":'+this.clazzId+'}}',
+                    data:data,
                     headers:{
                         'Content-Type': 'application/json',
                         'version':'2.4.0',
-                        'device':device
+                        'device':'ios',
+                        'UserAgent':'teacher'
                     }
-
-                }).then(function (response) {
-                    var result = response.body;
-
+                }).then(function(response) {
+                    var result = response.data;
                     //处理服务器异常信息提示
-                    if(response.status!=200 || result.code != 200){
+                    if(result.code != 200){
+
                         window.location.href='error.html';
                         return;
                     }
-                    this.clazzGroup = result.data.clazzGroup;
-                    this.code = this.clazzGroup.code;
+                    self.clazzGroup = result.data.clazzGroup;
+                    self.code = self.clazzGroup.code;
                     sessionStorage.setItem("code",result.data.clazzGroup.code);
                     var wrongTitle = result.data.wrongTitle;
 
@@ -275,34 +353,99 @@
                     var videoTime = wrongTitle.videoTime;
 
 
-                    this.videoTime = videoTime;
+                    self.videoTime = videoTime;
                     if(wrongTitle.likeCount){
-                        this.likeCount = wrongTitle.likeCount;
+                        self.likeCount = wrongTitle.likeCount;
                     }else{
-                        this.likeCount = 0;
+                        self.likeCount = 0;
                     }
                     if(wrongTitle.commentCount){
-                        this.commentCount = wrongTitle.commentCount;
+                        self.commentCount = wrongTitle.commentCount;
                     }else{
-                        this.commentCount = 0;
+                        self.commentCount = 0;
                     }
 
 
 
                     if(wrongTitle.collectCount){
-                        this.collectCount = wrongTitle.collectCount;
+                        self.collectCount = wrongTitle.collectCount;
                     }else{
-                        this.collectCount = 0;
+                        self.collectCount = 0;
                     }
 
                     wrongTitle.picUrl = wrongTitle.pictures[0].url;
 
-                    this.wrongTitle = result.data.wrongTitle;
-                    this.sourceImg = wrongTitle.picUrl;
+                    self.wrongTitle = result.data.wrongTitle;
+                    self.sourceImg = wrongTitle.picUrl;
 
-                    this.unZipData(wrongTitle.zipUrl);
+                    self.unZipData(wrongTitle.zipUrl);
 
+                }).catch(function (error) {
+                    console.log(error);
                 });
+
+
+
+
+                /*
+
+                                this.$http({
+                                    url:url,
+                                    method: 'POST',
+                                    data:data,
+                                    headers:{
+                                        'Content-Type': 'application/json',
+                                        'version':'2.4.0',
+                                        'device':device
+                                    }
+
+                                }).then(function (response) {
+                                    var result = response.data;
+
+                                    //处理服务器异常信息提示
+                                    if(result.code != 200){
+                                        window.location.href='error.html';
+                                        return;
+                                    }
+                                    this.clazzGroup = result.data.clazzGroup;
+                                    this.code = this.clazzGroup.code;
+                                    sessionStorage.setItem("code",result.data.clazzGroup.code);
+                                    var wrongTitle = result.data.wrongTitle;
+
+                                    //计算总的播放时长
+
+                                    var videoTime = wrongTitle.videoTime;
+
+
+                                    this.videoTime = videoTime;
+                                    if(wrongTitle.likeCount){
+                                        this.likeCount = wrongTitle.likeCount;
+                                    }else{
+                                        this.likeCount = 0;
+                                    }
+                                    if(wrongTitle.commentCount){
+                                        this.commentCount = wrongTitle.commentCount;
+                                    }else{
+                                        this.commentCount = 0;
+                                    }
+
+
+
+                                    if(wrongTitle.collectCount){
+                                        this.collectCount = wrongTitle.collectCount;
+                                    }else{
+                                        this.collectCount = 0;
+                                    }
+
+                                    wrongTitle.picUrl = wrongTitle.pictures[0].url;
+
+                                    this.wrongTitle = result.data.wrongTitle;
+                                    this.sourceImg = wrongTitle.picUrl;
+
+                                    this.unZipData(wrongTitle.zipUrl);
+
+                                });
+                                */
 
             },
 
@@ -353,6 +496,7 @@
 
                                                 AMR.util.init(samples);
 
+
                                                 AMR.util.element.onended = function(){
                                                     self.stopShowTime();
                                                     stopDrawLinePoint();
@@ -365,6 +509,8 @@
                                                     playingTime = 0;
                                                     testcanvas = null;
                                                     testcontext = null;
+
+                                                    self.isThan3Second = false;
 
                                                 };
 
@@ -392,7 +538,20 @@
                     i++;
                 }, 1000);
             },
+            closeTitleWin:function(){
+                this.isTitleShow = false;
+            },
             showDownloadAppWin:function(){
+                //计算一下窗口的高度和
+                var innerHeight = window.innerHeight;
+                var winHeight = innerHeight * 0.8;
+                this.winHeight = Math.floor(winHeight);
+
+                var winWidth = 1.8 * winHeight;
+                this.winWidth = Math.floor(winWidth);
+
+
+
                 this.isShow = true;
                 this.isShowDownladAppWin = true;
 
@@ -407,6 +566,7 @@
                 this.isShowWin3 = true;
 
             },
+
             closeWin3:function(){
                 this.isShow = false;
                 this.isShowWin3 = false;
@@ -422,6 +582,7 @@
                 this.isShowWin4 = false;
             },
             showErrorWin:function(){
+
                 this.isPageShow = false;
                 this.isShowErrorWin = true;
 
@@ -433,35 +594,72 @@
 
             },
             startPlay:function(){
+                var self = this;
 
-                if(!testcontext){
+                if(!testcanvas){
+                    document.getElementById("play_canvas_box").innerHTML="";
+                    var canvas = document.createElement("canvas");
+                    canvas.width = 510;
+                    canvas.height = 320;
+                    canvas.id = "canvas";
+
+                    var canvasBox = document.getElementById("play_canvas_box");
+                    canvasBox.appendChild(canvas);
+
+
+
                     testcanvas = document.getElementById("canvas");
-                    testcontext = testcanvas.getContext('2d');
-                    testcontext.strokeStyle = "red";
-                    testcontext.lineWidth=2;
+                    testcanvas.height = 320;
+                    testcanvas.width = 510;
+                    testcanvas = new fabric.Canvas("canvas", {
+                        isDrawingMode: true,
+                        skipTargetFind: true,
+                        selectable: false,
+                        selection: false
+                    });
+
+                    document.getElementById("canvas").style.backgroundImage="URL("+self.sourceImg+")";
+
+
+
+
                 }
 
                 if(playEnd == 1){
                     playEnd = 0;
-                    // testcontext.clearRect(0,0,testcanvas.width,testcanvas.height);
+                    document.getElementById("play_canvas_box").innerHTML="";
+                    var canvas = document.createElement("canvas");
+                    canvas.width = 510;
+                    canvas.height = 320;
+                    canvas.id = "canvas";
+
+                    var canvasBox = document.getElementById("play_canvas_box");
+                    canvasBox.appendChild(canvas);
+
+
+
                     testcanvas = document.getElementById("canvas");
                     testcanvas.height = 320;
                     testcanvas.width = 510;
-                    testcontext = testcanvas.getContext('2d');
-                    testcontext.strokeStyle = "red";
-                    testcontext.lineWidth=2;
+                    testcanvas = new fabric.Canvas("canvas", {
+                        isDrawingMode: true,
+                        skipTargetFind: true,
+                        selectable: false,
+                        selection: false
+                    });
 
+                    document.getElementById("canvas").style.backgroundImage="URL("+self.sourceImg+")";
                 }
 
                 if(startPauseTime != 0){
 
-                    drawCanvasInterval = setInterval(startDrawLinePoint,10);
+                    drawCanvasInterval = setInterval(startDrawLinePoint,1);
                     this.closeWin3();
                 }
                 if(startPlayTime == 0){
                     //startTimeOutDraw();
 
-                    drawCanvasInterval = setInterval(startDrawLinePoint,10);
+                    drawCanvasInterval = setInterval(startDrawLinePoint,1);
                     startPlayTime = (new Date()).getTime();
 
                 }
@@ -495,6 +693,7 @@
                 }
 
                 this.closeWin4();
+
                 this.showDownloadAppWin();
 
 
@@ -507,7 +706,7 @@
                 setTimeout(function () {
                     window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.open.teachermanager";//android 下载地址
 
-                },2000);
+                },500);
 
 
 
@@ -517,7 +716,7 @@
 
                 setTimeout(function(){
                     window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.open.parentmanager";
-                },2000);
+                },500);
 
             },
             stopShowTime:function(){
@@ -528,6 +727,7 @@
                 var currentPlayTime = AMR.util.currentTime();
 
                 playingTime = currentPlayTime * 1000;
+
                 var minute=Math.floor(currentPlayTime/60%60);
                 var second=Math.floor(currentPlayTime%60);
                 if(minute<10){
@@ -538,6 +738,12 @@
                 }
 
                 this.playTimeShow = minute+":"+second;
+                if(playingTime - 3000 > 0 && !this.isThan3Second){
+
+                    this.isTitleShow = true;
+                    this.isThan3Second  = true;
+                }
+
             },
             playMusic:function(){
 
@@ -569,8 +775,10 @@
                     //如果当前切换到竖屏正在播放则 暂停播放提示下载窗口
                     if(startPlayTime > 0){
                         self.stopPlay();
+                        self.closeWin3();
 
                     }
+
                     //判断当前是否有窗口展示
                     if(self.isShowDownladAppWin){
                         currentWinIndex = 1;
@@ -584,7 +792,7 @@
                         currentWinIndex = 3;
                     }
                     self.closeDownloadApp();
-                    self.closeWin3();
+
                     self.closeWin4();
 
                     self.showErrorWin();
@@ -610,6 +818,11 @@
                 }
 
             },
+            goHome:function(){
+               
+                 window.location.href='wrongtitle_share.html?clazzId='+this.clazzId+"&wrongTitleId="+this.wrongTitleId;
+
+            },
             getParam:function(paramName) {
                 paramValue = "", isFound = !1;
                 if (window.location.search.indexOf("?") == 0 && window.location.search.indexOf("=") > 1) {
@@ -619,6 +832,7 @@
                 return paramValue == "" && (paramValue = null), paramValue
             }
 
+
         }
     });
 
@@ -627,7 +841,8 @@
         clearInterval(drawCanvasInterval);
     }
     function startDrawLinePoint() {
-        if(currentPointIndex == drawData[currentLineIndex].pointbeans.length){
+        if(currentPointIndex >= drawData[currentLineIndex].pointbeans.length){
+
             currentLineIndex = currentLineIndex + 1;
             currentPointIndex = 0;
         }
@@ -640,20 +855,31 @@
 
 
         if((playingTime - point.o*1000) > 0){
+            /*
 
             if(currentPointIndex == 0){
 
                 testcontext.moveTo(point.p.x,point.p.y);
 
-            }
-            var tempPoint = drawData[currentLineIndex].pointbeans[currentPointIndex];
 
+            }*/
             if(currentPointIndex > 0){
 
-                testcontext.lineTo(tempPoint.p.x,tempPoint.p.y);
+
+                var prePoint = drawData[currentLineIndex].pointbeans[currentPointIndex-4];
+                var currentPoint = drawData[currentLineIndex].pointbeans[currentPointIndex];
+                //自由绘
+                var line = new fabric.Line([prePoint.p.x, prePoint.p.y, currentPoint.p.x, currentPoint.p.y], {
+                    fill: 'red',
+                    stroke: 'red',    //笔触颜色
+                    strokeWidth: 2,//笔触宽度
+                    strokeDashArray:[0,0]
+                });
+                testcanvas.add(line);
+
             }
-            testcontext.stroke();
-            currentPointIndex = currentPointIndex + 1;
+
+            currentPointIndex = currentPointIndex + 4;
 
 
         }

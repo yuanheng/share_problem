@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <title>错题播放</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="App-Config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="telephone=no,email=no" name="format-detection">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+    <link rel="stylesheet" type="text/css" href="css/play2.css">
+
+    <script type="text/javascript">
+        (function(){
+
+            var currClientWidth,
+                fontValue,
+                originWidth;
+            originWidth = 667;//ui设计稿的宽度，一般750或640
+            __resize();
+
+            window.addEventListener('resize', __resize, false);
+
+            function __resize() {
+                currClientWidth = document.documentElement.clientWidth;
+                if (currClientWidth > 667){
+                    currClientWidth = 667;
+                }
+                if (currClientWidth < 320){
+                    currClientWidth = 320;
+                }
+                fontValue = currClientWidth;
+                document.documentElement.style.fontSize = fontValue/6.67 + 'px';
+
+            };
+
+        })();
+    </script>
+</head>
+<body id="page_body">
+<div id='play_page' class="play_page" >
+
+    <div class="play_box" v-show="isPageShow">
+
+        <div class="play_btn_box">
+
+
+
+            <div class="play_start_box">
+
+                <img  v-show='playing' class="play"  v-on:click="stopPlay" src="img/play_start.png"/>
+
+                <img v-show='!playing'  id='play_btn' class="play"  v-on:click="startPlay" src="img/play_stop.png" id="play"/>
+
+                <div class="play_back_txt">00:0015</div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>

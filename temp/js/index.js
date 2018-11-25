@@ -15,7 +15,7 @@
 *clearCanvas方法: 清空画布
 *photos属性：画布内所有图片对象
 *
-*Photo对象：_delete方法可以删除该对象；
+*Photo对象：_devare方法可以删除该对象；
 *          init方法可以重置图片大小和位置
 *          changeInfo(obj)方法修改图片的信息可以修改hierarchy、img、rotate、scale、callback；
 *          enable属性为图片是否禁止编辑
@@ -269,8 +269,8 @@
     var touch = e.position;
     var x = e.type != 'dragstart' ? touch.x - $offset(this.box).left : touch.x;
     var y = e.type != 'dragstart' ? touch.y - $offset(this.box).top : touch.y;
-    if (this.targetPhoto && this.targetPhoto.isOperation(x, y) && this.targetPhoto.setSpot.type == this.targetPhoto.setSpot.deleteBut) {
-      this.targetPhoto._delete();
+    if (this.targetPhoto && this.targetPhoto.isOperation(x, y) && this.targetPhoto.setSpot.type == this.targetPhoto.setSpot.devareBut) {
+      this.targetPhoto._devare();
       return;
     }
     this.isSet = false;
@@ -293,7 +293,7 @@
     var y = touch.y;
     if (this.targetPhoto) {
       if (this.isSet) {     // 放大旋转模式
-        if (this.targetPhoto.setSpot.type == this.targetPhoto.setSpot.deleteBut) return;       // 删除按钮
+        if (this.targetPhoto.setSpot.type == this.targetPhoto.setSpot.devareBut) return;       // 删除按钮
         // 旋转
         this.targetPhoto.changeRotate(x, y);
         // 缩放
@@ -473,7 +473,7 @@
     this.setSpot = {        // 操作点的坐标
       w: 40,
       h: 40,
-      deleteBut: 'topLeft',     // 删除按钮所在方位默认为左上角
+      devareBut: 'topLeft',     // 删除按钮所在方位默认为左上角
       type: ''               // 类型点击的是具体哪个点（bottomLeft,bottomRight,topLeft,topRight）
     };
     this.oCoords = {};       // 四边的坐标
@@ -511,15 +511,15 @@
       // 根据exif旋转图片到正常
       if (exif == 6) {
         self.rotate = 90;
-        self.setSpot.deleteBut = 'bottomLeft';
+        self.setSpot.devareBut = 'bottomLeft';
       }
       if (exif == 3) {
         self.rotate = 180;
-        self.setSpot.deleteBut = 'bottomRight';
+        self.setSpot.devareBut = 'bottomRight';
       }
       if (exif == 8) {
         self.rotate = 90;
-        self.setSpot.deleteBut = 'topRight';
+        self.setSpot.devareBut = 'topRight';
       }
       self.autoScale();       // 调节缩放比例
       cb && cb(self);           // 回调返回图片对象
@@ -700,12 +700,12 @@
     var firstSpot = null;
     this._canvas.ctx.beginPath();
     this._canvas.ctx.fillStyle="#fff";
-    this._canvas.ctx.arc(this.realCorners[this.setSpot.deleteBut].x, this.realCorners[this.setSpot.deleteBut].y, 20, 0, 2*Math.PI);
+    this._canvas.ctx.arc(this.realCorners[this.setSpot.devareBut].x, this.realCorners[this.setSpot.devareBut].y, 20, 0, 2*Math.PI);
     this._canvas.ctx.fill();
     this._canvas.ctx.fillStyle="#000";
     this._canvas.ctx.textBaseline="middle";
     this._canvas.ctx.font="20px Arial";
-    this._canvas.ctx.fillText("╳", this.realCorners[this.setSpot.deleteBut].x - 10, this.realCorners[this.setSpot.deleteBut].y);
+    this._canvas.ctx.fillText("╳", this.realCorners[this.setSpot.devareBut].x - 10, this.realCorners[this.setSpot.devareBut].y);
     for (var key in this.realCorners) {
       var spot = this.realCorners[key];
       if (preSpot) {
@@ -717,7 +717,7 @@
     drawDashLine(this._canvas.ctx, preSpot.x, preSpot.y, firstSpot.x, firstSpot.y);  // 画边框
   }
   // 删除图片
-  Photo.prototype._delete = function () {
+  Photo.prototype._devare = function () {
     var idx = this._canvas.photos.indexOf(this);
     this._canvas.photos.splice(idx, 1);
     this._canvas.targetPhoto = null;

@@ -2,7 +2,7 @@
  * @version 8.3.22
  * @date 2018-09-12
  */
-a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,canvas,caption,center,cite,code,dd,del,details,dfn,div,dl,dt,em,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,html,i,iframe,img,ins,kbd,label,legend,li,mark,menu,nav,object,ol,p,pre,q,s,samp,section,small,span,strike,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var,video {
+a,abbr,acronym,address,appvar,article,aside,audio,b,big,blockquote,body,canvas,caption,center,cite,code,dd,del,details,dfn,div,dl,dt,em,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,html,i,iframe,img,ins,kbd,label,legend,li,mark,menu,nav,object,ol,p,pre,q,s,samp,section,small,span,strike,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var,video {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -171,7 +171,7 @@ body {
 	font-family: PingFangSC-Medium;
 	font-size: 0.16rem;
 	color: #000000;
-	letter-spacing: 0;
+	varter-spacing: 0;
 
 }
 h1{
@@ -187,7 +187,7 @@ h1{
 	font-family: PingFangSC-Regular;
 	font-size: 0.16rem;
 	color: #666666;
-	letter-spacing: 0;
+	varter-spacing: 0;
 	padding-right: 0.19rem
 
 }
@@ -202,7 +202,7 @@ h1{
 	font-family: PingFangSC-Medium;
 	font-size: 0.19rem;
 	color: #FFFFFF;
-	letter-spacing: 0;
+	varter-spacing: 0;
 	line-height: 0.4rem;
 	text-align: center;
 	z-index: 200;
@@ -221,7 +221,7 @@ h1{
 	font-family: PingFangSC-Medium;
 	font-size: 0.16rem;
 	color: #000000;
-	letter-spacing: 0;
+	varter-spacing: 0;
 	line-height: 0.2rem;
 	margin-left: 0.16rem;
 }
@@ -269,7 +269,7 @@ h1{
 	font-family: PingFangSC-Regular;
 	font-size: 0.14rem;
 	color: #666666;
-	letter-spacing: 0;
+	varter-spacing: 0;
 
 	overflow : hidden;
 	text-overflow: ellipsis;
@@ -312,7 +312,7 @@ h1{
 	font-family: PingFangSC-Medium;
 	font-size: 0.15rem;
 	color: #333333;
-	letter-spacing: 0;
+	varter-spacing: 0;
 }
 .info_sologon{
 	margin-top: 0.065rem;
@@ -322,7 +322,7 @@ h1{
 	font-family: PingFangSC-Regular;
 	font-size: 0.15rem;
 	color: #666666;
-	letter-spacing: 0;
+	varter-spacing: 0;
 
 }
 .tip_blob{
@@ -364,7 +364,7 @@ h1{
 	font-family: PingFangSC-Medium;
 	font-size: 0.17rem;
 	color: red;
-	letter-spacing: 0;
+	varter-spacing: 0;
 	text-align: center;
 
 }
@@ -373,7 +373,7 @@ h1{
 	font-family: PingFangSC-Regular;
 	font-size: 0.15rem;
 	color: #666666;
-	letter-spacing: 0;
+	varter-spacing: 0;
 	text-align: center;
 }
 .win_bg_box{
@@ -430,7 +430,7 @@ h1{
 	font-family: PingFangSC-Medium;
 	font-size: 0.16rem;
 	color: #FFFFFF;
-	letter-spacing: 0;
+	varter-spacing: 0;
 	line-height: 0.33rem;
 	text-align: center;
 	z-index: 200;
@@ -464,7 +464,7 @@ h1{
 	font-family: PingFangSC-Medium;
 	font-size: 0.15rem;
 	color: #666666;
-	letter-spacing: 0;
+	varter-spacing: 0;
 	text-align: center;
 	margin-top: 0.36rem;
 
@@ -480,7 +480,7 @@ h1{
 	font-family: PingFangSC-Medium;
 	font-size: 0.16rem;
 	color: #FFFFFF;
-	letter-spacing: 0;
+	varter-spacing: 0;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -533,14 +533,14 @@ h1{
 	font-family: PingFangSC-Regular;
 	font-size: 30%;
 	color: #666666;
-	letter-spacing: 0;
+	varter-spacing: 0;
 	text-align: center;
 	height: 24%;
 }
 .tip_message_heng_join{
 	font-size: 30%;
 }
-.class_num_heng{font-family: PingFangSC-Medium;font-size: 30%;color: red;letter-spacing: 0;margin-top: 1%;text-align: center;}
+.class_num_heng{font-family: PingFangSC-Medium;font-size: 30%;color: red;varter-spacing: 0;margin-top: 1%;text-align: center;}
 .win_bg_box_heng{
 	width: 100%;
 
@@ -594,7 +594,7 @@ h1{
 	font-family: PingFangSC-Medium;
 	font-size: 8%;
 	color: #FFFFFF;
-	letter-spacing: 0;
+	varter-spacing: 0;
 	text-align: center;
 	z-index: 200;
 	height: 50%;
@@ -630,7 +630,7 @@ h1{
 	font-family: PingFangSC-Medium;
 	font-size: 0.15rem;
 	color: #666666;
-	letter-spacing: 0;
+	varter-spacing: 0;
 	text-align: center;
 	margin-top: 0.36rem;
 
@@ -646,7 +646,7 @@ h1{
 	font-family: PingFangSC-Medium;
 	font-size: 0.16rem;
 	color: #FFFFFF;
-	letter-spacing: 0;
+	varter-spacing: 0;
 	display: flex;
 	justify-content: center;
 	align-items: center;
