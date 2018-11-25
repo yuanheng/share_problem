@@ -9,10 +9,8 @@
   	<meta content="telephone=no,email=no" name="format-detection">
   	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
   	<link rel="stylesheet" type="text/css" href="css/share_problem.css">
-  	<script  type="text/javascript" src="js/jszip.js"></script>
-	<script  type="text/javascript" src="js/jszip-utils.js"></script>
-  	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue"></script>
-  	<script type="text/javascript" src='https://unpkg.com/axios/dist/axios.min.js'></script>
+  	<script type="text/javascript" src="js/vue.js"></script>
+  	<script type="text/javascript" src='js/axios.min.js'></script>
 
 
 
@@ -210,80 +208,80 @@
 	
 	<script type="text/javascript">
         //var testUrl = "http://10.98.24.198:8080/teacher_business/business/wrongtitle/getShareWrongTitleByIdAndClazzId.json";
-    	//var url = "http://teacherasst.openonline.com.cn/business/wrongtitle/getShareWrongTitleByIdAndClazzId.json";
-    	var testUrl='wrong.txt';
-    	var url='wrong.txt';
+        //var url = "http://teacherasst.openonline.com.cn/business/wrongtitle/getShareWrongTitleByIdAndClazzId.json";
+        var testUrl = 'wrong.txt';
+        var url = 'wrong.txt';
 
         //判断是否是微信浏览器的函数
-        function isWeiXin(){
+        function isWeiXin() {
             //window.navigator.userAgent属性包含了浏览器类型、版本、操作系统类型、浏览器引擎类型等信息，这个属性可以用来判断浏览器类型
             var ua = window.navigator.userAgent.toLowerCase();
             //通过正则表达式匹配ua中是否含有MicroMessenger字符串
-            if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/QQ/i) == "qq"){
+            if (ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/QQ/i) == "qq") {
                 return true;
-            }else{
+            } else {
                 return false;
             }
         }
 
 
-		var page = new Vue({
-  			el: '#body',
-  			data:{
-  				isShow:false,
-  				screentHeight:0,
-  				clazzGroup:{},
-  				wrongTitle:{},
-  				otherWrongTitleList:[],
-  				clazzId:0,
-  				wrongTitleId:0,
-				weixin:false,
-				code:0,
-				clazzId:0,
-				url:'',
-                hengWinHeight:0,
-				hengWinWidth:0,
-                isHengWin:false,
-                isHengWinShow:false,
-                isDownloadAppTipShow:false,
-                isDownloadTipShow:false,
+        var page = new Vue({
+            el: '#body',
+            data: {
+                isShow: false,
+                screentHeight: 0,
+                clazzGroup: {},
+                wrongTitle: {},
+                otherWrongTitleList: [],
+                clazzId: 0,
+                wrongTitleId: 0,
+                weixin: false,
+                code: 0,
+                clazzId: 0,
+                url: '',
+                hengWinHeight: 0,
+                hengWinWidth: 0,
+                isHengWin: false,
+                isHengWinShow: false,
+                isDownloadAppTipShow: false,
+                isDownloadTipShow: false,
 
-  			},
-  			created:function(){
+            },
+            created: function() {
 
-  				this.clazzId = this.getParam('clazzId');
-				this.wrongTitleId = this.getParam('wrongTitleId');
-  				this.weixin = !isWeiXin();
+                this.clazzId = this.getParam('clazzId');
+                this.wrongTitleId = this.getParam('wrongTitleId');
+                this.weixin = !isWeiXin();
 
-  				if(window.location.host.indexOf('teacherasst.openonline.com.cn') == 0){
-                	this.url = url;
-            	}else{
-                	this.url = testUrl;
-            	}
+                if (window.location.host.indexOf('teacherasst.openonline.com.cn') == 0) {
+                    this.url = url;
+                } else {
+                    this.url = testUrl;
+                }
 
 
-				this.checkScreen();
+                this.checkScreen();
                 this.getlist();
 
 
-  			},
-  			methods:{
-  				getlist:function () {
+            },
+            methods: {
+                getlist: function() {
 
-  					var self = this;
-                //请求服务器的api获取到品牌的数据列表
+                    var self = this;
+                    //请求服务器的api获取到品牌的数据列表
                     var version = navigator.userAgent.toLowerCase();
                     var android = version.indexOf('Android');
 
                     var device;
-                    if(android > -1){
+                    if (android > -1) {
                         device = 'android';
-					}else{
+                    } else {
                         device = 'ios'
-					}
-                    var data= new Object();
+                    }
+                    var data = new Object();
                     var params = new Object();
-                    params.identification= this.wrongTitleId;
+                    params.identification = this.wrongTitleId;
                     params.clazzGroupId = this.clazzId;
 
                     data.params = params;
@@ -291,133 +289,132 @@
 
 
                     axios({
-	                    	url:this.url,
-	                		method: 'POST',
-	                		data:data,
-	                		headers:{
-	                			'Content-Type': 'application/json',
-								'version':'2.4.0',
-								'device':'ios',
-								'UserAgent':'teacher'
-	                		}
-                    	}).then(function(response) {
-                    		var result = response.data;
-                    		alert("0000"+result.code);
-	                    	//处理服务器异常信息提示
-	                    	 if(result.code != 200){
-	                    	 	alert("请求错误");
-	                        	window.location.href='error.html';
-	                        	return;
-	                    	} 
-	                    	self.clazzGroup = result.data.clazzGroup;
-	                    	self.code = self.clazzGroup.code;
+                        url: this.url,
+                        method: 'POST',
+                        data: data,
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'version': '2.4.0',
+                            'device': 'ios',
+                            'UserAgent': 'teacher'
+                        }
+                    }).then(function(response) {
+                        var result = response.data;
+                        //处理服务器异常信息提示
+                        if (result.code != 200) {
+                            alert("请求错误");
+                            window.location.href = 'error.html';
+                            return;
+                        }
+                        self.clazzGroup = result.data.clazzGroup;
+                        self.code = self.clazzGroup.code;
 
-	                    	sessionStorage.setItem("code",result.data.clazzGroup.code);
-	                    	var wrongTitle = result.data.wrongTitle;
-
-
-	                    	wrongTitle.picUrl = wrongTitle.pictures[0].url;
-
-	                    	self.wrongTitle = result.data.wrongTitle;
+                        sessionStorage.setItem("code", result.data.clazzGroup.code);
+                        var wrongTitle = result.data.wrongTitle;
 
 
-	                    	var otherWrongTitleList = result.data.otherWrongTitleList;
-	                    	var picSize = otherWrongTitleList.length;
-	                    	if(picSize > 3){
-	                    	    picSize = 3;
-							}
-							var tempOtherPic = [];
-	                    	for(var i = 0; i < picSize; i++){
-	                    		var temp = otherWrongTitleList[i];
-	                    		if(temp.hasPicture != 1){
-	                    			temp.picUrl='img/u2.jpg';
-	                    		}else{
-	                    			temp.picUrl = temp.pictures[0].thu_url;
-	                    		}
-                                tempOtherPic.push(temp);
+                        wrongTitle.picUrl = wrongTitle.pictures[0].url;
 
-	                    	}
-	                    	if(tempOtherPic.length == 2){
-	                    	    var temp = {};
-	                    	    temp.picUrl = "";
-                                tempOtherPic.push(temp);
-							}
-	                    	self.otherWrongTitleList = tempOtherPic;
+                        self.wrongTitle = result.data.wrongTitle;
 
 
+                        var otherWrongTitleList = result.data.otherWrongTitleList;
+                        var picSize = otherWrongTitleList.length;
+                        if (picSize > 3) {
+                            picSize = 3;
+                        }
+                        var tempOtherPic = [];
+                        for (var i = 0; i < picSize; i++) {
+                            var temp = otherWrongTitleList[i];
+                            if (temp.hasPicture != 1) {
+                                temp.picUrl = 'img/u2.jpg';
+                            } else {
+                                temp.picUrl = temp.pictures[0].thu_url;
+                            }
+                            tempOtherPic.push(temp);
 
-                    	}).catch(function (error) {
-                    	    console.log(error);
-                    	 });
-                
-            	},
-            	openPlayPage:function(id,event){
-            		window.location.href='play.html?clazzId='+this.clazzId+'&wrongTitleId='+this.wrongTitleId;
-            	},
-				closeDownloadAppTip:function(){
+                        }
+                        if (tempOtherPic.length == 2) {
+                            var temp = {};
+                            temp.picUrl = "";
+                            tempOtherPic.push(temp);
+                        }
+                        self.otherWrongTitleList = tempOtherPic;
+
+
+
+                    }).catch(function(error) {
+                        console.log(error);
+                    });
+
+                },
+                openPlayPage: function(id, event) {
+                    window.location.href = 'play.html?clazzId=' + this.clazzId + '&wrongTitleId=' + this.wrongTitleId;
+                },
+                closeDownloadAppTip: function() {
                     this.isShow = false;
                     this.isHengWinShow = false;
-					this.isDownloadAppTipShow = false;
-					this.isDownloadTipShow = false;
+                    this.isDownloadAppTipShow = false;
+                    this.isDownloadTipShow = false;
                     var body = document.getElementById('page_body');
-                    body.style.overflow='';
-				},
-  				showDownloadAppTip:function(){
+                    body.style.overflow = '';
+                },
+                showDownloadAppTip: function() {
 
-  					this.isShow = true;
+                    this.isShow = true;
 
-  					var body = document.getElementById('page_body');
-                    body.style.overflow='hidden';
+                    var body = document.getElementById('page_body');
+                    body.style.overflow = 'hidden';
 
-                    if(this.hengPing()){
+                    if (this.hengPing()) {
                         this.isHengWinShow = true;
-					}else{
+                    } else {
                         this.isDownloadAppTipShow = true;
-					}
+                    }
 
-					window.addEventListener("resize",this.checkScreen,false);
+                    window.addEventListener("resize", this.checkScreen, false);
 
-  					this.screentHeight = window.innerHeight;
+                    this.screentHeight = window.innerHeight;
 
-  				},
+                },
 
-  				showDownloadTip:function(){
-  					this.isShow = true;
-  					var body = document.getElementById('page_body');
+                showDownloadTip: function() {
+                    this.isShow = true;
+                    var body = document.getElementById('page_body');
 
-                    body.style.overflow='hidden';
+                    body.style.overflow = 'hidden';
 
                     this.isDownloadTipShow = true;
-  					
-  					this.screentHeight = window.innerHeight;
-  				},
-  				downloadApp:function(){
-  					this.closeDownloadAppTip();
-  					this.showDownloadAppTip();
-  				},
-  				openTeacherApp:function(){
 
-                    window.location.href = "openteacher://open?code="+this.code+"&openType=joinClazz&clazzId="+this.clazzId;
+                    this.screentHeight = window.innerHeight;
+                },
+                downloadApp: function() {
+                    this.closeDownloadAppTip();
+                    this.showDownloadAppTip();
+                },
+                openTeacherApp: function() {
 
-                    setTimeout(function () {
-                        window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.open.teachermanager";//android 下载地址
+                    window.location.href = "openteacher://open?code=" + this.code + "&openType=joinClazz&clazzId=" + this.clazzId;
 
-                    },500);
+                    setTimeout(function() {
+                        window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.open.teachermanager"; //android 下载地址
+
+                    }, 500);
 
 
-	
-  				},
-  				openParentApp:function(){
-                    window.location.href = "openparents://open?code="+this.code+"&openType=joinClazz&clazzId="+this.clazzId;
 
-                    setTimeout(function(){
+                },
+                openParentApp: function() {
+                    window.location.href = "openparents://open?code=" + this.code + "&openType=joinClazz&clazzId=" + this.clazzId;
+
+                    setTimeout(function() {
                         window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.open.parentmanager";
-					},500);
+                    }, 500);
 
-  				},
-                checkScreen:function(){
-  				    console.info("屏幕发生了变化。。。。"+(new Date()).getTime());
-  				    var self = this;
+                },
+                checkScreen: function() {
+                    console.info("屏幕发生了变化。。。。" + (new Date()).getTime());
+                    var self = this;
 
                     this.screentHeight = window.innerHeight;
 
@@ -428,41 +425,39 @@
                     var winWidth = 1.5 * winHeight;
                     this.hengWinWidth = Math.floor(winWidth);
 
-                    console.info("checkScreen:"+this.hengPing());
+                    console.info("checkScreen:" + this.hengPing());
 
-                    if(this.hengPing()){
-                        if(this.isShow && this.isDownloadAppTipShow){
+                    if (this.hengPing()) {
+                        if (this.isShow && this.isDownloadAppTipShow) {
                             this.isHengWinShow = true;
                             this.isDownloadAppTipShow = false;
-						}
-					}else{
-						if(this.isShow && this.isHengWinShow){
+                        }
+                    } else {
+                        if (this.isShow && this.isHengWinShow) {
                             this.isHengWinShow = false;
                             this.isDownloadAppTipShow = true;
-						}
-					}
+                        }
+                    }
 
 
 
-
-				},
-                hengPing:function(){
+                },
+                hengPing: function() {
                     var mql = window.matchMedia("(orientation: portrait)");
                     return !mql.matches;
                 },
-  				getParam:function(paramName) { 
-    				paramValue = "", isFound = !1; 
-    				if (window.location.search.indexOf("?") == 0 && window.location.search.indexOf("=") > 1) { 
-        				arrSource = unescape(window.location.search).substring(1, window.location.search.length).split("&"), i = 0; 
-        				while (i < arrSource.length && !isFound) arrSource[i].indexOf("=") > 0 && arrSource[i].split("=")[0].toLowerCase() == paramName.toLowerCase() && (paramValue = arrSource[i].split("=")[1], isFound = !0), i++ 
-    					} 
-    					return paramValue == "" && (paramValue = null), paramValue 
-					} 
-  				}
+                getParam: function(paramName) {
+                    paramValue = "", isFound = !1;
+                    if (window.location.search.indexOf("?") == 0 && window.location.search.indexOf("=") > 1) {
+                        arrSource = unescape(window.location.search).substring(1, window.location.search.length).split("&"), i = 0;
+                        while (i < arrSource.length && !isFound) arrSource[i].indexOf("=") > 0 && arrSource[i].split("=")[0].toLowerCase() == paramName.toLowerCase() && (paramValue = arrSource[i].split("=")[1], isFound = !0), i++
+                    }
+                    return paramValue == "" && (paramValue = null), paramValue
+                }
+            }
 
 
-  		});
-
+        });
 	</script>
 
 </body>
