@@ -6,18 +6,15 @@
     <meta name="App-Config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta content="yes" name="apple-touch-fullscreen">
+
     <meta content="telephone=no,email=no" name="format-detection">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
     <link rel="stylesheet" type="text/css" href="css/play.css">
+    <script src="js/vue.min.js"></script>
+    <script src="js/axios.min.js"></script>
 
-    <script src="js/vue.js"></script>
-
-    <script type="text/javascript" src='js/axios.min.js'></script>
-
-    <script  type="text/javascript" src="js/jszip.js"></script>
-    <script  type="text/javascript" src="js/jszip-utils.js"></script>
-
-
+    <script src="js/jszip.js"></script>
+    <script src="js/jszip-utils.js"></script>
     <script src="js/amr/pcmdata.min.js"></script>
     <script src="js/amr/swfobject.js"></script>
     <script src="js/amr/mediacapture.min.js"></script>
@@ -28,6 +25,8 @@
     <script src="js/amr/decoder.js"></script>
     <script src="js/amr/encoder.js"></script>
     <script src="js/io.js"></script>
+
+
 
     <script type="text/javascript">
         (function(){
@@ -319,12 +318,13 @@
                 }else{
                     device = 'iPhone'
                 }
-                var data={
-                    "params":{
-                        "identification":this.wrongTitleId,
-                        "clazzGroupId":this.clazzId
-                    }
-                }
+                var data = new Object();
+                var params = new Object();
+                params.identification = this.wrongTitleId;
+                params.clazzGroupId = this.clazzId;
+
+                data.params = params;
+
 
 
                 var self = this;
@@ -587,9 +587,8 @@
             },
             showErrorWin:function(){
 
-                var ua = window.navigator.userAgent.toLowerCase();
-                //通过正则表达式匹配ua中是否含有MicroMessenger字符串
-                if(ua.match(/QQ/i) == "qq"){
+
+                if(this.checkQQApp()){
                     this.messageTip = "请在浏览器中查看";
                 }else{
                     this.messageTip = "仅支持横屏播放哦！";
@@ -785,6 +784,18 @@
             goHome:function(){
 
                 window.location.href='wrongtitle_share.html?clazzId='+this.clazzId+"&wrongTitleId="+this.wrongTitleId;
+
+            },
+            checkQQApp:function (){
+                var ua = navigator.userAgent.toLowerCase();
+                var  isQQInstalled = false;
+
+                if(ua.indexOf(' qq')>-1 && ua.indexOf('mqqbrowser') <0){
+
+                    isQQInstalled = true;
+
+                }
+                return isQQInstalled;
 
             },
             getParam:function(paramName) {

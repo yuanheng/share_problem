@@ -9,7 +9,7 @@
   	<meta content="telephone=no,email=no" name="format-detection">
   	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
   	<link rel="stylesheet" type="text/css" href="css/share_problem.css">
-  	<script type="text/javascript" src="js/vue.js"></script>
+  	<script type="text/javascript" src="js/vue.min.js"></script>
   	<script type="text/javascript" src='js/axios.min.js'></script>
 
 
@@ -48,7 +48,7 @@
 			</div>
 			<div class="problem_box">
 				<div class="problem_title_box">
-					<img src="img/head.png">
+					<img :src="clazzUrl">
 					<div class="problem_info_box">
 						<div class="class_title">{{clazzGroup.clazzTempName}}（{{clazzGroup.code}}）</div>
 						<div class="class_info">
@@ -245,6 +245,7 @@
                 isHengWinShow: false,
                 isDownloadAppTipShow: false,
                 isDownloadTipShow: false,
+                clazzUrl:""
 
             },
             created: function() {
@@ -308,7 +309,10 @@
                         }
                         self.clazzGroup = result.data.clazzGroup;
                         self.code = self.clazzGroup.code;
-
+                        //计算一下班级头像用哪一张
+						var numIndex = Number.parseInt(self.code);
+						var picIndex = numIndex % 5;
+						self.clazzUrl = "img/"+picIndex + ".png";
                         sessionStorage.setItem("code", result.data.clazzGroup.code);
                         var wrongTitle = result.data.wrongTitle;
 

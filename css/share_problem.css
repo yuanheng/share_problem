@@ -72,6 +72,7 @@ body {
 .problem_title_box img{
 	width: 0.55rem;
 	height: 0.55rem;
+	border-radius: 0.55rem;
 
 }
 .class_title{
@@ -496,10 +497,12 @@ h1{
 	bottom: 0;
 }
 .tip_bg{
+	position: absolute;
 	background-image: url(../img/win_bg.png);
 	height: 0.33rem;
-
 	background-size: cover;
+	bottom: 0;
+	width: 100%;
 }
 
 

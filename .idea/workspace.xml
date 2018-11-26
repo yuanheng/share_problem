@@ -2,7 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3dc800b1-0a94-426c-ade7-e860792b7591" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/img/0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/4.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/play.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/play.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/share_problem.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/share_problem.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/axios.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/axios.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/vue.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/play.html" beforeDir="false" afterPath="$PROJECT_DIR$/play.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wrongtitle_share.html" beforeDir="false" afterPath="$PROJECT_DIR$/wrongtitle_share.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,27 +25,27 @@
     <session id="885479303">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="21" />
+          <entry key="project.closed" value="24" />
           <entry key="project.open.time.0" value="2" />
           <entry key="project.open.time.1" value="4" />
           <entry key="project.open.time.10" value="1" />
-          <entry key="project.open.time.2" value="6" />
+          <entry key="project.open.time.2" value="8" />
           <entry key="project.open.time.4" value="2" />
           <entry key="project.open.time.5" value="1" />
           <entry key="project.open.time.6" value="2" />
-          <entry key="project.open.time.7" value="1" />
+          <entry key="project.open.time.7" value="2" />
           <entry key="project.open.time.8" value="2" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="22" />
+          <entry key="project.opened" value="25" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="cs" value="1" />
           <entry key="css" value="15" />
-          <entry key="html" value="41" />
+          <entry key="html" value="42" />
           <entry key="jpg" value="2" />
-          <entry key="js" value="17" />
+          <entry key="js" value="20" />
           <entry key="json" value="5" />
           <entry key="png" value="7" />
           <entry key="ts" value="3" />
@@ -46,26 +56,26 @@
         <counts>
           <entry key="C#" value="1" />
           <entry key="CSS" value="15" />
-          <entry key="HTML" value="41" />
+          <entry key="HTML" value="42" />
           <entry key="Image" value="9" />
           <entry key="JSON" value="5" />
-          <entry key="JavaScript" value="17" />
+          <entry key="JavaScript" value="20" />
           <entry key="PLAIN_TEXT" value="2" />
           <entry key="TypeScript" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="css" value="1196" />
-          <entry key="html" value="15961" />
+          <entry key="css" value="1226" />
+          <entry key="html" value="16253" />
           <entry key="js" value="440" />
           <entry key="txt" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="CSS" value="1196" />
-          <entry key="HTML" value="15961" />
+          <entry key="CSS" value="1226" />
+          <entry key="HTML" value="16253" />
           <entry key="JavaScript" value="440" />
           <entry key="PLAIN_TEXT" value="8" />
         </counts>
@@ -75,35 +85,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/wrongtitle_share.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="277">
-              <caret line="302" column="37" lean-forward="true" selection-start-line="302" selection-start-column="37" selection-end-line="302" selection-end-column="37" />
-              <folding>
-                <element signature="n#div#2;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#0;n#div#3;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/playtest.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="1691" selection-start-line="1691" selection-end-line="1691" />
-              <folding>
-                <element signature="n#style#0;n#canvas#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/play.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="403">
-              <caret line="296" column="26" selection-start-line="296" selection-start-column="26" selection-end-line="296" selection-end-column="26" />
+            <state relative-caret-position="332">
+              <caret line="796" column="17" lean-forward="true" selection-start-line="796" selection-start-column="17" selection-end-line="796" selection-end-column="17" />
               <folding>
                 <element signature="n#style#0;n#img#0;n#div#1;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#img#1;n#div#1;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -119,9 +104,34 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wrongtitle_share.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="662">
+              <caret line="72" column="12" lean-forward="true" selection-start-line="72" selection-start-column="12" selection-end-line="72" selection-end-column="12" />
+              <folding>
+                <element signature="n#div#2;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
+                <element signature="n#div#0;n#div#3;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/axios.min.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="144">
+              <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test1.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="854">
+            <state relative-caret-position="30060">
               <caret line="1670" column="4" selection-start-line="1670" selection-start-column="4" selection-end-line="1673" selection-end-column="28" />
             </state>
           </provider>
@@ -130,7 +140,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="854">
+            <state relative-caret-position="25686">
               <caret line="1427" column="67" selection-start-line="1427" selection-start-column="67" selection-end-line="1427" selection-end-column="67" />
             </state>
           </provider>
@@ -139,7 +149,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/play2.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="651">
+            <state relative-caret-position="972">
               <caret line="54" column="50" selection-start-line="54" selection-start-column="50" selection-end-line="54" selection-end-column="50" />
             </state>
           </provider>
@@ -148,8 +158,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/css/play.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="19" selection-start-line="19" selection-end-line="23" selection-end-column="1" />
+            <state relative-caret-position="7866">
+              <caret line="437" column="5" selection-start-line="437" selection-start-column="5" selection-end-line="437" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -158,7 +168,7 @@
         <entry file="file://$PROJECT_DIR$/css/playtest.css">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="720">
-              <caret line="40" column="1" lean-forward="true" selection-start-line="40" selection-start-column="1" selection-end-line="40" selection-end-column="1" />
+              <caret line="40" column="1" selection-start-line="40" selection-start-column="1" selection-end-line="40" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -166,8 +176,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/css/share_problem.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="314">
-              <caret line="501" column="27" lean-forward="true" selection-end-line="669" selection-end-column="1" />
+            <state relative-caret-position="386">
+              <caret line="77" column="13" lean-forward="true" selection-start-line="77" selection-start-column="13" selection-end-line="77" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -175,8 +185,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/play1.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-11805">
-              <caret line="192" column="45" lean-forward="true" selection-start-line="192" selection-start-column="45" selection-end-line="192" selection-end-column="45" />
+            <state relative-caret-position="3456">
+              <caret line="192" column="45" selection-start-line="192" selection-start-column="45" selection-end-line="192" selection-end-column="45" />
             </state>
           </provider>
         </entry>
@@ -185,9 +195,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>checkSc</find>
-      <find>tip_message</find>
-      <find>download</find>
       <find>lineCanvas</find>
       <find>Image300</find>
       <find>_renderFill</find>
@@ -209,12 +216,15 @@
       <find>startplay</find>
       <find>showError</find>
       <find>var</find>
-      <find>alert</find>
       <find>myvideo</find>
       <find>play_start_box</find>
       <find>play_box</find>
       <find>play_btn_box</find>
       <find>testUrl</find>
+      <find>alert</find>
+      <find>showErrorWin</find>
+      <find>clazz</find>
+      <find>clazzUrl</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -239,7 +249,6 @@
         <option value="$PROJECT_DIR$/share_problem.html" />
         <option value="$PROJECT_DIR$/css/error.css" />
         <option value="$PROJECT_DIR$/share_problem_bk.html" />
-        <option value="$PROJECT_DIR$/css/share_problem.css" />
         <option value="$PROJECT_DIR$/error.html" />
         <option value="$PROJECT_DIR$/js/fac.js" />
         <option value="$PROJECT_DIR$/js/fabric.js" />
@@ -250,11 +259,12 @@
         <option value="$PROJECT_DIR$/wrong.txt" />
         <option value="$PROJECT_DIR$/css/play2.css" />
         <option value="$PROJECT_DIR$/play2.html" />
-        <option value="$PROJECT_DIR$/css/play.css" />
-        <option value="$PROJECT_DIR$/play.html" />
         <option value="$PROJECT_DIR$/playtest.html" />
         <option value="$PROJECT_DIR$/css/playtest.css" />
+        <option value="$PROJECT_DIR$/play.html" />
+        <option value="$PROJECT_DIR$/css/play.css" />
         <option value="$PROJECT_DIR$/wrongtitle_share.html" />
+        <option value="$PROJECT_DIR$/css/share_problem.css" />
       </list>
     </option>
   </component>
@@ -283,8 +293,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -296,25 +304,27 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543140885612" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543226189197" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/img" />
       <recent name="$PROJECT_DIR$/css" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/js" />
-      <recent name="$PROJECT_DIR$/img" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -361,17 +371,20 @@
       <workItem from="1542937739789" duration="8327000" />
       <workItem from="1542961679208" duration="13347000" />
       <workItem from="1543121552692" duration="887000" />
+      <workItem from="1543144869379" duration="1139000" />
+      <workItem from="1543196560040" duration="4058000" />
+      <workItem from="1543225533968" duration="651000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="145052000" />
+    <option name="totallyTimeSpent" value="151202000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="1027" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.3046683" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.31879607" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -386,7 +399,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.033842795" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -398,6 +411,8 @@
       <window_info anchor="right" id="Pavarte&#9;" order="6" />
       <window_info anchor="right" id="Database" order="7" />
       <window_info anchor="right" id="Maven Projects" order="8" weight="0.32985258" />
+      <window_info anchor="right" id="Palette" order="9" />
+      <window_info anchor="right" id="Palette&#9;" order="10" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -554,15 +569,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/axios.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/amr/swfobject.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -595,69 +601,97 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/play2.html">
+    <entry file="file://$PROJECT_DIR$/playtest.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="651">
-          <caret line="54" column="50" selection-start-line="54" selection-start-column="50" selection-end-line="54" selection-end-column="50" />
+        <state relative-caret-position="30438">
+          <caret line="1691" selection-start-line="1691" selection-end-line="1691" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/play1.html">
+    <entry file="file://$PROJECT_DIR$/js/vue.js" />
+    <entry file="file://$PROJECT_DIR$/js/vue.min.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-11805">
-          <caret line="192" column="45" lean-forward="true" selection-start-line="192" selection-start-column="45" selection-end-line="192" selection-end-column="45" />
+        <state>
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/axios.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test1.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="854">
+        <state relative-caret-position="30060">
           <caret line="1670" column="4" selection-start-line="1670" selection-start-column="4" selection-end-line="1673" selection-end-column="28" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="854">
+        <state relative-caret-position="25686">
           <caret line="1427" column="67" selection-start-line="1427" selection-start-column="67" selection-end-line="1427" selection-end-column="67" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/css/share_problem.css">
+    <entry file="file://$PROJECT_DIR$/play2.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
-          <caret line="501" column="27" lean-forward="true" selection-end-line="669" selection-end-column="1" />
+        <state relative-caret-position="972">
+          <caret line="54" column="50" selection-start-line="54" selection-start-column="50" selection-end-line="54" selection-end-column="50" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/css/play.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="19" selection-start-line="19" selection-end-line="23" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/playtest.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="1691" selection-start-line="1691" selection-end-line="1691" />
-          <folding>
-            <element signature="n#style#0;n#canvas#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="7866">
+          <caret line="437" column="5" selection-start-line="437" selection-start-column="5" selection-end-line="437" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/css/playtest.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="720">
-          <caret line="40" column="1" lean-forward="true" selection-start-line="40" selection-start-column="1" selection-end-line="40" selection-end-column="1" />
+          <caret line="40" column="1" selection-start-line="40" selection-start-column="1" selection-end-line="40" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/play1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3456">
+          <caret line="192" column="45" selection-start-line="192" selection-start-column="45" selection-end-line="192" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/share_problem.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="386">
+          <caret line="77" column="13" lean-forward="true" selection-start-line="77" selection-start-column="13" selection-end-line="77" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wrongtitle_share.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="662">
+          <caret line="72" column="12" lean-forward="true" selection-start-line="72" selection-start-column="12" selection-end-line="72" selection-end-column="12" />
+          <folding>
+            <element signature="n#div#2;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#div#0;n#div#3;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/play.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="403">
-          <caret line="296" column="26" selection-start-line="296" selection-start-column="26" selection-end-line="296" selection-end-column="26" />
+        <state relative-caret-position="332">
+          <caret line="796" column="17" lean-forward="true" selection-start-line="796" selection-start-column="17" selection-end-line="796" selection-end-column="17" />
           <folding>
             <element signature="n#style#0;n#img#0;n#div#1;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#img#1;n#div#1;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -667,17 +701,6 @@
             <element signature="n#style#0;n#div#3;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wrongtitle_share.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="302" column="37" lean-forward="true" selection-start-line="302" selection-start-column="37" selection-end-line="302" selection-end-column="37" />
-          <folding>
-            <element signature="n#div#2;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#0;n#div#3;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
           </folding>
         </state>
       </provider>

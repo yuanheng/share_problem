@@ -435,7 +435,6 @@ html,body {
 	height: 3.56rem;
 	background: #FFFFFF;
 	position: relative;
-	box-shadow: 0.128rem 0.128rem 0 0 rgba(6,202,150,0.14);
 	border-radius: 0.128rem;
 	overflow-x: hidden;
 }
