@@ -31,10 +31,40 @@
 
 <body id="page_body">
 	<div class="page" id="body_shu">
-		<canvas id="canvas_shu" height="235.2941176470588" width="375" style="background-image: url(source.jpg)"></canvas>
+        <div class="tip_shu">横屏查看效果更好哦！</div>
+        <div class="play_box_shu">
+                    <canvas id="canvas_shu" height="235.2941176470588" width="375" style="background-image: url(source.jpg)"></canvas>
+        </div>
+        <div class="play_box_btn_shu">
+            <div class="comment_box_shu">
+                <img src="img/comment.png" />
+                <p>{{commentCount}}</p>
+            </div>
+            <div class="flower_box_shu">
+                <img src="img/flower.png" />
+                <p>{{likeCount}}</p>
+            </div>
+            <div class="collection_box_shu">
+                <img src="img/favorite.png" />
+                <p>{{collectCount}}</p>
+            </div>
+        </div>
+
+        <div class="problem_desc">
+            <div class="problem_desc_title">{{clazzGroup.clazzTempName}}错题：</div>
+                    
+            <div class="problem_desc_content">
+                        {{wrongTitle.content}}
+            </div>
+        </div>
+
+        <div class="download_btn_shu">
+                    下载APP，观看更多班级内容！
+        </div>
+
 	</div>
 
-	<div id='play_page' class="play_page" >
+	<div  class="play_page" id="play_page">
 
 		<div class="play_box">
 			<div class="title_box" v-show="isTitleShow">
@@ -214,7 +244,7 @@
 
     var drawCanvasInterval;
     var page = new Vue({
-        el: '#play_page',
+        el: '#body_shu',
         data:{
 
             isShow:false,
@@ -237,7 +267,9 @@
             winHeight:0,
             winWidth:0,
             isTitleShow:false,
-            messageTip:"仅支持横屏播放哦！"
+            messageTip:"仅支持横屏播放哦！",
+            clazzGroup:{},
+            wrongTitle:{}
 
         },
         created:function(){
@@ -331,6 +363,7 @@
                     }
                     self.clazzGroup = result.data.clazzGroup;
                     self.code = self.clazzGroup.code;
+
                     sessionStorage.setItem("code",result.data.clazzGroup.code);
                     var wrongTitle = result.data.wrongTitle;
 
@@ -547,10 +580,10 @@
                     testcontext.lineWidth=1;
 
 
-                    shuTestcanvas = document.getElementById("canvas");
+                    shuTestcanvas = document.getElementById("canvas_shu");
                     shuTestcanvas.height = 320;
                     shuTestcanvas.width = 510;
-                    shuTestcontext = testcanvas.getContext('2d');
+                    shuTestcontext = shuTestcanvas.getContext('2d');
                     shuTestcontext.strokeStyle = "red";
                     shuTestcontext.lineWidth=1;
 
