@@ -31,9 +31,12 @@ body {
     margin: 0 auto;
     background-image: url(../img/bg_small.png);
     background-size: auto;
+    height: 100%;
+    width: 100%;
+    background-color: red;
 }
 
-#canvas{
+#canvas_shu{
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;

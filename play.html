@@ -816,6 +816,11 @@
         clearInterval(drawCanvasInterval);
     }
     function startDrawLinePoint() {
+        if(!drawData && !drawData.length == 0 ){
+            return;
+        }
+
+
         if(currentPointIndex == drawData[currentLineIndex].pointbeans.length){
             currentLineIndex = currentLineIndex + 1;
             currentPointIndex = 0;
