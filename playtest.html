@@ -30,37 +30,98 @@
 </head>
 
 <body id="page_body">
+<div id="page">
+   
 	<div class="page" id="body_shu">
-        <div class="tip_shu">横屏查看效果更好哦！</div>
+         <div class="title_box_shu" v-on:click='goBack' v-show="weixin">
+            <img src="img/back.png">
+            <div>错题分享</div>
+        </div>
+        <div class="tip_shu"><img class='tip_sound' src='img/tip_sound.png' />横屏查看效果更好哦！</div>
+
         <div class="play_box_shu">
-                    <canvas id="canvas_shu" height="235.2941176470588" width="375" style="background-image: url(source.jpg)"></canvas>
+            <canvas id="canvas_shu" height="0" width="0" style="background-image: url(source.jpg)"></canvas>
+            <img v-on:click="startPlay"  v-show='!playing' class="start_shu" src="img/start.png">
+            <div v-bind:style="{width: canvasWidth + 'px',height: canvasHeight + 'px' }"   class='stop_btn_shu' v-on:click="stopPlay"  v-show='playing' class="start_shu"></div>
+        </div>
+    
+        <div class="problem_desc">       
+            <div class="problem_desc_content">
+            <span class="problem_desc_title">{{clazzGroup.clazzTempName}}错题：</span>{{wrongTitle.content}}
+            </div>
         </div>
         <div class="play_box_btn_shu">
             <div class="comment_box_shu">
-                <img src="img/comment.png" />
+                <img src="img/comment_shu.png" v-on:click='downloadApp' />
                 <p>{{commentCount}}</p>
             </div>
             <div class="flower_box_shu">
-                <img src="img/flower.png" />
+                <img src="img/flower_shu.png" v-on:click='downloadApp' />
                 <p>{{likeCount}}</p>
             </div>
             <div class="collection_box_shu">
-                <img src="img/favorite.png" />
+                <img src="img/collection_shu.png"  v-on:click='downloadApp' />
                 <p>{{collectCount}}</p>
             </div>
         </div>
 
-        <div class="problem_desc">
-            <div class="problem_desc_title">{{clazzGroup.clazzTempName}}错题：</div>
-                    
-            <div class="problem_desc_content">
-                        {{wrongTitle.content}}
-            </div>
-        </div>
-
-        <div class="download_btn_shu">
+        <div class="download_btn_shu"  v-on:click='downloadApp'>
                     下载APP，观看更多班级内容！
         </div>
+        
+        <div id="win_bg" class="win_bg_box" v-show='isShow' style="display:none">
+            <div class="win_bg"></div>
+            <div class="download_app_tip" v-bind:style="{width: winWidthShu + 'px',height: winHeight + 'px' }"  v-show='isShowDownladAppWin' style="display:none" ref='downloadAppTip'>
+                <div class="closed_box" v-on:click="closeDownloadApp"></div>
+                <div class="win_title">提示</div>
+                <div class="tip_message">
+                    <div class="class_num">{{clazzGroup.code}}</div>
+                    <div class="tip_message_content">加入班级参与互动，请牢记此班级号（加入班级时使用）</div>
+                </div>
+                <div class="app_type_box">
+                    <div class="teacher_box">
+                        <img class="teacher_icon" src="img/teacher_icon.png">
+                        <div class="app_name">【教师秘书】</div>
+                    </div>
+                    <div class="teacher_box">
+                        <img class="teacher_icon" src="img/parent_icon.png">
+                        <div class="app_name">【家长帮手】</div>
+                    </div>
+                </div>
+                <div class="download_btn_box">
+                    <div class="download_app_btn" v-on:click="openTeacherApp">老师请下载</div>
+                    <div class="download_app_btn" v-on:click="openParentApp">家长请下载</div>
+                </div>
+                <div class="download_app_bg"></div>
+            </div>
+            <div class="download_tip" v-show='isShowWin3' style="display:none" ref="downloadTip">
+                <div class="closed_box" v-on:click="closeWin3"></div>
+                <div class="win_title">提示</div>
+                <div class="tip_download_message_play">
+                    <p class="tip_message_p">下载APP，观看体验更好，还可查看更多本班错题信息哦！</p>
+                </div>
+                <div class="tip_download_btn_box">
+                    <div class="btn_box_3">
+                        <div class="download_paly_3" v-on:click='downloadApp'>下载APP</div>
+
+                    </div>
+                    <div class="btn_box_4">
+                        <div class="download_paly_4" v-on:click='startPlay'>继续播放</div>
+                    </div>
+
+                    <div class="tip_bg"></div>
+                </div>
+            </div>
+            <div class="download_tip" v-show='isShowWin4' style="display:none"  ref="downloadTip">
+                <div class="closed_box" v-on:click="closeWin4"></div>
+                <div class="win_title">提示</div>
+                <div class="tip_download_message">下载APP后，还有更多班级内容等您查看哦！</div>
+                <div class="tip_download_bt" v-on:click="downloadApp">下载APP</div>
+                <div class="tip_bg"></div>
+            </div>
+
+        </div>
+
 
 	</div>
 
@@ -76,7 +137,7 @@
 			</div>
 			<div class="play_btn_box">
 				<div class="play_btn_bg"></div>
-
+                    
 
 				<div class="play_start_box">
 
@@ -165,17 +226,9 @@
 			</div>
 
 		</div>
-		<div id="win_bg_error" class="win_bg_box" v-show="isShowErrorWin" style="display: none">
-			<div class="download_tip_shu" v-show='isShowErrorWin' style="display:none"  ref="downloadTip">
-
-				<div class="win_title_shu">提示</div>
-				<div class="tip_download_message_shu">{{messageTip}}</div>
-
-				<div class="tip_bg_shu"></div>
-			</div>
-		</div>
+		
 	</div>
-
+</div>
 
 </body>
 <script type="text/javascript">
@@ -225,7 +278,7 @@
         }
     }
 
-
+    var scale=1.0;
     var drawData;
     var playData;
 	var shuTestCanvas;
@@ -242,9 +295,10 @@
     var showPlayTimer;
     var currentWinIndex = 0;
 
+
     var drawCanvasInterval;
     var page = new Vue({
-        el: '#body_shu',
+        el: '#page',
         data:{
 
             isShow:false,
@@ -269,11 +323,51 @@
             isTitleShow:false,
             messageTip:"仅支持横屏播放哦！",
             clazzGroup:{},
-            wrongTitle:{}
+            wrongTitle:{},
+            canvasHeight:0,
+            canvasWidth:0,
+            winWidthShu:0,
 
         },
         created:function(){
+            //判断当前是竖屏还是横屏：
 
+            var mql = window.matchMedia("(orientation: portrait)");
+            if(mql.matches) {
+                scale = window.screen.width * 1.0 / 510;
+                this.canvasHeight = 320 * scale;
+                this.canvasWidth = window.screen.width;
+                     //计算一下窗口的高度和
+                var innerHeight = window.screen.width;
+                var winHeight = innerHeight * 0.8;
+                this.winHeight = Math.floor(winHeight);
+
+                var winWidth = 1.8 * winHeight;
+                this.winWidth = Math.floor(winWidth);
+                this.winWidthShu = Math.floor(window.screen.width * 0.9);
+
+            }else{
+
+                scale = window.screen.height * 1.0 / 510;
+                this.canvasHeight = 320 * scale;
+                this.canvasWidth = window.screen.height;
+                     //计算一下窗口的高度和
+                var innerHeight = window.innerHeight;
+                var winHeight = innerHeight * 0.8;
+                this.winHeight = Math.floor(winHeight);
+
+                var winWidth = 1.8 * winHeight;
+                this.winWidth = Math.floor(winWidth);
+
+                this.winWidthShu = Math.floor(window.screen.height* 0.9);
+
+
+            }
+
+            
+
+            document.getElementById("canvas_shu").height = this.canvasHeight;
+            document.getElementById("canvas_shu").width = this.canvasWidth;
 
             var self = this;
             var hiddenProperty = 'hidden' in document ? 'hidden' :
@@ -502,15 +596,6 @@
                 this.isTitleShow = false;
             },
             showDownloadAppWin:function(){
-                //计算一下窗口的高度和
-                var innerHeight = window.innerHeight;
-                var winHeight = innerHeight * 0.8;
-                this.winHeight = Math.floor(winHeight);
-
-                var winWidth = 1.8 * winHeight;
-                this.winWidth = Math.floor(winWidth);
-
-
 
                 this.isShow = true;
                 this.isShowDownladAppWin = true;
@@ -541,25 +626,6 @@
                 this.isShow = false;
                 this.isShowWin4 = false;
             },
-            showErrorWin:function(){
-
-
-                if(this.checkQQApp()){
-                    this.messageTip = "请在浏览器中查看";
-                }else{
-                    this.messageTip = "仅支持横屏播放哦！";
-                }
-
-
-                this.isShowErrorWin = true;
-
-            },
-            closeErrorWin:function(){
-
-                this.isShowErrorWin = false;
-
-
-            },
             startPlay:function(){
                 if(!testcontext){
                     testcanvas = document.getElementById("canvas");
@@ -581,8 +647,8 @@
 
 
                     shuTestcanvas = document.getElementById("canvas_shu");
-                    shuTestcanvas.height = 320;
-                    shuTestcanvas.width = 510;
+                    shuTestcanvas.height = this.canvasHeight;
+                    shuTestcanvas.width = this.canvasWidth;
                     shuTestcontext = shuTestcanvas.getContext('2d');
                     shuTestcontext.strokeStyle = "red";
                     shuTestcontext.lineWidth=1;
@@ -593,7 +659,7 @@
                     this.closeWin3();
                 }
                 if(startPlayTime == 0){
-                    //startTimeOutDraw();
+
                     drawCanvasInterval = setInterval(startDrawLinePoint,1);
                     startPlayTime = (new Date()).getTime();
                 }
@@ -705,9 +771,6 @@
                     originWidth;
                 	originWidth = 750;//ui设计稿的宽度，一般750或640
 
-
-
-
                     currClientWidth = document.documentElement.clientWidth;
                     if (currClientWidth > 750){
                         currClientWidth = 750;
@@ -746,6 +809,7 @@
                 var self = this;
                 var mql = window.matchMedia("(orientation: portrait)");
                 if(mql.matches) {
+                   
 					self.shupingRem();
                 }else{
 
@@ -832,9 +896,9 @@
                 shuTestcontext.beginPath();
                 shuTestcontext.lineJoin="round";
                 shuTestcontext.lineCap="round";
-                shuTestcontext.moveTo(prePoint.p.x*375*1.0 / 510,prePoint.p.y*375*1.0 / 510);
+                shuTestcontext.moveTo(prePoint.p.x* scale,prePoint.p.y*scale);
 
-                shuTestcontext.lineTo(currentPoint.p.x*375*1.0 / 510,currentPoint.p.y*375*1.0 / 510);
+                shuTestcontext.lineTo(currentPoint.p.x*scale,currentPoint.p.y*scale);
                 shuTestcontext.strokeStyle="red";
                 shuTestcontext.lineWidth=2;
                 shuTestcontext.stroke();

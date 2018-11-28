@@ -311,6 +311,7 @@ html,body {
 	right: -0.025rem;
 	background-image: url(../img/close.png);
 	background-size: contain;
+	background-repeat: no-repeat;
 }
 
 .download_tip {

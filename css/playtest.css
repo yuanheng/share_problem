@@ -27,19 +27,24 @@ body {
     min-width: 3.2rem;
     overflow-x: hidden;
 }
-.page{
-    margin: 0 auto;
-    background-image: url(../img/bg_small.png);
-    background-size: auto;
-    height: 100%;
-    width: 100%;
+#page{
    
+    color: #FFF;
+    width: 100%;
+    height: 100%;
+}
+
+.page{
+   margin: 0 auto 0 auto;
+   height: 100%;
+   width: 100%;
+   background: #333333;
 }
 .play_box_shu{
     width: 100%;
-
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 #canvas_shu{
@@ -51,31 +56,31 @@ body {
 .tip_shu{
     width: 100%;
     font-family: PingFangSC-Medium;
-    font-size: 0.15rem;
-    color: #333;
+    font-size: 0.12rem;
     height: 0.3rem;
-    line-height: 0.3rem;
+    /* position: absolute; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* margin-top: 0.06rem; */
 }
 .play_box_btn_shu{
-    margin-top: 0.1rem;
+    margin-top: 0.15rem;
     width: 100%;
-    height: 0.8rem;
-   
     display:flex;
 }
 .download_btn_shu{
-    margin: 0.1rem auto 0 auto;
-    width: 2.97rem;
-    height: 0.4rem;
+    margin: 0.22rem auto 0 auto;
+    width: 2.39rem;
+    height: 0.33rem;
     background-image: linear-gradient(-270deg, #27CAAD 1%, #5BCA6F 100%);
     border: 0.01rem solid #25C1A5;
     box-shadow: 0 0.01rem 0.02rem 0 rgba(39,202,173,0.41);
     border-radius: 0.2rem;
     font-family: PingFangSC-Medium;
-    font-size: 0.19rem;
-    color: #FFFFFF;
+    font-size: 0.16rem;
     varter-spacing: 0;
-    line-height: 0.4rem;
+    line-height: 0.33rem;
     text-align: center;
     z-index: 200;
 }
@@ -83,25 +88,24 @@ body {
 .comment_box_shu,.flower_box_shu,.collection_box_shu{
     flex: 1;
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     justify-content: center;
     align-items: center;
 }
 
 .play_box_btn_shu img{
-    width: 0.4rem;
-    height: 0.4rem;
+    width: 0.16rem;
+    height: 0.16rem;
     display: block;
 }
 
 .play_box_btn_shu p{
      font-family: PingFangSC-Medium;
-     font-size: 0.19rem;
-     margin-top: 0.02rem;
+     font-size: 0.15rem;
+     margin-left: 0.13rem;
 }
 .problem_desc{
-    margin-top: 0.14rem;
-    margin-left: 0.16rem;
+    margin-top: 0.165rem;
 }
 .problem_desc h1{
     margin-left: 0;
@@ -109,17 +113,58 @@ body {
 .problem_desc_title{
 
     font-family: PingFangSC-Medium;
-    font-size: 0.16rem;
-    color: #000000;
-    varter-spacing: 0;
+    font-size: 0.15rem;
+  
 
 }
 .problem_desc_content{
-    margin-top: 0.135rem;
+   
     font-family: PingFangSC-Regular;
-    font-size: 0.16rem;
-    color: #666666;
-    varter-spacing: 0;
-    padding-right: 0.19rem
+    font-size: 0.15rem;
+    
+    width: 90%;
+    margin: 0 auto;
 
+}
+.title_box_shu{
+    margin-top: 0.13rem;
+    font-family: HiraginoSansGB-W3;
+    font-size: 0.18rem;
+    color: #333333;
+    letter-spacing: 0;
+    background: #fff;
+    padding-bottom: 0.06rem;
+}
+.title_box_shu div{
+    flex: 1;
+    text-align: center;
+}
+.title_box_shu img{
+    left: 0.16rem;
+    width: 0.29rem;
+    height: 0.29rem;
+    position: absolute;
+}
+.tip_shu_bg{
+   background:  #4B4B4B;
+   opacity: 0.17;
+   height: 0.3rem;
+   width: 100%;
+   position: absolute;
+   
+}
+.tip_sound{
+    width: 0.195rem;
+    height: 0.15rem;
+    margin-right: 0.1rem;
+}
+.start_shu{
+    width: 0.38rem;
+    height: 0.38rem;
+    position: absolute;
+}
+.stop_btn_shu{
+   
+    z-index: 10;
+    position: absolute;
 }
