@@ -40,11 +40,19 @@ body {
    width: 100%;
    background: #333333;
 }
+.play_box_bg_shu{
+    width: 100%;
+    display: block;
+    position: absolute;
+    background: #000;
+    opacity: 0.5;
+}
 .play_box_shu{
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+
 }
 
 #canvas_shu{

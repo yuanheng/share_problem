@@ -41,8 +41,9 @@
 
         <div class="tip_shu"><img class='tip_sound' src='img/tip_sound.png' />横屏查看效果更好哦！</div>
 
-        <div class="play_box_shu">
-            <canvas id="canvas_shu" height="0" width="0" style="background-image: url(source.jpg)"></canvas>
+        <div class="play_box_shu" v-bind:style="{height: canvasHeight + 'px' }">
+            <canvas id="canvas_shu" height="0" width="0" v-bind:style="{backgroundImage:'url(' + sourceImg + ')'}"></canvas>
+            <div class="play_box_bg_shu" v-show='!playing' v-bind:style="{height: canvasHeight + 'px' }"></div>
             <img v-on:click="startPlay"  v-show='!playing' class="start_shu" src="img/start.png">
             <div v-bind:style="{width: canvasWidth + 'px',height: canvasHeight + 'px' }"   class='stop_btn_shu' v-on:click="stopPlay"  v-show='playing' class="start_shu"></div>
         </div>
@@ -71,7 +72,7 @@
                     下载APP，观看更多班级内容！
         </div>
         
-        <div id="win_bg" class="win_bg_box" v-show='isShow' style="display:none">
+        <div class="win_bg_box" v-show='isShow' style="display:none">
             <div class="win_bg"></div>
             <div class="download_app_tip" v-bind:style="{width: winWidthShu + 'px',height: winHeight + 'px' }"  v-show='isShowDownladAppWin' style="display:none" ref='downloadAppTip'>
                 <div class="closed_box" v-on:click="closeDownloadApp"></div>
@@ -176,7 +177,7 @@
 
 		</div>
 
-		<div id="win_bg" class="win_bg_box" v-show='isShow' style="display:none">
+		<div class="win_bg_box" v-show='isShow' style="display:none">
 			<div class="win_bg"></div>
 			<div class="download_app_tip" v-bind:style="{width: winWidth + 'px',height: winHeight + 'px' }"  v-show='isShowDownladAppWin' style="display:none" ref='downloadAppTip'>
 				<div class="closed_box" v-on:click="closeDownloadApp"></div>
@@ -265,8 +266,8 @@
 
     //var testUrl = "http://10.98.24.198:8080/teacher_business/business/wrongtitle/getShareWrongTitleByIdAndClazzId.json";
     //var url = "http://teacherasst.openonline.com.cn/business/wrongtitle/getShareWrongTitleByIdAndClazzId.json";
-    var testUrl='wrong.txt';
-    var url='wrong.txt';
+    var testUrl='http://teacherasst.openonline.com.cn/business/wrongtitle/getShareWrongTitleByIdAndClazzId.json';
+    var url='http://teacherasst.openonline.com.cn/business/wrongtitle/getShareWrongTitleByIdAndClazzId.json';
 
     //判断是否是微信浏览器的函数
     function isWeiXin(){
@@ -855,7 +856,7 @@
         clearInterval(drawCanvasInterval);
     }
     function startDrawLinePoint() {
-        if(!drawData && !drawData.length == 0 ){
+        if(drawData.length == 0 ){
             return;
         }
 
